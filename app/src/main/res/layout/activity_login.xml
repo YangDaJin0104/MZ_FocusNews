@@ -100,7 +100,7 @@
         tools:layout_editor_absoluteY="242dp" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_registerComplete"
         android:layout_width="252dp"
         android:layout_height="48dp"
         android:backgroundTint="#3585FF"
