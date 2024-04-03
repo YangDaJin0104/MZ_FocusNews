@@ -21,12 +21,21 @@
 
     <ImageView
         android:id="@+id/img_check"
-        android:layout_width="45dp"
-        android:layout_height="46dp"
+        android:layout_width="33dp"
+        android:layout_height="35dp"
         android:layout_marginStart="48dp"
         android:src="@drawable/register_check_icon"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="161dp" />
+
+    <ImageView
+        android:id="@+id/img_check"
+        android:layout_width="33dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="72dp"
+        android:src="@drawable/register_check_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="407dp" />
 
     <EditText
         android:id="@+id/et_registerPw"
@@ -38,19 +47,19 @@
         android:textColor="#6A6A6A"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="314dp" />
+        tools:layout_editor_absoluteY="233dp" />
 
     <TextView
         android:id="@+id/text_registerPw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
-        android:text="내 아이디"
-        android:textSize="34sp"
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="157dp" />
+        android:text="ID"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="161dp" />
 
     <ImageButton
         android:id="@+id/btn_registerPwBack"
@@ -63,5 +72,38 @@
         android:src="@drawable/register_back_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_registerPw"
+        android:layout_width="331dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="사용할 비밀번호를 입력하세요."
+        android:textColor="#6A6A6A"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="589dp" />
+
+    <TextView
+        android:id="@+id/text_registerPw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="내 비밀번호"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="105dp"
+        tools:layout_editor_absoluteY="323dp" />
+
+    <ImageView
+        android:id="@+id/img_check"
+        android:layout_width="45dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="52dp"
+        android:src="@drawable/register_check_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="323dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
