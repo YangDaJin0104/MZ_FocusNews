@@ -1,150 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContentFragment">
+    tools:context=".MainActivity">
 
-    <LinearLayout
+    <FrameLayout
+    android:id="@+id/main_container"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
+    app:layout_constraintEnd_toEndOf="@+id/bottom_navigation_view"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <!-- 하단 네비게이션 바 -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/whiteblue"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        android:background="@drawable/background_nav_whiteblue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_bottom_nav"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@color/blue"/>
 
-        <LinearLayout
-            android:id="@+id/top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="30dp"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/backbtn" />
-
-            <TextView
-                android:id="@+id/todayNews"
-                android:layout_width="232dp"
-                android:layout_height="47dp"
-                android:gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:text="Today's News"
-                android:textSize="23sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- 뉴스 타이틀 부분 -->
-        <LinearLayout
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/img"
-                android:layout_width="350dp"
-                android:layout_height="250dp"
-                android:background="@color/white"
-                android:src="@drawable/img_sample" />
-
-            <TextView
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:text="의대교수 사직서 제출 행렬… 정부 5월 2천명 증원 마무리 쐐기"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- 뉴스 기사 요약 부분 -->
-        <LinearLayout
-            android:id="@+id/content"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingTop="15dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/text1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:layout_marginBottom="18dp"
-                android:text="정부와 의료계 대화가 둔화되면서 의대 교수들이 사직서를 제출하고 있다."
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/background_shape_blue" />
-
-            <TextView
-                android:id="@+id/text2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:layout_marginBottom="18dp"
-                android:text="의대 증원 문제가 대화의 중심이 되었지만 정부는 협상에 증원 여부와 규모를 포함하지 않고 있다."
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/background_shape_blue" />
-
-            <TextView
-                android:id="@+id/text3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:text="의료계 내 의사들과 교수들의 이탈 움직임이 나타나고 있으며, 환자들의 불만이 커지고 있다."
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/background_shape_blue" />
-        </LinearLayout>
-
-        <!-- 관련 뉴스 더보기 부분 -->
-        <LinearLayout
-            android:id="@+id/detail"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingTop="15dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/more"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="의대교수 사직서에 대해 더 알고싶다면?"
-                android:textStyle="bold"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/detail1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:layout_marginBottom="18dp"
-                android:text="푸바오 의사 파업 사건에 안타까움 표해 의사되기로 결심..."
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:background="@drawable/background_shape_white" />
-
-            <TextView
-                android:id="@+id/detail2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:layout_marginBottom="18dp"
-                android:text="푸바오가 중국행 비행기를 취소하고 의대 가는 것을 택해..."
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:background="@drawable/background_shape_white" />
-        </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
