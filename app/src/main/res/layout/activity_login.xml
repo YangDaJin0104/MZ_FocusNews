@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F4F4"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
@@ -49,12 +48,9 @@
             android:backgroundTint="#E1E1E1"
             android:ems="10"
             android:inputType="text"
-            android:text="\tEnter your email here"
+            android:hint="\tEnter your email here"
             android:textColor="#6A6A6A"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="242dp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,9 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Password"
-            android:textColor="#6A6A6A"
-            app:layout_constraintTop_toBottomOf="@+id/text_loginPw"
-            tools:layout_editor_absoluteX="50dp" />
+            android:textColor="#6A6A6A" />
 
         <EditText
             android:id="@+id/et_loginPw"
@@ -82,12 +76,9 @@
             android:backgroundTint="#E1E1E1"
             android:ems="10"
             android:inputType="text"
-            android:text="\tEnter your password here"
+            android:hint="\tEnter your password here"
             android:textColor="#6A6A6A"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="242dp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/et_loginFindPw"
@@ -96,9 +87,7 @@
             android:layout_gravity="right"
             android:text="Forgot Password?"
             android:textColor="#000000"
-            android:textSize="12sp"
-            tools:layout_editor_absoluteX="257dp"
-            tools:layout_editor_absoluteY="377dp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -115,11 +104,7 @@
             android:layout_height="48dp"
             android:backgroundTint="#3585FF"
             android:text="Login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            tools:layout_editor_absoluteY="427dp" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -131,9 +116,7 @@
                 android:layout_height="wrap_content"
                 android:text="Don't have an account?"
                 android:textColor="#000000"
-                android:textSize="12sp"
-                tools:layout_editor_absoluteX="55dp"
-                tools:layout_editor_absoluteY="485dp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/et_loginSignup"
@@ -143,9 +126,7 @@
                 android:text="Sign Up"
                 android:textColor="#3585FF"
                 android:textSize="13sp"
-                android:textStyle="bold"
-                tools:layout_editor_absoluteX="185dp"
-                tools:layout_editor_absoluteY="483dp" />
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
