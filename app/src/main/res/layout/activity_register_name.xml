@@ -109,14 +109,15 @@
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
         android:orientation="vertical">
-        <!-- 버튼 활성화 시 색상: #3585FF -->
+
+        <!-- 아이디 조건 부합 시 색상 변경 -->
         <Button
             android:id="@+id/btn_registerComplete"
             android:layout_width="252dp"
             android:layout_height="48dp"
-            android:backgroundTint="#C6C6C6"
-            android:text="다음"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+            android:enabled="false"
+            android:background="@drawable/register_next_button"
+            android:text="다음" />
     </LinearLayout>
 
 </LinearLayout>
