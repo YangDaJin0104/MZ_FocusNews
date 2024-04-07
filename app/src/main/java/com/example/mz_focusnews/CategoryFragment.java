@@ -2,63 +2,49 @@ package com.example.mz_focusnews;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class CategoryFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView recyclerView;
+    private NewsAdapter adapter;
+    private List<NewsItem> newsItemList;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CategoryFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CategoryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CategoryFragment newInstance(String param1, String param2) {
-        CategoryFragment fragment = new CategoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false);
+        // 프래그먼트 레이아웃 인플레이트
+        View view = inflater.inflate(R.layout.fragment_category, container, false);
+
+        // 레이아웃에서 RecyclerView 찾기
+        recyclerView = view.findViewById(R.id.recyclerView);
+
+        // LayoutManager 설정
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // 뉴스 데이터 생성 및 어댑터에 추가
+        newsItemList = new ArrayList<>();
+        // 예시 데이터 추가
+        newsItemList.add(new NewsItem("AI가 새로운 의료 기술을 개발", "한국일보", "2024-04-01"));
+        newsItemList.add(new NewsItem("로켓 발사 성공, 새로운 우주 시대의 시작", "우주뉴스", "2024-04-02"));
+        // 추가 데이터...
+
+        // 어댑터 초기화 및 RecyclerView에 설정
+        adapter = new NewsAdapter(getActivity(), newsItemList);
+        recyclerView.setAdapter(adapter);
+
+        return view;
     }
 }

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- blank는 나중에 mainFramgent로 수정 예정-->
     <item
-        android:id="@+id/home"
+        android:id="@+id/blankFragment"
         android:title="홈"
         android:icon="@drawable/menu_home"/>
     <item
-        android:id="@+id/category"
+        android:id="@+id/categoryFragment"
         android:title="카테고리"
         android:icon="@drawable/menu_category"/>
     <item
