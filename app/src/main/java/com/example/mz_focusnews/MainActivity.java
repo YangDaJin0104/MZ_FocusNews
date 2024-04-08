@@ -20,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_agree_info); // xml 파일 에뮬레이터 테스트
+        setContentView(R.layout.activity_login); // xml 파일 에뮬레이터 테스트
     }
 }
