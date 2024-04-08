@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -18,16 +19,14 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
     private Context context;
-    private List<NewsItem> newsList; //
+    private List<NewsItem> newsList;
+    private NavController navController;
 
-    public NewsAdapter(Context context, List<NewsItem> newsList) {
+    public NewsAdapter(Context context, List<NewsItem> newsList, NavController navController) {
         this.context = context;
         this.newsList = newsList;
+        this.navController = navController;
     }
-
-    /**
-     * @Override onCreateViewHolder, onBindViewHolder, getItemCount
-     */
 
     @NonNull
     @Override
@@ -49,14 +48,27 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         return newsList.size();
     }
 
-    public static class NewsViewHolder extends RecyclerView.ViewHolder {
+    public class NewsViewHolder extends RecyclerView.ViewHolder{
         TextView newsTitle, publisher, time;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
-            newsTitle = itemView.findViewById(R.id.news1);
-            publisher = itemView.findViewById(R.id.publisher1);
-            time = itemView.findViewById(R.id.time1);
+            newsTitle = itemView.findViewById(R.id.news_title);
+            publisher = itemView.findViewById(R.id.news_publisher);
+            time = itemView.findViewById(R.id.news_time);
+
+            itemView.findViewById(R.id.news_title).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        NewsItem clickedItem = newsList.get(position);
+                        navController.navigate(R.id.action_categoryFragment_to_contentFragment);
+                    }
+
+                }
+            });
+
         }
     }
 }
