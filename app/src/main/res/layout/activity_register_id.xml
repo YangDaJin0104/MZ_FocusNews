@@ -14,7 +14,7 @@
         android:layout_marginTop="25dp"
         android:orientation="vertical">
         <ImageButton
-            android:id="@+id/btn_registerPwBack"
+            android:id="@+id/btn_back"
             android:layout_width="40dp"
             android:layout_height="32dp"
             android:layout_marginStart="20dp"
@@ -101,7 +101,7 @@
         android:orientation="vertical">
         <!-- 버튼 활성화 시 색상: #3585FF -->
         <Button
-            android:id="@+id/btn_registerComplete"
+            android:id="@+id/btn_next"
             android:layout_width="252dp"
             android:layout_height="48dp"
             android:backgroundTint="#C6C6C6"

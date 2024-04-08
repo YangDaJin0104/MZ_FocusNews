@@ -65,7 +65,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btn_registerCompleteToNews"
+            android:id="@+id/btn_registerToNews"
             android:layout_width="252dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
