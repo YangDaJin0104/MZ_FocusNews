@@ -11,15 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+
+/**
+ * 뉴스 목록을 표시하는 데 사용되는 클래스 (리스트 스크롤 구현)
+ */
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
     private Context context;
-    private List<NewsItem> newsList;
+    private List<NewsItem> newsList; //
 
     public NewsAdapter(Context context, List<NewsItem> newsList) {
         this.context = context;
         this.newsList = newsList;
     }
+
+    /**
+     * @Override onCreateViewHolder, onBindViewHolder, getItemCount
+     */
 
     @NonNull
     @Override

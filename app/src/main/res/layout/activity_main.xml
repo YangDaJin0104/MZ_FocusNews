@@ -24,15 +24,15 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_nav_whiteblue"
+        app:itemIconTint="@color/blue"
+        app:labelVisibilityMode="unlabeled"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+
         app:layout_constraintRight_toRightOf="parent"
-
-        app:itemIconTint="@color/blue"
-        android:background="@drawable/background_nav_whiteblue"
-
-        app:menu="@menu/menu_bottom_nav"
-        app:labelVisibilityMode="unlabeled" />
+        app:menu="@menu/menu_bottom_nav" />
 
 
 

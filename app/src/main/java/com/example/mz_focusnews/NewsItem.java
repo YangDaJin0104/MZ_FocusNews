@@ -1,6 +1,9 @@
 package com.example.mz_focusnews;
 
 public class NewsItem {
+
+    // 뉴스 이미지 변수 추가 예정
+    // private String image;
     private String title; // 뉴스 제목
     private String publisher; // 출판사
     private String time; // 게시 시간
@@ -12,32 +15,29 @@ public class NewsItem {
         this.time = time;
     }
 
-    // 제목에 대한 getter
+    /**
+     * getter and setter
+     */
     public String getTitle() {
         return title;
     }
 
-    // 제목에 대한 setter
     public void setTitle(String title) {
         this.title = title;
     }
 
-    // 출판사에 대한 getter
     public String getPublisher() {
         return publisher;
     }
 
-    // 출판사에 대한 setter
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 
-    // 시간에 대한 getter
     public String getTime() {
         return time;
     }
 
-    // 시간에 대한 setter
     public void setTime(String time) {
         this.time = time;
     }

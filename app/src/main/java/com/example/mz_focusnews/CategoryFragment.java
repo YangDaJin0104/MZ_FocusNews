@@ -36,10 +36,16 @@ public class CategoryFragment extends Fragment {
 
         // 뉴스 데이터 생성 및 어댑터에 추가
         newsItemList = new ArrayList<>();
+
         // 예시 데이터 추가
         newsItemList.add(new NewsItem("AI가 새로운 의료 기술을 개발", "한국일보", "2024-04-01"));
         newsItemList.add(new NewsItem("로켓 발사 성공, 새로운 우주 시대의 시작", "우주뉴스", "2024-04-02"));
-        // 추가 데이터...
+        newsItemList.add(new NewsItem("미국에서 새로운 화성 탐사 임무 발표", "NASA News", "2024-04-03"));
+        newsItemList.add(new NewsItem("세계 최대의 로봇 전시회 개최", "로보틱스 뉴스", "2024-04-04"));
+        newsItemList.add(new NewsItem("인공지능 기술을 활용한 자율 주행 자동차 출시", "자동차 뉴스", "2024-04-05"));
+        newsItemList.add(new NewsItem("인공지능 기술을 활용한 음악 작곡 경연 대회 개최", "음악뉴스", "2024-04-06"));
+        newsItemList.add(new NewsItem("세계 최초로 인간과 로봇이 협업하는 공연 성공", "로봇엔터테인먼트", "2024-04-07"));
+        // ...
 
         // 어댑터 초기화 및 RecyclerView에 설정
         adapter = new NewsAdapter(getActivity(), newsItemList);

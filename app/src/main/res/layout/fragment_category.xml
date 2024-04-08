@@ -7,6 +7,7 @@
     android:background="@color/whiteblue"
     tools:context=".CategoryFragment">
 
+    <!--상단바-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,13 +25,12 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/backbtn" />
 
+            <!-- 카테고리 영역 -->
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp">
 
-
-                <!-- 카테고리 영역 -->
                 <LinearLayout
                     android:id="@+id/category_part"
                     android:layout_width="match_parent"
@@ -127,11 +127,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_height="525dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical"
-            android:layout_gravity="center"
-            android:background="@drawable/background_shape_white" />
+            android:layout_gravity="center" />
 
     </LinearLayout>
 </ScrollView>
