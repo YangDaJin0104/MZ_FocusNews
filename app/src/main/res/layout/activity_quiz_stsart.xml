@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".QuizActivity">
+    tools:context=".QuizStartActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,24 +41,26 @@
             android:layout_height="wrap_content"
             android:text="오 늘 의 상 식 키 우 기"
             android:textColor="@android:color/black"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold"
-            android:layout_marginBottom="100dp"
-            tools:layout_editor_absoluteX="96dp"
-            tools:layout_editor_absoluteY="138dp" />
+            android:layout_marginBottom="15dp" />
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="150dp"
+            android:src="@drawable/character"
+            android:layout_marginBottom="20dp"/>
 
         <Button
             android:id="@+id/button"
             android:layout_width="107dp"
-            android:layout_height="40dp"
-            android:text="게임 시작"
-            android:textColorLink="#2196F3"
-            android:textStyle="bold"
-            android:background="#66A7F3"
-            android:layout_marginTop="30dp"
+            android:layout_height="35dp"
             android:layout_marginBottom="40dp"
-            tools:layout_editor_absoluteX="155dp"
-            tools:layout_editor_absoluteY="211dp" />
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="#3D8FEF"
+            android:text="게임 시작"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView2"
@@ -81,70 +83,134 @@
 
 
     </LinearLayout>
-
-
+    
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_marginTop="20dp">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="5dp">
+            
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:src="@drawable/first">
+            </ImageView>
 
-        <View
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:background="#66A7F3"
-            android:layout_marginBottom="20dp"
-            tools:layout_editor_absoluteX="136dp"
-            tools:layout_editor_absoluteY="540dp" />
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#66A7F3"
+                android:text="양다진: 10점"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="10dp"
+                android:layout_marginHorizontal="10dp"/>
 
-        <View
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:background="#66A7F3"
-            android:layout_marginBottom="20dp"
-            tools:layout_editor_absoluteX="136dp"
-            tools:layout_editor_absoluteY="478dp" />
+        </LinearLayout>
 
-        <View
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:background="#66A7F3"
-            android:layout_marginBottom="20dp"
-            tools:layout_editor_absoluteX="136dp"
-            tools:layout_editor_absoluteY="412dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="5dp">
 
-        <View
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:background="#66A7F3"
-            android:layout_marginTop="50dp"
-            tools:layout_editor_absoluteX="136dp"
-            tools:layout_editor_absoluteY="412dp" />
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:src="@drawable/second">
+            </ImageView>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#66A7F3"
+                android:text="홍채영: 8점"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="10dp"
+                android:layout_marginHorizontal="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:src="@drawable/third">
+            </ImageView>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#66A7F3"
+                android:text="최민경: 6점"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="10dp"
+                android:layout_marginHorizontal="10dp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="3.5dp"
+            android:layout_height="26.5dp"
+            android:src="@drawable/more" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@drawable/circle_button"
+                android:backgroundTint="#D9D9D9"
+                android:text="15"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center" />
 
 
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#66A7F3"
+                android:text="나: 2점"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="10dp"
+                android:layout_marginHorizontal="10dp"/>
 
-
-
-
-
-
+        </LinearLayout>
 
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
 
 </LinearLayout>
