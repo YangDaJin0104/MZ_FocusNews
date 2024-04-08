@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".QuizActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quiz"
+            android:textColor="#3D8FEF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="187dp"
+            tools:layout_editor_absoluteY="85dp" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="3dp"
+            android:layout_centerInParent="true"
+            android:background="#3D8FEF"
+            android:layout_marginBottom="20dp"
+            tools:layout_editor_absoluteX="155dp"
+            tools:layout_editor_absoluteY="115dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오 늘 의 상 식 키 우 기"
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="100dp"
+            tools:layout_editor_absoluteX="96dp"
+            tools:layout_editor_absoluteY="138dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="107dp"
+            android:layout_height="40dp"
+            android:text="게임 시작"
+            android:textColorLink="#2196F3"
+            android:textStyle="bold"
+            android:background="#66A7F3"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="40dp"
+            tools:layout_editor_absoluteX="155dp"
+            tools:layout_editor_absoluteY="211dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rank"
+            android:textColor="#3D8FEF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="187dp"
+            tools:layout_editor_absoluteY="318dp" />
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="3dp"
+            android:layout_centerInParent="true"
+            android:background="#3D8FEF"
+            tools:layout_editor_absoluteX="155dp"
+            tools:layout_editor_absoluteY="340dp" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:background="#66A7F3"
+            android:layout_marginBottom="20dp"
+            tools:layout_editor_absoluteX="136dp"
+            tools:layout_editor_absoluteY="540dp" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:background="#66A7F3"
+            android:layout_marginBottom="20dp"
+            tools:layout_editor_absoluteX="136dp"
+            tools:layout_editor_absoluteY="478dp" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:background="#66A7F3"
+            android:layout_marginBottom="20dp"
+            tools:layout_editor_absoluteX="136dp"
+            tools:layout_editor_absoluteY="412dp" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:background="#66A7F3"
+            android:layout_marginTop="50dp"
+            tools:layout_editor_absoluteX="136dp"
+            tools:layout_editor_absoluteY="412dp" />
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
