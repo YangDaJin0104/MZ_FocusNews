@@ -70,26 +70,30 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/et_registerId"
                 android:layout_width="260dp"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:layout_gravity="center"
+                android:background="@drawable/background_shape_gray"
                 android:ems="10"
                 android:inputType="text"
+                android:paddingStart="15dp"
                 android:hint="  사용할 아이디를 입력하세요."
                 android:textColor="#6A6A6A"
                 android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btn_doubleCheck"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
+                android:layout_gravity="center"
                 android:layout_marginStart="5dp"
-                android:backgroundTint="#000000"
+                android:backgroundTint="@color/blue"
                 android:text="중복 확인"
-                android:textSize="12sp"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraSmall" />
+                android:textSize="12sp" />
+
         </LinearLayout>
     </LinearLayout>
 
