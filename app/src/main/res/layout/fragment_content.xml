@@ -31,6 +31,7 @@
                 android:layout_height="47dp"
                 android:gravity="center_horizontal"
                 android:paddingTop="10dp"
+                android:layout_marginStart="20dp"
                 android:text="Today's News"
                 android:textSize="23sp"
                 android:textStyle="bold" />
@@ -64,10 +65,15 @@
                     android:text="의대교수 사직서 제출 행렬… 정부 5월 2천명 증원 마무리 쐐기"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-                
+
                 <TextView
-                    android:layout_width=""
-                    android:layout_height=""
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:text="2024년 4월 9일"
+                    android:gravity="right"
+                    android:textSize="13sp" />
+
+
             </LinearLayout>
 
             <!-- 뉴스 기사 요약 부분 -->
@@ -84,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
-                    android:layout_marginBottom="18dp"
+                    android:layout_marginBottom="13dp"
                     android:text="정부와 의료계 대화가 둔화되면서 의대 교수들이 사직서를 제출하고 있다."
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -96,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
-                    android:layout_marginBottom="18dp"
+                    android:layout_marginBottom="13dp"
                     android:text="의대 증원 문제가 대화의 중심이 되었지만 정부는 협상에 증원 여부와 규모를 포함하지 않고 있다."
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -121,7 +127,7 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingTop="15dp"
+                android:paddingTop="25dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -138,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
-                    android:layout_marginBottom="18dp"
+                    android:layout_marginBottom="13dp"
                     android:text="푸바오 의사 파업 사건에 안타까움 표해 의사되기로 결심..."
                     android:textSize="15sp"
                     android:textStyle="bold"
