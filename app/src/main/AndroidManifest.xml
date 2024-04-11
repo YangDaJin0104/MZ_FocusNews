@@ -13,18 +13,6 @@
         android:theme="@style/Theme.MZ_FocusNews"
         tools:targetApi="31">
         <activity
-            android:name=".RegisterAgreeInfo"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterIdActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterNameActivity"
-            android:exported="false" />
-        <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login"

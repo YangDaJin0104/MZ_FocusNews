@@ -45,20 +45,21 @@
 
             <!-- 뉴스 타이틀 부분 -->
             <LinearLayout
-                android:id="@+id/title"
+                android:id="@+id/news_top_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/img"
+                    android:id="@+id/news_img"
                     android:layout_width="350dp"
                     android:layout_height="250dp"
                     android:background="@color/white"
                     android:src="@drawable/img_sample" />
 
                 <TextView
+                    android:id="@+id/news_title"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
@@ -67,6 +68,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/news_date"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:text="2024년 4월 9일"
@@ -78,7 +80,7 @@
 
             <!-- 뉴스 기사 요약 부분 -->
             <LinearLayout
-                android:id="@+id/content"
+                android:id="@+id/news_content_group"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -86,7 +88,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text1"
+                    android:id="@+id/news_content1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
@@ -98,7 +100,7 @@
                     android:background="@drawable/background_shape_blue" />
 
                 <TextView
-                    android:id="@+id/text2"
+                    android:id="@+id/news_content2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
@@ -110,7 +112,7 @@
                     android:background="@drawable/background_shape_blue" />
 
                 <TextView
-                    android:id="@+id/text3"
+                    android:id="@+id/news_content3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
@@ -123,24 +125,36 @@
 
             <!-- 관련 뉴스 더보기 부분 -->
             <LinearLayout
-                android:id="@+id/detail"
+                android:id="@+id/news_related_group"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingTop="25dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/more"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="의대교수 사직서에 대해 더 알고싶다면?"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/news_related_keyword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="의대교수 사직서"
+                        android:textStyle="bold"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="에 대해 더 알고싶다면?"
+                        android:textStyle="bold"
+                        android:textSize="15sp" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/detail1"
+                    android:id="@+id/news_related1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
@@ -151,7 +165,7 @@
                     android:background="@drawable/background_shape_white" />
 
                 <TextView
-                    android:id="@+id/detail2"
+                    android:id="@+id/news_related2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
