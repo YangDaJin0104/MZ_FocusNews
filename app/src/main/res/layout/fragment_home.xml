@@ -51,7 +51,9 @@
             android:drawableLeft="@drawable/siren"
             android:layout_gravity="center_horizontal"
             android:text="[속보] 푸바오 오늘 중국행 비행기 탑승"
-            android:layout_marginTop="50dp"/>
+            android:layout_marginTop="50dp"
+            android:textColor="@color/white"
+            android:background="@drawable/background_shape_blue"/>
 
         <FrameLayout
             android:layout_gravity="center"
@@ -101,7 +103,9 @@
                 android:layout_height="wrap_content"
                 android:text="See All"
                 android:textSize="13dp"
-                android:layout_marginLeft="100dp"/>
+                android:layout_marginLeft="100dp"
+                android:textColor="@color/blue"
+                android:background="white"/>
 
         </LinearLayout>
 
