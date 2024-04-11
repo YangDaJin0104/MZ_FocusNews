@@ -1,78 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F4F4"
+    android:orientation="vertical"
     tools:context=".RegisterNameActivity">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="332dp"
-        android:layout_height="33dp"
-        android:progressDrawable="@drawable/register_progressbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="103dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="20dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/register_back_icon" />
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/img_check"
-        android:layout_width="45dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="48dp"
-        android:src="@drawable/register_check_icon"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="161dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_gravity="center"
+            android:layout_width="332dp"
+            android:layout_height="33dp"
+            android:progressDrawable="@drawable/register_progressbar" />
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/et_registerPw"
-        android:layout_width="331dp"
-        android:layout_height="44dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="본명이나 닉네임을 입력하세요."
-        android:textColor="#6A6A6A"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="314dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/img_check"
+            android:layout_width="45dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="48dp"
+            android:src="@drawable/register_check_icon" />
 
-    <TextView
-        android:id="@+id/text_registerNameInfo"
-        android:layout_width="331dp"
-        android:layout_height="38dp"
-        android:text=" * 프로필 및 상식퀴즈 랭킹에 표시되는 이름으로 이후 변경할 수\n   없습니다."
-        android:textColor="#6A6A6A"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="370dp" />
+        <TextView
+            android:id="@+id/text_registerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="sans-serif-black"
+            android:text="이름"
+            android:textSize="34sp" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_registerPw"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/et_registerName"
+                android:layout_width="260dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="  본명이나 닉네임을 입력하세요."
+                android:textColor="#6A6A6A"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_doubleCheck"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="5dp"
+                android:backgroundTint="#000000"
+                android:text="중복 확인"
+                android:textSize="12sp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraSmall" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_registerNameInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:text=" * 프로필 및 상식퀴즈 랭킹에 표시되는 이름으로 이후 변경할 수 없습니다."
+            android:textColor="#6A6A6A"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="내 이름"
-        android:textSize="34sp"
-        tools:layout_editor_absoluteX="122dp"
-        tools:layout_editor_absoluteY="157dp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/btn_registerPwBack"
-        android:layout_width="39dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="25dp"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        android:src="@drawable/register_back_icon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- 아이디 조건 부합 시 색상 변경 -->
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="252dp"
+            android:layout_height="48dp"
+            android:enabled="false"
+            android:background="@drawable/register_next_button"
+            android:text="다음" />
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

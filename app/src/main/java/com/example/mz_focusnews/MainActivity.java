@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation_view);
 //        bottomNavigation.setOnItemSelectedListener(new ItemSelectedListener());
-    }
+//    }
 
     // 하단 네비게이션 바 .. 하는중
 //     class ItemSelectedListener implements BottomNavigationView.OnItemSelectedListener {
@@ -64,4 +64,6 @@ public class MainActivity extends AppCompatActivity {
 //            return false;
 //        }
 //    }
+        setContentView(R.layout.activity_login); // xml 파일 에뮬레이터 테스트
+    }
 }
