@@ -3,6 +3,7 @@
     <style name="Base.Theme.MZ_FocusNews" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/black</item>
     </style>
 
     <style name="Theme.MZ_FocusNews" parent="Base.Theme.MZ_FocusNews" />
