@@ -17,6 +17,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    // 하단 네비게이션 바를 위한 변수
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    ContentFragment contentFragment;
+    CategoryFragment categoryFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
