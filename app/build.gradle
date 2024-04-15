@@ -65,6 +65,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'me.relex:circleindicator:2.1.6'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
     // MySQL 의존성 추가
     implementation files('libs/mysql-connector-java-5.1.49-bin.jar')
