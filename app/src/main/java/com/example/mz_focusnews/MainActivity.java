@@ -13,7 +13,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.mz_focusnews.data.DatabaseManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.os.AsyncTask;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,5 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup); // xml 파일 에뮬레이터 테스트
+
+        // AsyncTask 실행
+        new DatabaseManager().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }
