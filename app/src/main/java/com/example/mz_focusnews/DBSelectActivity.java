@@ -29,7 +29,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class DBSelectActivity extends AppCompatActivity {
 
     private static String IP_ADDRESS = "10.0.2.2";
     private static String TAG = "phptest";
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = ProgressDialog.show(MainActivity.this,
+            progressDialog = ProgressDialog.show(DBSelectActivity.this,
                     "Please Wait", null, true, true);
         }
 
