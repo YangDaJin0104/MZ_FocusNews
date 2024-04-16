@@ -9,7 +9,7 @@
     tools:context=".LoginActivity">
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/btn_idpw2"
+        android:id="@+id/btn_loginPw"
         android:layout_width="335dp"
         android:layout_height="60dp"
         android:backgroundTint="#E1E1E1"
@@ -17,11 +17,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_emailText"
+        app:layout_constraintTop_toBottomOf="@+id/text_loginEmail"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
 
     <TextView
-        android:id="@+id/et_title"
+        android:id="@+id/text_loginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
@@ -33,17 +33,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/et_emailText"
+        android:id="@+id/text_loginEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:text="Password"
         android:textColor="#6A6A6A"
-        app:layout_constraintTop_toBottomOf="@+id/et_pwText"
+        app:layout_constraintTop_toBottomOf="@+id/text_loginPw"
         tools:layout_editor_absoluteX="50dp" />
 
     <TextView
-        android:id="@+id/et_pwText"
+        android:id="@+id/text_loginPw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="208dp"
@@ -53,7 +53,7 @@
         tools:layout_editor_absoluteX="50dp" />
 
     <EditText
-        android:id="@+id/et_pw"
+        android:id="@+id/et_loginPw"
         android:layout_width="299dp"
         android:layout_height="41dp"
         android:background="@null"
@@ -65,7 +65,7 @@
         tools:layout_editor_absoluteY="327dp" />
 
     <TextView
-        android:id="@+id/et_pw2"
+        android:id="@+id/et_loginPw2"
         android:layout_width="166dp"
         android:layout_height="21dp"
         android:text="Enter your password here"
@@ -74,7 +74,7 @@
         tools:layout_editor_absoluteY="337dp" />
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/btn_idpw"
+        android:id="@+id/btn_loginId"
         android:layout_width="334dp"
         android:layout_height="65dp"
         android:backgroundTint="#E1E1E1"
@@ -82,11 +82,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_pwText"
+        app:layout_constraintTop_toBottomOf="@+id/text_loginPw"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
 
     <EditText
-        android:id="@+id/et_id"
+        android:id="@+id/et_loginId"
         android:layout_width="263dp"
         android:layout_height="34dp"
         android:background="@null"
@@ -100,7 +100,7 @@
         tools:layout_editor_absoluteY="242dp" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_registerComplete"
         android:layout_width="252dp"
         android:layout_height="48dp"
         android:backgroundTint="#3585FF"
@@ -112,7 +112,7 @@
         tools:layout_editor_absoluteY="427dp" />
 
     <TextView
-        android:id="@+id/et_accountText"
+        android:id="@+id/text_loginAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Don\t have an account?"
@@ -122,7 +122,7 @@
         tools:layout_editor_absoluteY="485dp" />
 
     <TextView
-        android:id="@+id/et_signup"
+        android:id="@+id/et_loginSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Up"
@@ -133,7 +133,7 @@
         tools:layout_editor_absoluteY="483dp" />
 
     <TextView
-        android:id="@+id/et_findpw"
+        android:id="@+id/et_loginFindPw"
         android:layout_width="98dp"
         android:layout_height="19dp"
         android:text="Forgot Password?"
