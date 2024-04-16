@@ -105,7 +105,7 @@
                 android:textSize="13dp"
                 android:layout_marginLeft="100dp"
                 android:textColor="@color/blue"
-                android:background="white"/>
+                android:background="@color/white"/>
 
         </LinearLayout>
 
