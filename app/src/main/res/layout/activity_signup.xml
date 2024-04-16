@@ -9,10 +9,17 @@
     android:orientation="vertical"
     tools:context=".SignupActivity">
 
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/backbtn_gray">
+    </ImageView>
+
     <View
         android:layout_width="130dp"
         android:layout_height="3dp"
-        android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:background="@color/blue" />
 

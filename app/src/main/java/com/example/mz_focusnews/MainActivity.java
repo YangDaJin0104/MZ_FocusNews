@@ -25,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
     
+    // 하단 네비게이션 바를 위한 변수
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    ContentFragment contentFragment;
+    CategoryFragment categoryFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
