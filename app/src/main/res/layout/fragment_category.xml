@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteblue"
+    tools:context=".CategoryFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/backbtn" />
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> ef510afbb319127fe064d632fd6ac4a5f25fae20
+                <!-- 카테고리 영역 -->
+                <LinearLayout
+                    android:id="@+id/category_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4.5dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/background_shape_lightblue">
+
+                    <TextView
+                        android:id="@+id/political"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="정치"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/economic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20dp"
+                        android:text="경제"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/social"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20dp"
+                        android:text="사회"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/local"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20dp"
+                        android:text="지역"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/life"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20dp"
+                        android:text="생활/문화"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/science"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20dp"
+                        android:text="IT/과학"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/entertainment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20dp"
+                        android:text="연예"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/sports"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="20dp"
+                        android:text="스포츠"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+<<<<<<< HEAD
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+=======
+
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+>>>>>>> ef510afbb319127fe064d632fd6ac4a5f25fae20
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+<<<<<<< HEAD
+            android:background="@drawable/background_shape_white">
+
+            <!--뉴스 파트-->
+            <LinearLayout
+                android:layout_width="388dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/img_sample_panda" />
+
+
+                <!-- 기사 내용: 제목, 출판사, 시간-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/news1"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="중국어 열공 푸바오 할부지에 갤 S24 울트라 선물한 삼성"
+                        android:textColor="@color/black"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/publisher1"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="한국 경제"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/time1"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="6시간 30분 전"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+=======
+            android:background="@drawable/background_shape_white" />
+
+>>>>>>> ef510afbb319127fe064d632fd6ac4a5f25fae20
+    </LinearLayout>
+</ScrollView>
