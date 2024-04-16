@@ -1,4 +1,4 @@
-package com.example.mz_focusnews;
+package com.example.mz_focusnews.DB;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.mz_focusnews.R;
 
 import java.io.BufferedReader;
 
@@ -23,7 +25,7 @@ import java.net.URL;
 
 public class DBInsertActivity extends AppCompatActivity {
 
-    private static String IP_ADDRESS = "10.0.2.2";
+    private static String IP_ADDRESS = "43.201.173.245";
     private static String TAG = "phptest";
 
     private EditText mEditTextName;

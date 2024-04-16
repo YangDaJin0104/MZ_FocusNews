@@ -1,4 +1,4 @@
-package com.example.mz_focusnews;
+package com.example.mz_focusnews.DB;
 
 
 public class PersonalData {

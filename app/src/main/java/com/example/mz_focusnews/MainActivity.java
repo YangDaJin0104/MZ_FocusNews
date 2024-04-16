@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.example.mz_focusnews.DB.PersonalData;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String IP_ADDRESS = "10.0.2.2";
+    private static String IP_ADDRESS = "43.201.173.245";    // AWS DB 서버 Elastic IP 주소
     private static String TAG = "phptest";
 
     private EditText mEditTextName;
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
 
                 GetData task = new GetData();
-                task.execute( "http://" + IP_ADDRESS + "/getjson.php", "");
+                task.execute( "http://" + IP_ADDRESS + "/getJson.php", "");
             }
         });
 
