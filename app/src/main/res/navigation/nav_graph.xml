@@ -3,7 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/blankFragment">
+    app:startDestination="@id/loginActivity">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.mz_focusnews.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_contentFragment2"
+            app:destination="@id/contentFragment" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/categoryFragment"
@@ -21,9 +32,16 @@
         android:label="fragment_content"
         tools:layout="@layout/fragment_content" />
 
-    <fragment
-        android:id="@+id/blankFragment"
-        android:name="com.example.mz_focusnews.BlankFragment"
-        android:label="fragment_blank"
-        tools:layout="@layout/fragment_blank" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.mz_focusnews.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+
+    <activity
+        android:id="@+id/signupActivity"
+        android:name="com.example.mz_focusnews.SignupActivity"
+        android:label="activity_signup"
+        tools:layout="@layout/activity_signup" />
+
 </navigation>

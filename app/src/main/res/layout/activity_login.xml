@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -121,20 +121,20 @@
             android:layout_marginEnd="8dp"
             android:text="비밀번호를 잊으셨나요?"
             android:textColor="#000000"
-            android:textSize="11sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="252dp"
-            android:layout_height="48dp"
+            android:layout_width="240dp"
+            android:layout_height="55dp"
             android:backgroundTint="#3585FF"
             android:text="로그인"
             android:textStyle="bold"
@@ -153,7 +153,7 @@
             android:layout_height="wrap_content"
             android:text="계정이 없으신가요?"
             android:textColor="#000000"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/goToSignup"
@@ -162,7 +162,7 @@
             android:layout_marginLeft="7dp"
             android:text="회원가입"
             android:textColor="#3585FF"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>
