@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterCompleteActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/text_registerComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="회원가입이 완료되었습니다."
+            android:textSize="28sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <!-- 불꽃 무료 애니메이션 아이콘: https://www.flaticon.com/kr/free-animated-icon/fireworks-_8701027?term=%EC%B6%95%ED%95%98&page=1&position=1&origin=search&related_id=8701027
+        현재는 아이콘으로 사용 -->
+        <ImageView
+            android:id="@+id/img_congratulation"
+            android:layout_width="203dp"
+            android:layout_height="159dp"
+            android:layout_gravity="center"
+            android:src="@drawable/register_complete_animation" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <Button
+        android:id="@+id/btn_registerComplete"
+        android:layout_width="252dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#3585FF"
+        android:text="완료"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.None" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_registerToNews"
+            android:layout_width="252dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#245BAE"
+            android:text="오늘의 뉴스 보러가기"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.None" />
+    </LinearLayout>
+
+</LinearLayout>
