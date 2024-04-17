@@ -3,7 +3,7 @@
 
     <!-- blank는 나중에 mainFramgent로 수정 예정-->
     <item
-        android:id="@+id/blankFragment"
+        android:id="@+id/homeFragment"
         android:title="홈"
         android:icon="@drawable/menu_home"/>
     <item
@@ -11,11 +11,11 @@
         android:title="카테고리"
         android:icon="@drawable/menu_category"/>
     <item
-        android:id="@+id/quiz"
+        android:id="@+id/quizStartActivity"
         android:title="퀴즈"
         android:icon="@drawable/menu_quiz"/>
     <item
-        android:id="@+id/mypage"
+        android:id="@+id/myPage"
         android:title="마이페이지"
         android:icon="@drawable/menu_mypage"/>
 </menu>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginActivity">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -11,7 +11,16 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_contentFragment2"
+            android:id="@+id/action_homeFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_quizStartActivity"
+            app:destination="@id/quizStartActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_myPage"
+            app:destination="@id/myPage" />
+        <action
+            android:id="@+id/action_homeFragment_to_contentFragment"
             app:destination="@id/contentFragment" />
     </fragment>
 
@@ -33,15 +42,41 @@
         tools:layout="@layout/fragment_content" />
 
     <activity
-        android:id="@+id/loginActivity"
-        android:name="com.example.mz_focusnews.LoginActivity"
-        android:label="activity_login"
-        tools:layout="@layout/activity_login" />
-
+        android:id="@+id/quizStartActivity"
+        android:name="com.example.mz_focusnews.QuizStartActivity"
+        android:label="activity_quiz_stsart"
+        tools:layout="@layout/activity_quiz_start" />
     <activity
-        android:id="@+id/signupActivity"
-        android:name="com.example.mz_focusnews.SignupActivity"
-        android:label="activity_signup"
-        tools:layout="@layout/activity_signup" />
+        android:id="@+id/myPage"
+        android:name="com.example.mz_focusnews.MyPage"
+        android:label="activity_my_page"
+        tools:layout="@layout/activity_my_page" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.mz_focusnews.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.example.mz_focusnews.SignupFragment"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup" >
+        <action
+            android:id="@+id/action_signupFragment_to_signupCompleteFragment"
+            app:destination="@id/signupCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signupCompleteFragment"
+        android:name="com.example.mz_focusnews.SignupCompleteFragment"
+        android:label="fragment_signup_complete"
+        tools:layout="@layout/fragment_signup_complete" >
+        <action
+            android:id="@+id/action_signupCompleteFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>
