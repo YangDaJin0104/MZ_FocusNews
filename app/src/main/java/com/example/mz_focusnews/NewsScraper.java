@@ -35,7 +35,7 @@ public class NewsScraper {
     public void scrapeNews() {
         new Thread(() -> {
             try {
-                Document doc = Jsoup.connect("https://news.google.com/").get();
+                Document doc = Jsoup.connect("https://news.google.com/").get(); //웹페이지 크롤링
                 Elements newsItems = doc.select(itemSelector);
                 StringBuilder resultBuilder = new StringBuilder();
 
@@ -49,15 +49,18 @@ public class NewsScraper {
                         continue;
                     }
 
+                    // version1 반환하지 않고 크롤링 제대로 되는지 확인
                     resultBuilder.append("뉴스 제목: ").append(title).append("\n")
                             .append("언론사: ").append(source).append("\n")
                             .append("뉴스 작성 시간: ").append(time).append("\n\n");
+                    // version2 NewsArticle 클래스 활용하여 사용자에게 보여지도록
+                    // ArrayList
                 }
 
                 if (callback != null) {
                     callback.onNewsScraped(resultBuilder.toString());
                 }
-            } catch (IOException e) {
+            } catch (IOException e) { // 크롤링이 되지않으면 예외처리(Logcat으로 확인)
                 e.printStackTrace();
                 Log.e(TAG, "Exception occurred: " + e.toString());
             }
