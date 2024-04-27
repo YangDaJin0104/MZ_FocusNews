@@ -72,6 +72,7 @@ public class NewsScraper {
         StringBuilder contentBuilder = new StringBuilder(); // StringBuilding을 이용해 하나의 문자열로 합친다.
 
         // 기사 내용을 식별할 수 있는 선택자를 사용하여 해당 내용을 가져온다.
+        // contentElements를 사용하여 뉴스 전체내용 가져오기
         Elements contentElements = doc.select(".article-content p");
         for (Element element : contentElements) {
             // 각각의 내용을 contentBuilder에 추가
