@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 테두리 둥글기 설정 -->
+    <corners android:radius="10dp"/>
+
+    <!-- 버튼 배경 색상 -->
+    <solid android:color="#C6C6C6"/>
+
+    <!-- 비활성화 상태일 때 -->
+    <stroke
+        android:width="1dp"
+        android:color="#C6C6C6"
+        android:state_enabled="false"/>
+    <!-- 활성화 상태일 때 -->
+    <stroke
+        android:width="1dp"
+        android:color="#3585FF"
+        android:state_enabled="true"/>
+</shape>

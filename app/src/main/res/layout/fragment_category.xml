@@ -29,6 +29,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp">
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ef510afbb319127fe064d632fd6ac4a5f25fae20
                 <!-- 카테고리 영역 -->
                 <LinearLayout
                     android:id="@+id/category_part"
@@ -119,15 +123,25 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+<<<<<<< HEAD
             </HorizontalScrollView>
         </LinearLayout>
 
         <LinearLayout
+=======
+
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+>>>>>>> ef510afbb319127fe064d632fd6ac4a5f25fae20
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:layout_gravity="center"
+<<<<<<< HEAD
             android:background="@drawable/background_shape_white">
 
             <!--뉴스 파트-->
@@ -183,5 +197,9 @@
 
             </LinearLayout>
         </LinearLayout>
+=======
+            android:background="@drawable/background_shape_white" />
+
+>>>>>>> ef510afbb319127fe064d632fd6ac4a5f25fae20
     </LinearLayout>
 </ScrollView>
