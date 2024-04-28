@@ -1,5 +1,4 @@
 import openai
-import base64
 
 # OpenAI API 키 설정
 
