@@ -57,5 +57,5 @@ A씨는 “많은 분이 제 SNS 페이지를 캡처해 공격하고 있다. 마
 
 # 함수 호출 및 요약 결과 출력
 summary = summarize_korean_text(example_text)
-print("원본: ", example_text)
+# print("원본: ", example_text)
 print("\n\n\n요약된 텍스트:", summary)
