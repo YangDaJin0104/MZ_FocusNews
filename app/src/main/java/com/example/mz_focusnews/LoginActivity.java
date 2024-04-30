@@ -94,14 +94,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        // 비밀번호 찾기를 눌렀을 떄 수행 --> 비밀번호 찾기 페이지 필요
-//        forgetPw.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this, change_password.class);
-//                startActivity(intent);
-//            }
-//        });
 
         // 회원가입 텍스트를 눌렀을 떄 수행
         goToSignup.setOnClickListener(new View.OnClickListener() {

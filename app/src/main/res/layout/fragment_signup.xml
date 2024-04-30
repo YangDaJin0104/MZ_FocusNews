@@ -79,6 +79,7 @@
                 android:textSize="14sp" />
 
             <Button
+                android:id="@+id/btn_namecheck"
                 android:layout_width="63dp"
                 android:layout_height="35dp"
                 android:layout_gravity="right|center"
@@ -149,6 +150,7 @@
                 android:textSize="14sp" />
 
             <Button
+                android:id="@+id/btn_idcheck"
                 android:layout_width="63dp"
                 android:layout_height="35dp"
                 android:layout_gravity="right|center"
@@ -206,7 +208,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/pw_check"
+            android:id="@+id/et_pw_check"
             android:layout_width="355dp"
             android:layout_height="45dp"
             android:layout_marginTop="6.5dp"
@@ -260,12 +262,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginStart="6dp"/>
+                    android:layout_width="27dp"
+                    android:layout_height="17dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -289,12 +291,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginStart="6dp"/>
+                    android:layout_width="27dp"
+                    android:layout_height="17dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -327,14 +329,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginStart="6dp"/>
-
+                    android:layout_width="27dp"
+                    android:layout_height="17dp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -367,13 +368,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:gravity="center"
                 android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginStart="6dp"/>
+                    android:layout_width="27dp"
+                    android:layout_height="17dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -411,7 +412,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_complete_signup"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:backgroundTint="@color/blue"

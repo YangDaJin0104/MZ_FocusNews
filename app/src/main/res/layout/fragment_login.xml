@@ -8,7 +8,7 @@
     android:background="@color/whiteblue"
     tools:context=".LoginFragment">
 
-<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
@@ -163,4 +163,5 @@
             android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
+    
 </LinearLayout>

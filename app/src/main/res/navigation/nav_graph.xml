@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -23,7 +23,6 @@
             android:id="@+id/action_homeFragment_to_contentFragment"
             app:destination="@id/contentFragment" />
     </fragment>
-
 
     <fragment
         android:id="@+id/categoryFragment"
@@ -46,11 +45,13 @@
         android:name="com.example.mz_focusnews.QuizStartActivity"
         android:label="activity_quiz_stsart"
         tools:layout="@layout/activity_quiz_start" />
+
     <activity
         android:id="@+id/myPage"
         android:name="com.example.mz_focusnews.MyPage"
         android:label="activity_my_page"
         tools:layout="@layout/activity_my_page" />
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.mz_focusnews.LoginFragment"
@@ -60,6 +61,7 @@
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/signupFragment"
         android:name="com.example.mz_focusnews.SignupFragment"
@@ -69,6 +71,7 @@
             android:id="@+id/action_signupFragment_to_signupCompleteFragment"
             app:destination="@id/signupCompleteFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/signupCompleteFragment"
         android:name="com.example.mz_focusnews.SignupCompleteFragment"

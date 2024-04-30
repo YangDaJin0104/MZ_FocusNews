@@ -8,6 +8,9 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 서버로 아이디 중복 확인 요청을 보냄
+ */
 public class ValidateRequest extends StringRequest {
 
     //서버 url 설정(php파일 연동)
