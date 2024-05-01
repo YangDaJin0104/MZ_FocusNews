@@ -16,7 +16,7 @@ def summarize_korean_text(text):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",  # 적절한 모델명으로 수정
             messages=[
-                {"role": "system", "content": "다음 글을 3문장으로 요약해줘."},
+                {"role": "system", "content": "다음 글을 3문장으로 요약해줘. 공백 포함 200글자 내외로 써줘."},
                 {"role": "user", "content": text}
             ],
             max_tokens=300,  # 최소 토큰 수로 설정하여 크레딧 절약
