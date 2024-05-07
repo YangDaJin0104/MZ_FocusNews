@@ -2,18 +2,24 @@ package com.example.mz_focusnews;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,37 +33,28 @@ import org.json.JSONObject;
  */
 public class SignupActivity extends AppCompatActivity {
 
-    private ImageView backBtn;
     private EditText signup_username, signup_userID, signup_userPw, signup_userPwCheck;
-    private Button idCheckBtn, nameCheckBtn, completeSignup;
+    private Button idCheckBtn, completeSignup;
     private AlertDialog dialog;
     private boolean validate = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_signup);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
+        signup_username = findViewById(R.id.et_name);
+        signup_userID = findViewById(R.id.et_id);
+        signup_userPw = findViewById(R.id.et_pw);
+        signup_userPwCheck = findViewById(R.id.et_pw_check);
 
-        backBtn = (ImageView) findViewById(R.id.backBtn);
+        completeSignup = findViewById(R.id.btn_complete_signup);
+        idCheckBtn = findViewById(R.id.btn_idcheck);
 
-        // 회원가입 정보 받아오기
-        signup_username = (EditText) findViewById(R.id.et_pw);
-        signup_userID = (EditText) findViewById(R.id.et_id);
-        signup_userPw = (EditText) findViewById(R.id.et_name);
-        signup_userPwCheck = (EditText) findViewById(R.id.et_pw_check);
-
-        completeSignup = (Button) findViewById(R.id.btn_complete_signup); // 회원가입 버튼
-        nameCheckBtn = (Button) findViewById(R.id.btn_namecheck); // 이름 중복 확인 버튼
-        idCheckBtn = (Button) findViewById(R.id.btn_idcheck); // 아이디 중복 확인 버튼
-
-
+        /**
+         * TODO: 이름 중복 확인
+         */
 
         // 아이디 중복 확인
         idCheckBtn.setOnClickListener(new View.OnClickListener() {
@@ -70,9 +67,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 // 아이디가 입력되지 않았다면
                 if (UserID.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                    dialog = builder.setMessage("아이디를 입력하세요.").setPositiveButton("확인", null).create();
-                    dialog.show();
+                    Toast.makeText(getApplicationContext(), "아이디를 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -84,17 +79,12 @@ public class SignupActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
-                            // 성공 여부에 따라 dialog 생성하여 보여줌
                             if (success) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                                dialog = builder.setMessage("사용할 수 있는 아이디입니다.").setPositiveButton("확인", null).create();
-                                dialog.show();
+                                Toast.makeText(getApplicationContext(), "사용 가능한 아이디입니다.", Toast.LENGTH_SHORT).show();
                                 signup_userID.setEnabled(false);// 아이디 입력란을 비활성화 (아이디 값 고정)
                                 validate = true; //검증 완료
                             } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                                dialog = builder.setMessage("이미 존재하는 아이디입니다.").setNegativeButton("확인", null).create();
-                                dialog.show();
+                                Toast.makeText(getApplicationContext(), "이미 존재하는 아이디입니다.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -109,30 +99,23 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        // 뒤로가기 버튼
-
-        // 회원가입 완료
         completeSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String UserID = signup_userID.getText().toString();
-                final String UserPw = signup_userPw.getText().toString();
-                final String UserPwCk = signup_userPwCheck.getText().toString();
-                final String UserName = signup_username.getText().toString();
+                final String userID = signup_userID.getText().toString();
+                final String userPw = signup_userPw.getText().toString();
+                final String userPwCk = signup_userPwCheck.getText().toString();
+                final String userName = signup_username.getText().toString();
 
                 // 아이디 중복체크 했는지 확인
                 if (!validate) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                    dialog = builder.setMessage("중복된 아이디가 있는지 확인하세요.").setNegativeButton("확인", null).create();
-                    dialog.show();
+                    Toast.makeText(getApplicationContext(), "아이디 중복 확인을 해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // 한 칸이라도 입력 안했을 경우
-                if (UserID.equals("") || UserPw.equals("") || UserName.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                    dialog = builder.setMessage("모두 입력해주세요.").setNegativeButton("확인", null).create();
-                    dialog.show();
+                if (userID.equals("") || userPw.equals("") || userName.equals("")) {
+                    Toast.makeText(getApplicationContext(), "모두 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -145,20 +128,17 @@ public class SignupActivity extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
 
                             // 회원가입 성공시 비밀번호 체크
-                            if (UserPw.equals(UserPwCk)) {
-                                if (success) {
-                                    Toast.makeText(getApplicationContext(), String.format("%s님 가입을 환영합니다.", UserName), Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                                    startActivity(intent);
-                                } else { // 회원가입 실패시
-                                    Toast.makeText(getApplicationContext(), "회원가입에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
+                            if (userPw.equals(userPwCk)) {
+                            if (success) {
+                                Toast.makeText(getApplicationContext(), "회원 등록에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
+                                // 회원가입이 성공하면 로그인 화면으로 이동
+                                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            } else { // 회원가입 실패시
+                                Toast.makeText(getApplicationContext(), "회원 등록에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
+                            }
                             } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                                dialog = builder.setMessage("비밀번호가 동일하지 않습니다.").setNegativeButton("확인", null).create();
-                                dialog.show();
-                                return;
+                                Toast.makeText(getApplicationContext(), "비밀번호가 동일하지 않습니다.", Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
@@ -169,7 +149,7 @@ public class SignupActivity extends AppCompatActivity {
                 };
 
                 // 서버로 Volley를 이용해서 요청
-                SignupRequest registerRequest = new SignupRequest(UserID, UserPw, UserName, responseListener);
+                SignupRequest registerRequest = new SignupRequest(userID, userPw, userName, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(SignupActivity.this);
                 queue.add(registerRequest);
             }
