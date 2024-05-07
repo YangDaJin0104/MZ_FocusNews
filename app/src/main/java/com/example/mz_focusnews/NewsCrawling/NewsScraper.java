@@ -44,9 +44,9 @@ public class NewsScraper {
                 for (Element item : items) {
                     String title = item.select("title").text(); // 제목
                     String pubDate = item.select("pubDate").text(); // 기사 작성 시간
-                    String url = item.select("link").text(); // 기사 url
+                    String publisher = item.select("source").text();
 
-                    NewsArticle article = new NewsArticle(title, pubDate, url);
+                    NewsArticle article = new NewsArticle(title, pubDate, publisher);
                     articles.add(article);
                 }
 

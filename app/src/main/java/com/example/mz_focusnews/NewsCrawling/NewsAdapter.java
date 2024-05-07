@@ -41,6 +41,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         NewsArticle article = articles.get(position);
         holder.title.setText(article.getTitle());
         holder.publicationDate.setText(article.getPublicationDate());
+        holder.publisher.setText(article.getPublisher());
     }
 
     @Override
@@ -49,12 +50,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
     static class NewsViewHolder extends RecyclerView.ViewHolder {
-        TextView title, publicationDate;
+        TextView title, publicationDate, publisher;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
             publicationDate = itemView.findViewById(R.id.publicationDate);
+            publisher = itemView.findViewById(R.id.publisher);
         }
     }
 }
