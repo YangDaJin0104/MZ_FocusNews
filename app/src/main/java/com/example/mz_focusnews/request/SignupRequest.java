@@ -14,16 +14,16 @@ import java.util.Map;
 public class SignupRequest extends StringRequest {
 
     //서버 URL 설정(php 파일 연동)
-    final static private String URL = "http://tofha1108.ivyro.net/signup.php"; // 임시
+    final static private String URL = "http://43.201.173.245/signup.php"; // 임시
     private Map<String, String> map;
 
     public SignupRequest(String UserID, String UserPw, String UserName, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("userID", UserID);
-        map.put("userPw", UserPw);
-        map.put("userName", UserName);
+        map.put("user_id", UserID);
+        map.put("user_pw", UserPw);
+        map.put("user_name", UserName);
     }
 
     @Override

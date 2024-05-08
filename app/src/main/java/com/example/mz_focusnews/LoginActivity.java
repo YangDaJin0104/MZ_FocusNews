@@ -65,14 +65,14 @@ public class LoginActivity extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
 
                             if (success) {  // 로그인 성공
-                                String userID = jsonObject.getString("userID");
-                                String userPw = jsonObject.getString("userPw");
-                                String userName = jsonObject.getString("userName");
+                                String userID = jsonObject.getString("user_id");
+                                String userPw = jsonObject.getString("user_pw");
+                                String userName = jsonObject.getString("user_name");
 
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
 
                                 Bundle bundle = new Bundle();
-                                bundle.putString("userName", userName); // 사용자 이름을 Bundle에 추가
+                                bundle.putString("user_name", userName); // 사용자 이름을 Bundle에 추가
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("userData", bundle); // Bundle을 Intent에 추가

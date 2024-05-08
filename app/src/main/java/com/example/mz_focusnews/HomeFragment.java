@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             // Bundle에서 사용자 이름을 가져와서 TextView에 설정
-            String s = bundle.getString("userName");
+            String s = bundle.getString("user_name");
             if (s != null) {
                 userName.setText("Hi, " + s);
             }
