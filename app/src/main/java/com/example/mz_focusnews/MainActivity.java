@@ -1,4 +1,5 @@
-/*package com.example.mz_focusnews;
+/*
+package com.example.mz_focusnews;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
 import com.example.mz_focusnews.NewsCrawling.*;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,4 +58,5 @@ public class MainActivity extends AppCompatActivity {
             newsScraper.shutdown(); // 스크레이퍼 리소스 정리
         }
     }
-}*/
+}
+*/
