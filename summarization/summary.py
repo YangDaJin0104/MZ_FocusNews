@@ -57,5 +57,16 @@ A씨는 “많은 분이 제 SNS 페이지를 캡처해 공격하고 있다. 마
 
 # 함수 호출 및 요약 결과 출력
 summary = summarize_korean_text(example_text)
+
+#문장 분리
+sentences = summary.split('. ')
+sentence1 = sentences[0] + '.'
+sentence2 = sentences[1] + '.'
+sentence3 = sentences[2]
+
+
 # print("원본: ", example_text)
-print("\n\n\n요약된 텍스트:", summary)
+print("\n\n\n요약된 텍스트\n")
+print(sentence1)
+print(sentence2)
+print(sentence3)
