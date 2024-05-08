@@ -1,222 +1,62 @@
+/*
 package com.example.mz_focusnews;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-
-import com.example.mz_focusnews.DB.PersonalData;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
+import com.example.mz_focusnews.NewsCrawling.*;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static String IP_ADDRESS = "43.201.173.245";    // AWS DB 서버 Elastic IP 주소
-    private static String TAG = "phptest";
-
-    private EditText mEditTextName;
-    private EditText mEditTextCountry;
-    private TextView mTextViewResult;
-    private ArrayList<PersonalData> mArrayList;
-    private UsersAdapter mAdapter;
-    private RecyclerView mRecyclerView;
-    private EditText mEditTextSearchKeyword;
-    private String mJsonString;
-
+    private RecyclerView recyclerView;
+    private NewsAdapter newsAdapter;
+    private NewsScraper newsScraper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.db_select_test);
+        setContentView(R.layout.list_item_news); // 액티비티의 메인 레이아웃 파일을 사용하도록 변경
 
-        mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
-        mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // RecyclerView 설정
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        newsAdapter = new NewsAdapter(this, new ArrayList<>());
+        recyclerView.setAdapter(newsAdapter);
 
-        mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
+        // NewsScraper 인스턴스 생성
+        newsScraper = new NewsScraper(this);
 
+        // 뉴스 기사 가져오기
+        fetchArticles();
+    }
 
+    private void fetchArticles() {
+        newsScraper.fetchNews(new NewsScraperCallback() {
+            @Override
+            public void onSuccess(ArrayList<NewsArticle> articles) {
+                // UI 스레드에서 RecyclerView 데이터 업데이트
+                runOnUiThread(() -> newsAdapter.updateData(articles));
+            }
 
-        mArrayList = new ArrayList<>();
-
-        mAdapter = new UsersAdapter(this, mArrayList);
-        mRecyclerView.setAdapter(mAdapter);
-
-
-        Button button_all = (Button) findViewById(R.id.button_main_all);
-        button_all.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                mArrayList.clear();
-                mAdapter.notifyDataSetChanged();
-
-                GetData task = new GetData();
-                task.execute( "http://" + IP_ADDRESS + "/getJson.php", "");
+            @Override
+            public void onFailure(Exception e) {
+                // 오류 메시지 표시
+                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Failed to fetch news: " + e.getMessage(), Toast.LENGTH_LONG).show());
             }
         });
-
     }
 
-
-
-    private class GetData extends AsyncTask<String, Void, String>{
-
-        ProgressDialog progressDialog;
-        String errorString = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            progressDialog = ProgressDialog.show(MainActivity.this,
-                    "Please Wait", null, true, true);
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            progressDialog.dismiss();
-            mTextViewResult.setText(result);
-            Log.d(TAG, "response - " + result);
-
-            if (result == null){
-
-                mTextViewResult.setText(errorString);
-            }
-            else {
-
-                mJsonString = result;
-                showResult();
-            }
-        }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            String serverURL = params[0];
-            String postParameters = params[1];
-
-
-            try {
-
-                URL url = new URL(serverURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-
-                httpURLConnection.setReadTimeout(5000);
-                httpURLConnection.setConnectTimeout(5000);
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setDoInput(true);
-                httpURLConnection.connect();
-
-
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
-
-
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(TAG, "response code - " + responseStatusCode);
-
-                InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
-                }
-                else{
-                    inputStream = httpURLConnection.getErrorStream();
-                }
-
-
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuilder sb = new StringBuilder();
-                String line;
-
-                while((line = bufferedReader.readLine()) != null){
-                    sb.append(line);
-                }
-
-                bufferedReader.close();
-
-                return sb.toString().trim();
-
-
-            } catch (Exception e) {
-
-                Log.d(TAG, "GetData : Error ", e);
-                errorString = e.toString();
-
-                return null;
-            }
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (newsScraper != null) {
+            newsScraper.shutdown(); // 스크레이퍼 리소스 정리
         }
     }
-
-
-    private void showResult(){
-
-        String TAG_JSON="coddl";
-        String TAG_ID = "id";
-        String TAG_NAME = "name";
-        String TAG_COUNTRY ="country";
-
-
-        try {
-            JSONObject jsonObject = new JSONObject(mJsonString);
-            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
-
-            for(int i=0;i<jsonArray.length();i++){
-
-                JSONObject item = jsonArray.getJSONObject(i);
-
-                String id = item.getString(TAG_ID);
-                String name = item.getString(TAG_NAME);
-                String country = item.getString(TAG_COUNTRY);
-
-                PersonalData personalData = new PersonalData();
-
-                personalData.setMember_id(id);
-                personalData.setMember_name(name);
-                personalData.setMember_country(country);
-
-                mArrayList.add(personalData);
-                mAdapter.notifyDataSetChanged();
-            }
-
-
-
-        } catch (JSONException e) {
-
-            Log.d(TAG, "showResult : ", e);
-        }
-
-    }
-
 }
+*/
