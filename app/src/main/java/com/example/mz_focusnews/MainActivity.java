@@ -1,4 +1,4 @@
-package com.example.mz_focusnews;
+/*package com.example.mz_focusnews;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -56,4 +56,4 @@ public class MainActivity extends AppCompatActivity {
             newsScraper.shutdown(); // 스크레이퍼 리소스 정리
         }
     }
-}
+}*/
