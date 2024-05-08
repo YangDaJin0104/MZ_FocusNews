@@ -1,4 +1,4 @@
-package com.example.mz_focusnews;
+package com.example.mz_focusnews.request;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;

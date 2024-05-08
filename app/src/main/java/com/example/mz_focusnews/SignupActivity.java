@@ -2,28 +2,19 @@ package com.example.mz_focusnews;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.mz_focusnews.request.SignupRequest;
+import com.example.mz_focusnews.request.ValidateRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +25,7 @@ import org.json.JSONObject;
 public class SignupActivity extends AppCompatActivity {
 
     private EditText signup_username, signup_userID, signup_userPw, signup_userPwCheck;
-    private Button idCheckBtn, completeSignup;
+    private Button idCheckBtn, signupbtn;
     private AlertDialog dialog;
     private boolean validate = false;
 
@@ -49,7 +40,7 @@ public class SignupActivity extends AppCompatActivity {
         signup_userPw = findViewById(R.id.et_pw);
         signup_userPwCheck = findViewById(R.id.et_pw_check);
 
-        completeSignup = findViewById(R.id.btn_complete_signup);
+        signupbtn = findViewById(R.id.btn_complete_signup);
         idCheckBtn = findViewById(R.id.btn_idcheck);
 
         /**
@@ -99,7 +90,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        completeSignup.setOnClickListener(new View.OnClickListener() {
+        signupbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String userID = signup_userID.getText().toString();

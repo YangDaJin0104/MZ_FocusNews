@@ -8,22 +8,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.mz_focusnews.request.LoginRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.util.Log;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -70,16 +65,20 @@ public class LoginActivity extends AppCompatActivity {
                             boolean success = jsonObject.getBoolean("success");
 
                             if (success) {  // 로그인 성공
-                                String UserID = jsonObject.getString("userID");
+                                String userID = jsonObject.getString("userID");
                                 String userPw = jsonObject.getString("userPw");
-                                String UserName = jsonObject.getString("userName");
+                                String userName = jsonObject.getString("userName");
 
                                 Toast.makeText(getApplicationContext(), "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("userName", userName); // 사용자 이름을 Bundle에 추가
+
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("userID", UserID);
-                                intent.putExtra("userPw", userPw);
-                                intent.putExtra("userName", UserName);
+                                intent.putExtra("userData", bundle); // Bundle을 Intent에 추가
                                 startActivity(intent);
+
+                                finish();
                             } else {    // 로그인 실패
                                 Toast.makeText(getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
                             }

@@ -3,6 +3,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/main"
@@ -14,35 +15,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
 
             <TextView
                 android:id="@+id/user_name"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Hi, User Name"
+                android:hint="Hi, User Name"
                 android:textSize="30dp"
-                android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:layout_marginTop="40dp"
+                android:layout_gravity="center_vertical|right"
                 android:layout_marginLeft="150dp"
                 android:src="@drawable/bell"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/current_date"
+            android:id="@+id/now_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="yyyy년mm월dd일"
             android:textSize="15dp"
             android:layout_marginTop="4dp"
             android:layout_marginLeft="20dp"/>
-
 
         <Button
             android:id="@+id/button"

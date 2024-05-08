@@ -57,10 +57,10 @@
         android:name="com.example.mz_focusnews.LoginActivity"
         android:label="activity_login"
         tools:layout="@layout/activity_login" />
+
     <activity
         android:id="@+id/signupActivity"
         android:name="com.example.mz_focusnews.SignupActivity"
         android:label="activity_signup"
         tools:layout="@layout/activity_signup" />
-
 </navigation>
