@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+<<<<<<< HEAD
     <mapping directory="" vcs="Git" />
 <!--&gt;>>>>>> c4bac1f48378cb7f7dda08f46b8eb4c5f51f6050-->
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+=======
+<!--    <mapping directory="$PROJECT_DIR$/.." vcs="" />-->
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+<!--    <mapping directory="" vcs="Git" />-->
+>>>>>>> 56fbab10549d8dc3096459a2d7fcf29cabbb09f8
+=======
+    <mapping directory="" vcs="Git" />
+>>>>>>> origin/master
+>>>>>>> ming
   </component>
 </project>
