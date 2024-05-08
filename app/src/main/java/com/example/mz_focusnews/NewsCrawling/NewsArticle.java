@@ -3,41 +3,28 @@ package com.example.mz_focusnews.NewsCrawling;
 /*
 기사 데이터 저장
 * */
-public class NewsArticle {
-    private String title; // 기사 제목
-    private String publicationDate; // 기사 발행 일자
-    private String publisher; // 출판사
-    //private String url;
-    private String content;
+class NewsArticle {
+    private String title;
+    private String pubDate;
+    private String publisher;
+    private String link;
+    private String imageUrl;
+    private String body;
 
-    public NewsArticle(String title, String publicationDate, String publisher) {
+    public NewsArticle(String title, String pubDate, String publisher, String link, String imageUrl, String body) {
         this.title = title;
-        this.publicationDate = publicationDate;
+        this.pubDate = pubDate;
         this.publisher = publisher;
-        //this.url = url;
-        this.content = "";
+        this.link = link;
+        this.imageUrl = imageUrl;
+        this.body = body;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getPublicationDate() {
-        return publicationDate;
-    }
-    public String getPublisher() {
-        return publisher;
-    }
-
-    /*public String getUrl() {
-        return url;
-    }*/
-
-    public String getContent() {
-        return content;
-    }
+    // Getter 메소드 추가
+    public String getTitle() { return title; }
+    public String getPublicationDate() { return pubDate; }
+    public String getPublisher() { return publisher; }
+    public String getLink() { return link; }
+    public String getImageUrl() { return imageUrl; }
+    public String getBody() { return body; }
 }

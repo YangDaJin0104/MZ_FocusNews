@@ -29,6 +29,7 @@
             android:padding="15dp">
 
             <ImageView
+                android:id="@+id/newsImageView"
                 android:layout_width="160dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop" />

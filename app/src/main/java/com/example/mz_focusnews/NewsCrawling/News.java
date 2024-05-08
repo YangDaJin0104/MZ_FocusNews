@@ -1,7 +1,10 @@
 package com.example.mz_focusnews.NewsCrawling;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +18,7 @@ public class News extends AppCompatActivity {
     private NewsAdapter adapter;
     private NewsScraper newsScraper;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,7 @@ public class News extends AppCompatActivity {
         fetchArticles();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void fetchArticles() {
         newsScraper.fetchNews(new NewsScraperCallback() {
             @Override
