@@ -65,7 +65,11 @@ sentence2 = sentences[1] + '.'
 sentence3 = sentences[2]
 
 
+<<<<<<< HEAD
 # print("원본: ", example_text)
+=======
+#print("원본: ", example_text)
+>>>>>>> origin/master
 print("\n\n\n요약된 텍스트\n")
 print(sentence1)
 print(sentence2)
