@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,19 +18,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".RegisterCompleteActivity"
+            android:name=".SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterAgreeInfo"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterIdActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterNameActivity"
+            android:name=".SignupCompleteActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
@@ -47,4 +39,6 @@
         </activity>
     </application>
 
+    <!--외부로의 접근을 위한 인터넷 사용 허가 설정 (MYSQL)-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>
