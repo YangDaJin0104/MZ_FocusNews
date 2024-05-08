@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginActivity">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.mz_focusnews.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_quizStartActivity"
+            app:destination="@id/quizStartActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_myPage"
+            app:destination="@id/myPage" />
+        <action
+            android:id="@+id/action_homeFragment_to_contentFragment"
+            app:destination="@id/contentFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.mz_focusnews.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_contentFragment"
+            app:destination="@id/contentFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contentFragment"
+        android:name="com.example.mz_focusnews.ContentFragment"
+        android:label="fragment_content"
+        tools:layout="@layout/fragment_content" />
+
+    <activity
+        android:id="@+id/quizStartActivity"
+        android:name="com.example.mz_focusnews.QuizStartActivity"
+        android:label="activity_quiz_stsart"
+        tools:layout="@layout/activity_quiz_start" />
+
+    <activity
+        android:id="@+id/myPage"
+        android:name="com.example.mz_focusnews.MyPage"
+        android:label="activity_my_page"
+        tools:layout="@layout/activity_my_page" />
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.mz_focusnews.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+
+    <activity
+        android:id="@+id/signupActivity"
+        android:name="com.example.mz_focusnews.SignupActivity"
+        android:label="activity_signup"
+        tools:layout="@layout/activity_signup" />
+</navigation>
