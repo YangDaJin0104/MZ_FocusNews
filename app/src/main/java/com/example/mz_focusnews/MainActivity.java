@@ -1,7 +1,7 @@
-/*
 package com.example.mz_focusnews;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,11 +9,34 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.mz_focusnews.NewsCrawling.*;
+import com.example.mz_focusnews.Quiz.CSVFileReader;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
+    private static final String TAG = "MainActivity";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        CSVFileReader csvFileReader = new CSVFileReader();
+
+        // CSV 파일을 읽어옴
+        List<String[]> csvData = csvFileReader.readCSVFile(this, "quiz.csv");
+
+        // 읽어온 데이터 출력
+        for (String[] line : csvData) {
+            StringBuilder lineBuilder = new StringBuilder();
+            for (String value : line) {
+                lineBuilder.append(value).append(", ");
+            }
+            Log.d(TAG, "CSV Read: " + lineBuilder.toString());
+        }
+    }
+    /*private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
     private NewsScraper newsScraper;
 
@@ -57,6 +80,5 @@ public class MainActivity extends AppCompatActivity {
         if (newsScraper != null) {
             newsScraper.shutdown(); // 스크레이퍼 리소스 정리
         }
-    }
+    }*/
 }
-*/
