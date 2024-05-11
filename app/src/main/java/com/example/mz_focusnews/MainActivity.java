@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 
 import com.example.mz_focusnews.Quiz.CSVFileReader;
+import com.example.mz_focusnews.Quiz.CSVFileWriter;
 import com.example.mz_focusnews.Quiz.Question;
 import com.example.mz_focusnews.Quiz.QuestionGenerator;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int QUESTION_COUNT = 4;        // 문제 갯수 (오늘의 퀴즈 제외)
+    private static final int USER_ID = 123;             // 유저 아이디 (DB에서 가져와야 함. 구현 필요)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CSVFileReader csvFileReader = new CSVFileReader();
+        CSVFileWriter csvFileWriter = new CSVFileWriter();
 
         // CSV 파일을 읽어옴
         List<String[]> csvData = csvFileReader.readCSVFile(this, "quiz.csv");
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Option 2: " + question.getOption2());
             Log.d(TAG, "Option 3: " + question.getOption3());
             Log.d(TAG, "Option 4: " + question.getOption4());
+
+            csvFileWriter.writeCSVFile(USER_ID, question.getId());
         }
     }
 }

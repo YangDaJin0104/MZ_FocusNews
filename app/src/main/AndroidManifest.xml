@@ -7,6 +7,9 @@
     <!--외부로의 접근을 위한 인터넷 사용 허가 설정 (MYSQL)-->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- csv 파일 쓰기 권한 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"

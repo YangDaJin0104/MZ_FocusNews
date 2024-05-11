@@ -54,8 +54,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
             newsTitle = itemView.findViewById(R.id.news_title);
-            publisher = itemView.findViewById(R.id.news_publisher);
-            time = itemView.findViewById(R.id.news_time);
+            //publisher = itemView.findViewById(R.id.news_publisher);   // 오류 발생해서 주석 처리. merge 시 주석 풀기
+            //time = itemView.findViewById(R.id.news_time);             // 오류 발생해서 주석 처리. merge 시 주석 풀기
 
             itemView.findViewById(R.id.news_title).setOnClickListener(new View.OnClickListener() {
                 @Override
