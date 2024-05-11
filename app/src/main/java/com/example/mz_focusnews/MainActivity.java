@@ -9,6 +9,7 @@ import com.example.mz_focusnews.Quiz.CSVFileReader;
 import com.example.mz_focusnews.Quiz.CSVFileWriter;
 import com.example.mz_focusnews.Quiz.Question;
 import com.example.mz_focusnews.Quiz.QuestionGenerator;
+import com.example.mz_focusnews.Quiz.QuizActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -18,37 +19,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_quiz_submit);
 
-        CSVFileReader csvFileReader = new CSVFileReader();
-        CSVFileWriter csvFileWriter = new CSVFileWriter();
-
-        // CSV 파일을 읽어옴
-        List<String[]> csvData = csvFileReader.readCSVFile(this, "quiz.csv");
-
-        // 읽어온 데이터 출력
-        for (String[] line : csvData) {
-            StringBuilder lineBuilder = new StringBuilder();
-            for (String value : line) {
-                lineBuilder.append(value).append(", ");
-            }
-            Log.d(TAG, "CSV Read: " + lineBuilder.toString());
-        }
-
-        // 퀴즈 출제
-        List<Question> quizQuestions = QuestionGenerator.generateQuestions(this, QUESTION_COUNT);
-
-        // 퀴즈 문제 출력
-        for (Question question : quizQuestions) {
-            Log.d(TAG, "Question ID: " + question.getId());
-            Log.d(TAG, "Question: " + question.getQuestion());
-            Log.d(TAG, "Correct Answer: " + question.getCorrectAnswer());
-            Log.d(TAG, "Option 1: " + question.getOption1());
-            Log.d(TAG, "Option 2: " + question.getOption2());
-            Log.d(TAG, "Option 3: " + question.getOption3());
-            Log.d(TAG, "Option 4: " + question.getOption4());
-
-            csvFileWriter.writeCSVFile(USER_ID, question.getId());
-        }
+        QuizActivity.showQuiz(this);
     }
 }
