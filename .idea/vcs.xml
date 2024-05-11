@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+<<<<<<< HEAD
+<<<<<<< HEAD
     <mapping directory="" vcs="Git" />
+=======
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+>>>>>>> romi
+=======
+<<<<<<< HEAD
+    <mapping directory="" vcs="Git" />
+<!--&gt;>>>>>> c4bac1f48378cb7f7dda08f46b8eb4c5f51f6050-->
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+=======
+<!--    <mapping directory="$PROJECT_DIR$/.." vcs="" />-->
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+<!--    <mapping directory="" vcs="Git" />-->
+>>>>>>> 56fbab10549d8dc3096459a2d7fcf29cabbb09f8
+=======
+    <mapping directory="" vcs="Git" />
+>>>>>>> origin/master
+>>>>>>> ming
+>>>>>>> c2048aeb8351c7f159bfa2d96dbee0b0fec51895
   </component>
 </project>
