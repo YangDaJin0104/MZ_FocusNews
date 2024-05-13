@@ -71,6 +71,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+/*    private void setCategoryButtonListeners() {
+        findViewById(R.id.politics).setOnClickListener(v -> updateCategory("politics"));
+        findViewById(R.id.economy).setOnClickListener(v -> updateCategory("economy"));
+        findViewById(R.id.society).setOnClickListener(v -> updateCategory("society"));
+        findViewById(R.id.area).setOnClickListener(v -> updateCategory("area"));
+        findViewById(R.id.Recruitment_information).setOnClickListener(v -> updateCategory("recruitment"));
+        findViewById(R.id.science_technology).setOnClickListener(v -> updateCategory("science_technology"));
+        findViewById(R.id.entertainment).setOnClickListener(v -> updateCategory("entertainment"));
+        findViewById(R.id.sports).setOnClickListener(v -> updateCategory("sports"));
+    }
+    private void initializeNewsScraper(String category) {
+        NewsSourceConfig config = new NewsSourceConfig();
+        config.setCategory(category);
+        String url = config.getNewsSourceUrl();
+        newsScraper = new NewsScraper(this, url);
+        fetchArticles(category);  // 기존 fetchArticles 메소드 호출을 fetchNews로 변경
+    }
+
+    private void updateCategory(String category) {
+        Toast.makeText(this, "Category changed to: " + category, Toast.LENGTH_SHORT).show();
+        initializeNewsScraper(category);
+    }*/
+
     private void initLocationAddress() {
         newsSourceConfig = new NewsSourceConfig();
         locationAddress = new LocationAddress(this, newsSourceConfig);
