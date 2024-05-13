@@ -3,7 +3,7 @@ package com.example.mz_focusnews.NewsCrawling;
 /*
 기사 데이터 저장
 * */
-class NewsArticle {
+public class NewsArticle {
     private String title;
     private String pubDate;
     private String publisher;
