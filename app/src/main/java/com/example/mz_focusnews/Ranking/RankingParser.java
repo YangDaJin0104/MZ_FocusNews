@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RankingParser {
     private static final String TAG = "RankingParser";
-    private static final String USER_ID = "user4";      // 현재 앱 사용자(테스트용 하드코딩)
+    private static final String USER_ID = "romi";      // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
 
     public static List<Ranking> parseRanking(String json) {
         List<Ranking> rankings = new ArrayList<>();

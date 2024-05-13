@@ -45,7 +45,6 @@ public class QuestionGenerator {
             for (String value : line) {
                 lineBuilder.append(value).append(", ");
             }
-            Log.d(TAG, "CSV Read: " + lineBuilder.toString());
         }
 
         // 4개의 문제가 List에 저장될 때까지 반복

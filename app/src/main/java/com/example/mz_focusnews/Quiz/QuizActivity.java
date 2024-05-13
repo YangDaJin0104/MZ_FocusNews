@@ -15,7 +15,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final String QUIZ_FILE_NAME = "quiz.csv";
     private static final String QUIZ_SOLVED_FILE_NAME = "quiz_solved.csv";
     private static final int QUESTION_COUNT = 4;        // 문제 갯수 (오늘의 퀴즈 제외)
-    private static final int USER_ID = 456;             // 유저 아이디 (DB에서 가져와야 함. 구현 필요)
+    private static final int USER_ID = 456;             // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +29,8 @@ public class QuizActivity extends AppCompatActivity {
             CSVFileReader csvFileReader = new CSVFileReader();
             CSVFileWriter csvFileWriter = new CSVFileWriter();
 
-            csvFileWriter.clearQuizSolvedCSVFile(this, QUIZ_SOLVED_FILE_NAME);    // quiz_solved.csv 파일 초기화 (테스트용)
+            // quiz_solved.csv 파일 초기화 (테스트용)
+            //csvFileWriter.clearQuizSolvedCSVFile(this, QUIZ_SOLVED_FILE_NAME);
 
             // CSV 파일을 읽어옴
             List<String[]> csvData = csvFileReader.readQuizCSVFile(this, QUIZ_FILE_NAME);
