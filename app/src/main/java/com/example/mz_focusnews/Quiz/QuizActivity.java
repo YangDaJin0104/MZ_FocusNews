@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mz_focusnews.R;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class QuizActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
@@ -16,6 +18,8 @@ public class QuizActivity extends AppCompatActivity {
     private static final String QUIZ_SOLVED_FILE_NAME = "quiz_solved.csv";
     private static final int QUESTION_COUNT = 4;        // 문제 갯수 (오늘의 퀴즈 제외)
     private static final int USER_ID = 456;             // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
+    Map<Integer, String> USER_ANSWER = new HashMap<>();    // 현재 앱 사용자가 입력한 정답 (테스트용 하드코딩)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +34,7 @@ public class QuizActivity extends AppCompatActivity {
             CSVFileWriter csvFileWriter = new CSVFileWriter();
 
             // quiz_solved.csv 파일 초기화 (테스트용)
-            //csvFileWriter.clearQuizSolvedCSVFile(this, QUIZ_SOLVED_FILE_NAME);
+            csvFileWriter.clearQuizSolvedCSVFile(this, QUIZ_SOLVED_FILE_NAME);
 
             // CSV 파일을 읽어옴
             List<String[]> csvData = csvFileReader.readQuizCSVFile(this, QUIZ_FILE_NAME);
@@ -63,6 +67,15 @@ public class QuizActivity extends AppCompatActivity {
             // ChatGPT API 비용 문제 발생 - 오류: You exceeded your current quota, please check your plan and billing details.
             //String response = ChatGPTAPI.chatGPT("HI?");
             //Log.d(TAG, "ChatGPT Return: " + response);
+
+            // 문제 출제 및 채점
+            AnswerChecker answerChecker = new AnswerChecker(quizQuestions);
+            USER_ANSWER.put(quizQuestions.get(0).getId(), quizQuestions.get(0).getCorrectAnswer());        // 테스트용
+            USER_ANSWER.put(quizQuestions.get(1).getId(), quizQuestions.get(1).getCorrectAnswer());        // 테스트용
+            USER_ANSWER.put(quizQuestions.get(2).getId(), quizQuestions.get(2).getCorrectAnswer());        // 테스트용
+            USER_ANSWER.put(quizQuestions.get(3).getId(), quizQuestions.get(3).getCorrectAnswer());        // 테스트용
+            int score = answerChecker.checkAnswers(USER_ANSWER);
+            Log.d(TAG, "Score: " + score);
         }
     }
 
