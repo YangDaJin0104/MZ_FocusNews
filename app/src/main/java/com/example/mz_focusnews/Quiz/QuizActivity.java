@@ -2,7 +2,6 @@ package com.example.mz_focusnews.Quiz;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +26,6 @@ public class QuizActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            //your codes here
             CSVFileReader csvFileReader = new CSVFileReader();
             CSVFileWriter csvFileWriter = new CSVFileWriter();
 
@@ -62,8 +60,8 @@ public class QuizActivity extends AppCompatActivity {
             csvFileReader.readQuizSolvedCSVFile(this, QUIZ_SOLVED_FILE_NAME);
 
             // ChatGPT API 비용 문제 발생 - 오류: You exceeded your current quota, please check your plan and billing details.
-            String response = ChatGPTAPI.chatGPT("HI?");
-            Log.d(TAG, "ChatGPT Return: " + response);
+            //String response = ChatGPTAPI.chatGPT("HI?");
+            //Log.d(TAG, "ChatGPT Return: " + response);
         }
     }
 

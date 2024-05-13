@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 외부로의 접근을 위한 인터넷 사용 허가 설정 (MYSQL) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 외부로의 접근을 위한 인터넷 사용 허가 설정 (MYSQL) -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -17,29 +16,28 @@
         android:theme="@style/Theme.MZ_FocusNews"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <!--<activity
-            android:name=".Quiz.QuizActivity"
-            android:exported="false"
-            android:label="@string/title_activity_quiz"
-            android:theme="@style/Theme.MZ_FocusNews" />-->
-
-        <!-- ChatGPT - Deprecation of HTTP client 현상 해결 -->
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-
         <activity
-            android:name=".Quiz.QuizActivity"
+            android:name=".Ranking.RankingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity
-            android:name=".SignupActivity"
-            android:exported="true" />-->
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".Quiz.QuizActivity"
+            android:exported="false">
+
+        </activity>
+
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>
