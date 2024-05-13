@@ -22,12 +22,15 @@
             android:exported="false"
             android:label="@string/title_activity_quiz"
             android:theme="@style/Theme.MZ_FocusNews" />-->
+
+        <!-- ChatGPT - Deprecation of HTTP client 현상 해결 -->
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <activity
             android:name=".Quiz.QuizActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
