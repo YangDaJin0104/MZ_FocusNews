@@ -35,7 +35,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_item_news, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.news_item, parent, false);    // layout 오류 발생해서 아무거나 넣어둠.
         return new NewsViewHolder(view);
     }
 

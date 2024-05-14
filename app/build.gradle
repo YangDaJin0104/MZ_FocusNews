@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.mz_focusnews"
-        minSdk 21
+        minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -24,6 +24,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
         }
     }
     compileOptions {
@@ -35,6 +36,7 @@ android {
     }
     buildFeatures {
         compose true
+        viewBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.5.1'
@@ -44,10 +46,35 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
+    // 빌드에서 제외 (임시)
+    sourceSets{
+        main{
+            java{
+                exclude '**/MyPage.java'
+                exclude '**/LoginActivity.java'
+                exclude '**/NewsAdapter.java'
+                exclude '**/NewsItem.java'
+                exclude '**/SignupActivity.java'
+                exclude '**/SignupCompleteFragment.java'
+                exclude '**/UsersAdapter.java'
+                exclude '**/CategoryFragment.java'
+                exclude '**/change_password.java'
+                exclude '**/HomeFragment.java'
+                exclude '**/DBSelectActivity.java'
+                exclude '**/DBInsertActivity.java'
+                exclude '**/PersonalData.java'
+                exclude '**/News.java'
+                exclude '**/NewsAdapter.java'
+                exclude '**/NewsArticle.java'
+                exclude '**/NewsScraper.java'
+                exclude '**/NewsScraperCallback.java'
+            }
+        }
+    }
 }
 
 dependencies {
-
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -59,15 +86,16 @@ dependencies {
     implementation libs.ui.graphics
     implementation libs.ui.tooling.preview
     implementation libs.material3
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
+    implementation 'com.android.volley:volley:1.2.1'
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
-<<<<<<< HEAD
+
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-=======
 
->>>>>>> 7d44672ec9b9015bcbf729f96eaf8ec06ca17040
     implementation 'org.jsoup:jsoup:1.17.2'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
@@ -76,4 +104,19 @@ dependencies {
 
     // MySQL 의존성 추가
     implementation files('libs/mysql-connector-java-5.1.49-bin.jar')
+
+    // OpenCSV 라이브러리 - csv 파일 읽을 때 사용
+    implementation 'com.opencsv:opencsv:5.5.2'
+}
+
+dependencies {
+
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+    androidTestImplementation platform(libs.compose.bom)
+    androidTestImplementation libs.ui.test.junit4
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation "org.mockito:mockito-core:3.+"
+    debugImplementation libs.ui.tooling
+    debugImplementation libs.ui.test.manifest
 }
