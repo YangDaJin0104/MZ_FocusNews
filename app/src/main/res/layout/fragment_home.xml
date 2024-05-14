@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,28 +14,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/user_name"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Hi, User Name"
+                android:text="Hi, User Name"
                 android:textSize="30dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:layout_gravity="center_vertical|right"
+                android:layout_marginTop="40dp"
                 android:layout_marginLeft="150dp"
                 android:src="@drawable/bell"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/now_date"
+            android:id="@+id/current_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="yyyy년mm월dd일"
@@ -44,25 +43,27 @@
             android:layout_marginTop="4dp"
             android:layout_marginLeft="20dp"/>
 
+
         <Button
             android:id="@+id/button"
             android:layout_width="380dp"
             android:layout_height="50dp"
+            android:paddingLeft="20dp"
             android:drawableLeft="@drawable/siren"
             android:layout_gravity="center_horizontal"
-            android:text="[속보] 푸바오 오늘 중국행 비행기 탑승"
             android:layout_marginTop="50dp"
             android:textColor="@color/white"
             android:background="@drawable/background_shape_blue"/>
 
         <FrameLayout
+            android:id="@+id/today_frame"
             android:layout_gravity="center"
             android:layout_width="350dp"
             android:layout_height="200dp"
             android:layout_marginTop="15dp">
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/news"
+                android:id="@+id/today_news"
                 android:layout_gravity="center"
                 android:clipToPadding="false"
                 android:clipChildren="false"
@@ -71,12 +72,12 @@
                 android:scaleType="fitXY"
                 android:layout_marginBottom="10dp"/>
 
-            <!--<me.relex.circleindicator.CircleIndicator3
+            <me.relex.circleindicator.CircleIndicator3
                 android:id="@+id/indicator"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="10dp"
-                android:layout_gravity="bottom"/>-->
+                android:layout_gravity="bottom"/>
 
         </FrameLayout>
 
@@ -101,14 +102,11 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
                 android:text="See All"
+                android:textSize="13dp"
+                android:layout_marginLeft="100dp"
                 android:textColor="@color/blue"
                 android:background="@color/white"/>
-<<<<<<< HEAD
-
-=======
->>>>>>> romi
 
         </LinearLayout>
 

@@ -206,6 +206,4 @@ public class DBInsertActivity extends AppCompatActivity {
 
         }
     }
-
-
 }

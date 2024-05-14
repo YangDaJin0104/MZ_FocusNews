@@ -53,11 +53,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
-            newsTitle = itemView.findViewById(R.id.news_title);
-            publisher = itemView.findViewById(R.id.news_publisher);
-            time = itemView.findViewById(R.id.news_time);
+            newsTitle = itemView.findViewById(R.id.title);
+            publisher = itemView.findViewById(R.id.publisher);
+            time = itemView.findViewById(R.id.publicationDate);
 
-            itemView.findViewById(R.id.news_title).setOnClickListener(new View.OnClickListener() {
+            itemView.findViewById(R.id.title).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();

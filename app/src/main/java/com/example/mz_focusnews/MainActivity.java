@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     CategoryFragment categoryFragment;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // 액티비티의 메인 레이아웃 파일을 사용하도록 변경
@@ -40,17 +39,8 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-
-        // Bundle을 가져와서 HomeFragment에 전달
-        Bundle userDataBundle = getIntent().getBundleExtra("userData");
-        if (userDataBundle != null) {
-            HomeFragment homeFragment = new HomeFragment();
-            homeFragment.setArguments(userDataBundle);
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.nav_host_fragment, homeFragment)
-                    .commit();
-        }
+    }
+}
 
 //        // RecyclerView 설정
 //        recyclerView = findViewById(R.id.recyclerView);
@@ -63,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        // 뉴스 기사 가져오기
 //        fetchArticles();
-    }
+//    }
 
 //    private void fetchArticles() {
 //        newsScraper.fetchNews(new NewsScraperCallback() {
@@ -81,12 +71,12 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (newsScraper != null) {
-            newsScraper.shutdown(); // 스크레이퍼 리소스 정리
-
-        }
-    }
-}
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (newsScraper != null) {
+//            newsScraper.shutdown(); // 스크레이퍼 리소스 정리
+//
+//        }
+//    }
+//}

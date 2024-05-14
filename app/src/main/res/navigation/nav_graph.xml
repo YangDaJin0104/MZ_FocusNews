@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginActivity">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -43,7 +43,7 @@
     <activity
         android:id="@+id/quizStartActivity"
         android:name="com.example.mz_focusnews.QuizStartActivity"
-        android:label="activity_quiz_stsart"
+        android:label="activity_quiz_start"
         tools:layout="@layout/activity_quiz_start" />
 
     <activity
@@ -52,15 +52,34 @@
         android:label="activity_my_page"
         tools:layout="@layout/activity_my_page" />
 
-    <activity
-        android:id="@+id/loginActivity"
-        android:name="com.example.mz_focusnews.LoginActivity"
-        android:label="activity_login"
-        tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.mz_focusnews.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
-    <activity
-        android:id="@+id/signupActivity"
-        android:name="com.example.mz_focusnews.SignupActivity"
-        android:label="activity_signup"
-        tools:layout="@layout/activity_signup" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.mz_focusnews.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment">
+            <argument
+                android:name="user_name"
+                app:argType="string" />
+            <argument
+                android:name="user_id"
+                app:argType="string" />
+        </action>
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
 </navigation>

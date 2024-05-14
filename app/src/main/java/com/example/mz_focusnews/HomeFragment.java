@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        nowDate = view.findViewById(R.id.now_date);
+        nowDate = view.findViewById(R.id.current_date);
 
         // 현재 날짜 가져오기
         long now = System.currentTimeMillis();

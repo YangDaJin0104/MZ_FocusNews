@@ -22,7 +22,7 @@ public class News extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_item_news);
+        setContentView(R.layout.news_item); // 오류나서 임시 수정 db_item_news->news_item
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
