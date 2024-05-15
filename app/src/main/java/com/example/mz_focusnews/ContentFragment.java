@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ public class ContentFragment extends Fragment {
                 // 뉴스 아이템 정보를 TextView에 설정
                 tv_title.setText(newsItem.getTitle());
                 tv_time.setText(newsItem.getTime());
+            } else {
+                Log.e("ContentFragment", "Received null NewsItem");
             }
         }
 

@@ -1,9 +1,9 @@
 package com.example.mz_focusnews;
 
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +46,10 @@ public class HomeFragment extends Fragment {
 
         // TextView에 현재 날짜 설정
         nowDate.setText(formattedDate);
+
+        ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(getActivity());
+        ViewPager2 viewPager2 = view.findViewById(R.id.news_view_pager);
+        viewPager2.setAdapter(viewPager2Adapter);
 
         return view;
     }
