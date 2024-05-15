@@ -3,27 +3,66 @@ package com.example.mz_focusnews.Quiz;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.HashSet;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
 
 public class QuestionGenerator {
     private static final String TAG = "QuestionGenerator";
 
     // 오늘의 퀴즈 생성 (구현 필요)
-    public static Question generateQuestion() {
-        // 임시 데이터
-        int id = 123123;
-        String question = "오늘의 퀴즈 문제입니다.";
-        String correctAnswer = "정답";
-        String option1 = "보기 1";
-        String option2 = "보기 2";
-        String option3 = "보기 3";
-        String option4 = "정답";
+    public static Question generateTodayQuiz(String response) {
+        // JSON 데이터 파싱하여 필요한 정보 추출
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONObject message = jsonObject.getJSONArray("choices").getJSONObject(0).getJSONObject("message");
+            String content = message.getString("content");
+            JSONObject innerJsonObject = new JSONObject(content);
 
-        return new Question(id, question, correctAnswer, option1, option2, option3, option4);
+            String question = innerJsonObject.getString("question");
+            String correctAnswer = innerJsonObject.getString("answer");
+            String option1 = innerJsonObject.getString("option1");
+            String option2 = innerJsonObject.getString("option2");
+            String option3 = innerJsonObject.getString("option3");
+            String option4 = innerJsonObject.getString("option4");
+
+            // ChatGPT가 제시한 정답이 보기 안에 있는지 확인 (가끔 없을 때가 있음)
+            if(correctAnswer.equals(option1) ||
+                    correctAnswer.equals(option2) ||
+                    correctAnswer.equals(option3) ||
+                    correctAnswer.equals(option4)) {
+
+                // 오늘의 퀴즈 객체 생성
+                Question questionObject = new Question(
+                        0,           // 오늘의 퀴즈id는 default 0
+                        question,      // 문제 내용
+                        correctAnswer,  // 정답
+                        option1,        // 보기1
+                        option2,        // 보기2
+                        option3,        // 보기3
+                        option4         // 보기4
+                );
+
+                // 테스트 출력
+                Log.d(TAG, "Question: " + question);
+                Log.d(TAG, "Answer: " + correctAnswer);
+                Log.d(TAG, "option1: " + option1);
+                Log.d(TAG, "option2: " + option2);
+                Log.d(TAG, "option3: " + option3);
+                Log.d(TAG, "option4: " + option4);
+
+                return questionObject;
+            }
+
+            return null;
+
+        } catch (JSONException e) {
+            System.err.println("Failed to parse JSON: " + e.getMessage());
+            return null;
+        }
     }
 
     // 오늘의 퀴즈를 제외한 나머지 4개의 문제 생성
