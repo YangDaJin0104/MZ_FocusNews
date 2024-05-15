@@ -44,7 +44,7 @@
         android:id="@+id/quizStartActivity"
         android:name="com.example.mz_focusnews.QuizStartActivity"
         android:label="activity_quiz_stsart"
-        tools:layout="@layout/activity_quiz_start" />
+        tools:layout="@layout/fragment_quiz_start" />
 
     <activity
         android:id="@+id/myPage"

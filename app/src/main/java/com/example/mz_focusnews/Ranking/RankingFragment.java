@@ -4,29 +4,37 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.fragment.app.Fragment;
 import com.example.mz_focusnews.R;
-
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class RankingActivity extends AppCompatActivity {
-    private static final String TAG = "RankingActivity";
-    private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";     // ranking 테이블 데이터를 JSON으로 출력하는 웹 서버 주소
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz_start);
+public class RankingFragment extends Fragment {
+    private static final String TAG = "RankingFragment";
+    private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // 프래그먼트의 UI를 인플레이트합니다.
+        return inflater.inflate(R.layout.fragment_quiz_start, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        showRanking();
+    }
+
+    private void showRanking() {
         ExecutorService executor = Executors.newSingleThreadExecutor();     // 백그라운드 실행을 위함
         Handler handler = new Handler(Looper.getMainLooper());              // 메인 스레드로 전달을 위함
 
@@ -75,4 +83,5 @@ public class RankingActivity extends AppCompatActivity {
             return null;
         }
     }
+
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="10dp"
-    tools:context=".QuizStartActivity">
+    tools:context=".Ranking.RankingFragment">
 
     <LinearLayout
         android:id="@+id/main"
@@ -116,7 +116,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/rounded_button"
                         android:backgroundTint="#66A7F3"
-                        android:text="양다진: 10점"
+                        android:text="@string/score_text"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:gravity="start|center_vertical"
