@@ -9,12 +9,15 @@ public class NewsItem implements Parcelable {
 
     // 뉴스 이미지 변수 추가 예정
     // private String image;
+
+    private int newsId;
     private String title; // 뉴스 제목
     private String publisher; // 출판사
     private String time; // 게시 시간
 
     // 생성자
-    public NewsItem(String title, String publisher, String time) {
+    public NewsItem(int newsId, String title, String publisher, String time) {
+        this.newsId = newsId;
         this.title = title;
         this.publisher = publisher;
         this.time = time;
@@ -47,6 +50,18 @@ public class NewsItem implements Parcelable {
         this.time = time;
     }
 
+    public int getNewsId() {
+        return newsId;
+    }
+
+    public void setNewsId(int newsId) {
+        this.newsId = newsId;
+    }
+
+
+    /**
+     * override
+     */
     @Override
     public int describeContents() {
         return 0;
@@ -54,12 +69,14 @@ public class NewsItem implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(newsId);
         dest.writeString(title);
         dest.writeString(publisher);
         dest.writeString(time);
     }
 
     public void readFromParcel(Parcel in) {
+        newsId = in.readInt();
         title = in.readString();
         publisher = in.readString();
         time = in.readString();
@@ -67,7 +84,7 @@ public class NewsItem implements Parcelable {
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public NewsItem createFromParcel(Parcel in) {
-            return new NewsItem(in.readString(), in.readString(), in.readString());
+            return new NewsItem(in.readInt(), in.readString(), in.readString(), in.readString());
         }
 
         public NewsItem[] newArray(int size) {
