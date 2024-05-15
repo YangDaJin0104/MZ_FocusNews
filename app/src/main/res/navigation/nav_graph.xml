@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -31,7 +31,11 @@
         tools:layout="@layout/fragment_category" >
         <action
             android:id="@+id/action_categoryFragment_to_contentFragment"
-            app:destination="@id/contentFragment" />
+            app:destination="@id/contentFragment">
+            <argument
+                android:name="newsItem"
+                app:argType="com.example.mz_focusnews.NewsItem" />
+        </action>
     </fragment>
 
     <fragment

@@ -63,7 +63,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
-                    android:text="의대교수 사직서 제출 행렬… 정부 5월 2천명 증원 마무리 쐐기"
+                    android:text="샘플 텍스트"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -71,7 +71,7 @@
                     android:id="@+id/news_date"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
-                    android:text="2024년 4월 9일"
+                    android:text="2024년 "
                     android:gravity="right"
                     android:textSize="13sp" />
 

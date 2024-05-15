@@ -1,6 +1,11 @@
 package com.example.mz_focusnews;
 
-public class NewsItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class NewsItem implements Parcelable {
 
     // 뉴스 이미지 변수 추가 예정
     // private String image;
@@ -41,4 +46,32 @@ public class NewsItem {
     public void setTime(String time) {
         this.time = time;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(publisher);
+        dest.writeString(time);
+    }
+
+    public void readFromParcel(Parcel in) {
+        title = in.readString();
+        publisher = in.readString();
+        time = in.readString();
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public NewsItem createFromParcel(Parcel in) {
+            return new NewsItem(in.readString(), in.readString(), in.readString());
+        }
+
+        public NewsItem[] newArray(int size) {
+            return new NewsItem[size];
+        }
+    };
 }
