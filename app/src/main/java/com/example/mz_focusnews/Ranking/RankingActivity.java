@@ -14,6 +14,8 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -35,7 +37,10 @@ public class RankingActivity extends AppCompatActivity {
             handler.post(() -> {
                 //UI Thread work - 백그라운드 작업 결과를 메인 스레드로 전달
                 if(response!=null){
-                    RankingParser.parseRanking(response);
+                    List<Ranking> rankings = RankingParser.parseRanking(response);
+                    for(int i=0;i<rankings.size();i++){
+                        System.out.println(rankings.get(i).getRank() + "등: " + rankings.get(i).getUserId() + " - " + rankings.get(i).getScore() + "점");
+                    }
                 } else{
                     Log.e(TAG, "response == null");
                 }

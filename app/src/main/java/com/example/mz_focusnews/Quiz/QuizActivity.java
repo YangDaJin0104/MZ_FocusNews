@@ -70,8 +70,8 @@ public class QuizActivity extends AppCompatActivity {
             csvFileReader.readQuizSolvedCSVFile(this, QUIZ_SOLVED_FILE_NAME);
 
             // ChatGPT API 비용 문제 발생 - 오류: You exceeded your current quota, please check your plan and billing details.
-            String response = ChatGPTAPI.chatGPT(SUMMARIZE1, SUMMARIZE2, SUMMARIZE3);
-            Log.d(TAG, "ChatGPT Return: " + response);
+            //String response = ChatGPTAPI.chatGPT(SUMMARIZE1, SUMMARIZE2, SUMMARIZE3);
+            //Log.d(TAG, "ChatGPT Return: " + response);
 
             // 문제 출제 및 채점
             AnswerChecker answerChecker = new AnswerChecker(quizQuestions);
