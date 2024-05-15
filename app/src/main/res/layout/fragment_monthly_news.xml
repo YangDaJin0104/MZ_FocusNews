@@ -3,12 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".newspager.WeeklyNewsFragment">
+    tools:context=".newspager.MonthlyNewsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- fragment_daily_news.xml 픽스 되면 수정 예정 -->
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center"
+        android:background="@color/blue"
+        android:text="Monthly News"
+        android:textSize="40dp"/>
 
 </FrameLayout>
