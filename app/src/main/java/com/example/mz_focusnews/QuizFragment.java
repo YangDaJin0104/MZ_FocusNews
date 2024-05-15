@@ -1,4 +1,4 @@
-package com.example.mz_focusnews.Quiz;
+package com.example.mz_focusnews;
 
 import android.os.Bundle;
 
@@ -14,7 +14,7 @@ public class QuizFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_quiz_submit, container, false);
+        View view = inflater.inflate(R.layout.fragment_quiz, container, false);
         return view;
     }
 }
