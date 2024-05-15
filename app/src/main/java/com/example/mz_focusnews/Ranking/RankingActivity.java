@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 
 public class RankingActivity extends AppCompatActivity {
     private static final String TAG = "RankingActivity";
-    private static final String URL = "http://43.201.173.245/RankingConnection.php";     // ranking 테이블 데이터를 JSON으로 출력하는 웹 서버 주소
+    private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";     // ranking 테이블 데이터를 JSON으로 출력하는 웹 서버 주소
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
