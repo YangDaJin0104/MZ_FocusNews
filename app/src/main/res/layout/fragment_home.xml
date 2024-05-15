@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,62 +52,53 @@
             android:paddingLeft="20dp"
             android:drawableLeft="@drawable/siren"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:textColor="@color/white"
             android:background="@drawable/background_shape_blue"/>
 
-        <FrameLayout
-            android:id="@+id/today_frame"
-            android:layout_gravity="center"
-            android:layout_width="350dp"
+
+        <!-- 안에 담길 내용들은 fragment_daliy... 들에 있음-->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/news_view_pager"
+            android:layout_width="388dp"
             android:layout_height="200dp"
-            android:layout_marginTop="15dp">
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:scaleType="fitXY" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/today_news"
-                android:layout_gravity="center"
-                android:clipToPadding="false"
-                android:clipChildren="false"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="10dp"/>
-
-            <me.relex.circleindicator.CircleIndicator3
-                android:id="@+id/indicator"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="bottom"/>
-
-        </FrameLayout>
-
-        <EditText
-            android:id="@+id/editTextText"
+        <View
             android:layout_width="360dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_height="2dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="18dp"
+            android:background="@color/gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="무슨 일이일어나고 있나요?"
-                android:textSize="15dp"
-                android:layout_marginLeft="30dp"/>
+                android:text="무슨 일이 일어나고 있나요?"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginLeft="30dp" />
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="See All"
-                android:textSize="13dp"
                 android:layout_marginLeft="100dp"
-                android:textColor="@color/blue"
-                android:background="@color/white"/>
+                android:text="See All"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:textColor="@color/blue" />
 
         </LinearLayout>
 
