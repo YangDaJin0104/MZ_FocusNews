@@ -7,7 +7,7 @@ import java.net.URL;
 
 public class ChatGPTAPI {
     private static final String TAG = "ChatGPTAPI";
-    private static final String API_KEY = "sk-proj-ccIjl8qYC5BcQPJGrffcT3BlbkFJR5wVft8LL7oXS1F0Krgr";     // 최민경의 API secret key
+    private static final String API_KEY = "//";     // 최민경의 API secret key
 
     public static String chatGPT(String summarize1, String summarize2, String summarize3) {
         String url = "https://api.openai.com/v1/chat/completions";      // ChatGPT API 엔드포인트의 URL (수정 X)
