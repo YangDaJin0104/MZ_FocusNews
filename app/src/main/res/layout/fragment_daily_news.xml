@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="385dp"
-        android:layout_height="200dp"
+        android:layout_height="190dp"
         android:layout_gravity="center"
         android:background="@drawable/background_shape_lightblue"
         android:gravity="center"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:paddingBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:text="Today's News"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -27,7 +27,7 @@
         <LinearLayout
             android:id="@+id/daily_card_news"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal">
@@ -41,7 +41,7 @@
 
             <LinearLayout
                 android:layout_width="190dp"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:paddingStart="10dp"
                 android:orientation="vertical">
 
@@ -49,18 +49,17 @@
                     android:id="@+id/daily_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
+                    android:paddingTop="8dp"
                     android:paddingBottom="5dp"
-                    android:text="중국어 열공 푸바오 할부지에 갤 S24 울트라 선물한 삼성"
+                    android:text="푸바옹푸바옹푸바옹푸바옹푸바옹푸바옹푸바옹푸바옹"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/daily_content"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
+                    android:layout_width="180dp"
+                    android:layout_height="60dp"
                     android:text="의대 교수들이 '2천명 증원 백지화'를 대화의 조건으로 들고 있는 가운데, 정부는..."
                     android:textSize="13sp"
                     android:textStyle="bold" />

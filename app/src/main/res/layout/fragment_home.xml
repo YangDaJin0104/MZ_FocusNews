@@ -49,10 +49,11 @@
             android:id="@+id/button"
             android:layout_width="380dp"
             android:layout_height="50dp"
-            android:paddingLeft="20dp"
-            android:drawableLeft="@drawable/siren"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dp"
+            android:drawableLeft="@drawable/siren"
             android:textColor="@color/white"
             android:background="@drawable/background_shape_blue"/>
 
@@ -60,8 +61,8 @@
         <!-- 안에 담길 내용들은 fragment_daliy... 들에 있음-->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/news_view_pager"
-            android:layout_width="388dp"
-            android:layout_height="200dp"
+            android:layout_width="385dp"
+            android:layout_height="190dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:clipChildren="false"
@@ -72,8 +73,8 @@
             android:layout_width="360dp"
             android:layout_height="2dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/gray" />
 
         <LinearLayout

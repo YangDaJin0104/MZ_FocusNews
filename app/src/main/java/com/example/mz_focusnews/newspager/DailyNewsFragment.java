@@ -28,12 +28,14 @@ import java.util.Locale;
 public class DailyNewsFragment extends Fragment {
 
     TextView daily_title;
+    TextView daily_content;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily_news, container, false);
 
         daily_title = view.findViewById(R.id.daily_title);
+        daily_content = view.findViewById(R.id.daily_content);
 
         loadDailyNews();
 
@@ -62,8 +64,11 @@ public class DailyNewsFragment extends Fragment {
                                 JSONArray newsArray = response.getJSONArray("news");
                                 JSONObject topNews = newsArray.getJSONObject(0); // 조회수가 가장 많은 뉴스 가져오기
 
-                                String title = topNews.getString("title"); // 뉴스 제목 가져오기
+                                String title = topNews.getString("title");
+                                String content = topNews.getString("summary");
+
                                 daily_title.setText(title);
+                                daily_content.setText(content);
                             } else {
                                 Toast.makeText(getActivity(), "뉴스를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
 
