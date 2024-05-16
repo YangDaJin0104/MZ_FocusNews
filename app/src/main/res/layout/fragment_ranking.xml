@@ -112,11 +112,12 @@
                     </ImageView>
 
                     <TextView
+                        android:id="@+id/score1"
                         android:layout_width="200dp"
                         android:layout_height="40dp"
                         android:background="@drawable/rounded_button"
                         android:backgroundTint="#66A7F3"
-                        android:text="@string/score_text"
+                        android:text="1등 정보가 없습니다."
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:gravity="start|center_vertical"
@@ -139,11 +140,12 @@
                     </ImageView>
 
                     <TextView
+                        android:id="@+id/score2"
                         android:layout_width="200dp"
                         android:layout_height="40dp"
                         android:background="@drawable/rounded_button"
                         android:backgroundTint="#66A7F3"
-                        android:text="홍채영: 8점"
+                        android:text="2등 정보가 없습니다."
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:gravity="start|center_vertical"
@@ -166,11 +168,12 @@
                     </ImageView>
 
                     <TextView
+                        android:id="@+id/score3"
                         android:layout_width="200dp"
                         android:layout_height="40dp"
                         android:background="@drawable/rounded_button"
                         android:backgroundTint="#66A7F3"
-                        android:text="최민경: 6점"
+                        android:text="3등 정보가 없습니다."
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:gravity="start|center_vertical"
@@ -184,11 +187,13 @@
         </ScrollView>
 
             <ImageView
+                android:id="@+id/dot"
                 android:layout_width="3.5dp"
                 android:layout_height="26.5dp"
                 android:src="@drawable/more" />
 
             <LinearLayout
+                android:id="@+id/layout_user_rank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -197,22 +202,24 @@
                 android:layout_marginTop="5dp">
 
                 <TextView
+                    android:id="@+id/rank_user"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:background="@drawable/circle_button"
                     android:backgroundTint="#D9D9D9"
                     android:text="15"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:gravity="center" />
 
                 <TextView
+                    android:id="@+id/score_user"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_button"
                     android:backgroundTint="#66A7F3"
-                    android:text="나: 2점"
+                    android:text="나: 0점"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:gravity="start|center_vertical"

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RankingParser {
     private static final String TAG = "RankingParser";
-    private static final String USER_ID = "user5";      // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
+    private static final String USER_ID = "user1";      // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
 
     public static List<Ranking> parseRanking(String json) {
         List<Ranking> rankings = new ArrayList<>();
@@ -23,12 +23,13 @@ public class RankingParser {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 String userId = jsonObject.optString("user_id");
+                String userName = jsonObject.optString("user_name");
                 int score = jsonObject.optInt("quiz_score");
                 int rank = jsonObject.optInt("rank");
 
                 // Ranking 객체를 생성해 데이터 저장 - 1, 2, 3등
                 if(rank == 1 || rank == 2 || rank == 3){
-                    Ranking ranking = new Ranking(userId, score, rank);
+                    Ranking ranking = new Ranking(userId, userName, score, rank);
                     rankings.add(ranking);
                 } else{
                     // 사용자 랭킹 정보가 있는지 확인 (없을 경우 추가)
@@ -37,7 +38,7 @@ public class RankingParser {
                             return rankings;
                         }
                     }
-                    Ranking ranking = new Ranking(userId, score, rank);
+                    Ranking ranking = new Ranking(userId, userName, score, rank);
                     rankings.add(ranking);
                 }
             }
