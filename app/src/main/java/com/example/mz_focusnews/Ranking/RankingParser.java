@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RankingParser {
     private static final String TAG = "RankingParser";
-    private static final String USER_ID = "user1";      // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
+    private static final String USER_ID = "user2";      // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
 
     public static List<Ranking> parseRanking(String json) {
         List<Ranking> rankings = new ArrayList<>();
@@ -19,7 +19,8 @@ public class RankingParser {
         try {
             JSONArray jsonArray = new JSONArray(json);
 
-            for (int i = 0; rankings.size() <= 3; i++) {
+            // 1~3등 랭킹 정보 저장
+            for (int i = 0; rankings.size() < 3; i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 String userId = jsonObject.optString("user_id");
@@ -27,19 +28,31 @@ public class RankingParser {
                 int score = jsonObject.optInt("quiz_score");
                 int rank = jsonObject.optInt("rank");
 
-                // Ranking 객체를 생성해 데이터 저장 - 1, 2, 3등
-                if(rank == 1 || rank == 2 || rank == 3){
+                Ranking ranking = new Ranking(userId, userName, score, rank);
+                rankings.add(ranking);
+            }
+
+            // 사용자 랭킹 정보가 1~3등 내에 있는지 확인
+            for(int i=0; i < 3; i++){
+                if(USER_ID.equals(rankings.get(i).getUserId())){
+                    return rankings;        // 이미 1~3등 내에 있을 경우 리턴
+                }
+            }
+
+            // 사용자 랭킹 정보 저장
+            for (int j = 3; j < jsonArray.length(); j++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(j);
+                String userId = jsonObject.optString("user_id");
+
+                // JSON에서 사용자 랭킹 정보를 찾은 경우 Ranking 객체 생성
+                if (USER_ID.equals(userId)) {
+                    String userName = jsonObject.optString("user_name");
+                    int score = jsonObject.optInt("quiz_score");
+                    int rank = jsonObject.optInt("rank");
+
                     Ranking ranking = new Ranking(userId, userName, score, rank);
                     rankings.add(ranking);
-                } else{
-                    // 사용자 랭킹 정보가 있는지 확인 (없을 경우 추가)
-                    for(int j=0; j<rankings.size(); j++){
-                        if (USER_ID.equals(rankings.get(j).getUserId())) {     // 이미 유저의 등수가 1~3등 안에 있다면 더이상 객체 생성 X
-                            return rankings;
-                        }
-                    }
-                    Ranking ranking = new Ranking(userId, userName, score, rank);
-                    rankings.add(ranking);
+                    break;
                 }
             }
         } catch (JSONException e) {
