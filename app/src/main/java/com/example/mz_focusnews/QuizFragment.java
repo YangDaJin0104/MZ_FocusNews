@@ -27,6 +27,7 @@ import com.example.mz_focusnews.Quiz.CSVFileWriter;
 import com.example.mz_focusnews.Quiz.ChatGPTAPI;
 import com.example.mz_focusnews.Quiz.Question;
 import com.example.mz_focusnews.Quiz.QuestionGenerator;
+import com.example.mz_focusnews.Quiz.UpdateDBQuizScore;
 
 import java.util.List;
 
@@ -35,9 +36,10 @@ public class QuizFragment extends Fragment {
     private static final String QUIZ_FILE_NAME = "quiz.csv";
     private static final String QUIZ_SOLVED_FILE_NAME = "quiz_solved.csv";
     private static final int QUESTION_COUNT = 4;        // 문제 갯수 (오늘의 퀴즈 제외)
+    private int SCORE = 0;      // 사용자 획득 점수
 
     // 테스트용 데이터
-    private static final int USER_ID = 456;             // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
+    private static final String USER_ID = "user3";             // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
     private String USER_ANSWER;    // 사용자가 입력한 정답
     private static final String SUMMARIZE = "우리은행이 한국신용데이터가 주도하는 인터넷전문은행 컨소시엄에 투자 의사를 밝혔다. " +
             "한국신용데이터는 소상공인을 대상으로 하는 인터넷전문은행을 만들 계획이며, 소상공인에 대한 자체적인 신용평가 서비스를 제공한다." +
@@ -83,8 +85,6 @@ public class QuizFragment extends Fragment {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            int score = 0;                 // 사용자가 얻은 점수
-
             CSVFileReader csvFileReader = new CSVFileReader();
             CSVFileWriter csvFileWriter = new CSVFileWriter();
             Context context = requireContext();         // 컨텍스트 가져오기
@@ -99,8 +99,6 @@ public class QuizFragment extends Fragment {
             List<Question> quizQuestions = QuestionGenerator.generateQuestions(context, QUIZ_FILE_NAME, QUIZ_SOLVED_FILE_NAME, USER_ID, QUESTION_COUNT);
 
             quiz(view, quizQuestions);
-            
-            // TODO: 사용자 score DB에 update 필요
         }
     }
 
@@ -130,11 +128,13 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, static_question)) {
+                    SCORE = 1;
                     setResultView(true);
                     csvQuiz1(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(false);
+                    updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
             }
@@ -157,11 +157,13 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
+                    SCORE = 3;
                     setResultView(true);
                     csvQuiz2(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(false);
+                    updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
             }
@@ -185,11 +187,13 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
+                    SCORE = 5;
                     setResultView(true);
                     csvQuiz3(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(false);
+                    updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
             }
@@ -213,11 +217,13 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
+                    SCORE = 7;
                     setResultView(true);
                     csvQuiz4(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(false);
+                    updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
             }
@@ -241,6 +247,7 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
+                    SCORE = 10;
                     setResultView(true);
                     setCompleteView();      // 퀴즈 종료 시 설정
                 } else {
@@ -248,6 +255,7 @@ public class QuizFragment extends Fragment {
                     setResultView(false);
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
+                updateDBQuizScore();
             }
         });
     }
@@ -408,5 +416,10 @@ public class QuizFragment extends Fragment {
                 USER_ANSWER = quiz.getOption4();
             }
         });
+    }
+
+    private void updateDBQuizScore(){
+        UpdateDBQuizScore updateQuizScore = new UpdateDBQuizScore(USER_ID, SCORE);
+        updateQuizScore.execute();
     }
 }

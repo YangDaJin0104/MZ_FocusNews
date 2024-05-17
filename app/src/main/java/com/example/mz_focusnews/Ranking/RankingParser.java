@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RankingParser {
     private static final String TAG = "RankingParser";
-    private static final String USER_ID = "user2";      // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
+    private static final String USER_ID = "user3";      // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
 
     public static List<Ranking> parseRanking(String json) {
         List<Ranking> rankings = new ArrayList<>();
@@ -60,5 +60,26 @@ public class RankingParser {
         }
 
         return rankings;
+    }
+
+    // UpdateDBQuizScore.java에서 사용하는 getScore 함수
+    public static int parseScore(String json) {
+        try {
+            JSONArray jsonArray = new JSONArray(json);
+
+            // 사용자의 기존 score 찾기
+            for (int j = 0; j < jsonArray.length(); j++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(j);
+                String userId = jsonObject.optString("user_id");
+
+                if (USER_ID.equals(userId)) {
+                    return  jsonObject.optInt("quiz_score");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

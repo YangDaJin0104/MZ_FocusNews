@@ -15,7 +15,7 @@ public class CSVFileWriter {
     private static final String TAG = "CSVFileWriter";
     private static final String FILENAME = "quiz_solved.csv";
 
-    public void writeCSVFile(Context context, int userId, int questionID) {
+    public void writeCSVFile(Context context, String userId, int questionID) {
         String struserId = String.valueOf(userId);
         String strQuestionID = String.valueOf(questionID);
 

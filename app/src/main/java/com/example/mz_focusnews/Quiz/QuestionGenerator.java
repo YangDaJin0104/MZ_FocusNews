@@ -66,7 +66,7 @@ public class QuestionGenerator {
     }
 
     // 오늘의 퀴즈를 제외한 나머지 4개의 문제 생성
-    public static List<Question> generateQuestions(Context context, String quizFileName, String quizSolvedFileName, int userId, int count) {
+    public static List<Question> generateQuestions(Context context, String quizFileName, String quizSolvedFileName, String userId, int count) {
         List<Question> questions = new ArrayList<>();
 
         Random random = new Random();
@@ -107,7 +107,7 @@ public class QuestionGenerator {
             if (!isSolved(solvedQuestions, strUserID, strQuestionID)) {
                 // Question 객체 생성
                 Question question = new Question(
-                        Integer.parseInt(questionData[0]), // 문제 id
+                        questionId, // 문제 id
                         questionData[1], // 문제 내용
                         questionData[2], // 정답
                         questionData[3], // 보기1
