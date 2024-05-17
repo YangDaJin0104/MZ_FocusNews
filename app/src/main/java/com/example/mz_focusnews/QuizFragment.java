@@ -28,9 +28,7 @@ import com.example.mz_focusnews.Quiz.ChatGPTAPI;
 import com.example.mz_focusnews.Quiz.Question;
 import com.example.mz_focusnews.Quiz.QuestionGenerator;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class QuizFragment extends Fragment {
     private static final String TAG = "QuizActivity";
@@ -40,7 +38,7 @@ public class QuizFragment extends Fragment {
 
     // 테스트용 데이터
     private static final int USER_ID = 456;             // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
-    Map<Integer, String> USER_ANSWER = new HashMap<>();    // 현재 앱 사용자가 입력한 정답
+    private String USER_ANSWER;    // 사용자가 입력한 정답
     private static final String SUMMARIZE = "우리은행이 한국신용데이터가 주도하는 인터넷전문은행 컨소시엄에 투자 의사를 밝혔다. " +
             "한국신용데이터는 소상공인을 대상으로 하는 인터넷전문은행을 만들 계획이며, 소상공인에 대한 자체적인 신용평가 서비스를 제공한다." +
             "컨소시엄은 예비인가 신청 후 금융감독원 및 금융위의 심사를 거쳐 인가를 받으면 6개월 이내에 영업을 개시할 예정이다.";    // 3문장 요약
@@ -106,7 +104,6 @@ public class QuizFragment extends Fragment {
         }
     }
 
-    // 1번째 문제: 오늘의 퀴즈 - 오늘의 뉴스 기반의 문제 출제
     public void quiz(View view, List<Question> quizList) {
         Question todayQuiz = null;      // 오늘의 퀴즈 생성 결과 (JSON 형태)
         String response;                // 오늘의 퀴즈 생성 여부
@@ -117,20 +114,24 @@ public class QuizFragment extends Fragment {
             todayQuiz = QuestionGenerator.generateTodayQuiz(response);
         }
 
+        // 1번째 문제: 오늘의 퀴즈 - 오늘의 뉴스 기반의 문제 출제
         setQuizView(view, todayQuiz, 1);
 
         clickOption(view, todayQuiz);
 
         AnswerChecker answerChecker = new AnswerChecker(todayQuiz);
 
+        final Question static_question = todayQuiz;
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navController = Navigation.findNavController(view);
                 //navController.navigate(R.id.action_rankingFragment_to_quizFragment);  // 수정 필요
-                if (answerChecker.isCorrectAnswer(USER_ANSWER)) {
+
+                // 사용자가 선택한 답이 정답인지 확인
+                if (answerChecker.isCorrectAnswer(USER_ANSWER, static_question)) {
                     setResultView(true);
-                    csvQuiz1(view, quizList);
+                    csvQuiz1(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(false);
@@ -141,9 +142,8 @@ public class QuizFragment extends Fragment {
     }
 
     private void csvQuiz1(View view, List<Question> quizList) {
-        Question current_quiz;
+        Question current_quiz = quizList.get(0);
 
-        current_quiz = quizList.get(1);
         setQuizView(view, current_quiz, 2);
         clickOption(view, current_quiz);
 
@@ -154,9 +154,11 @@ public class QuizFragment extends Fragment {
             public void onClick(View v) {
                 navController = Navigation.findNavController(view);
                 //navController.navigate(R.id.action_rankingFragment_to_quizFragment);  // 수정 필요
-                if (answerChecker.isCorrectAnswer(USER_ANSWER)) {
+
+                // 사용자가 선택한 답이 정답인지 확인
+                if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     setResultView(true);
-                    csvQuiz2(view, quizList);
+                    csvQuiz2(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(false);
@@ -169,7 +171,7 @@ public class QuizFragment extends Fragment {
     private void csvQuiz2(View view, List<Question> quizList) {
         Question current_quiz;
 
-        current_quiz = quizList.get(2);
+        current_quiz = quizList.get(1);
         setQuizView(view, current_quiz, 3);
         clickOption(view, current_quiz);
 
@@ -180,9 +182,11 @@ public class QuizFragment extends Fragment {
             public void onClick(View v) {
                 navController = Navigation.findNavController(view);
                 //navController.navigate(R.id.action_rankingFragment_to_quizFragment);  // 수정 필요
-                if (answerChecker.isCorrectAnswer(USER_ANSWER)) {
+
+                // 사용자가 선택한 답이 정답인지 확인
+                if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     setResultView(true);
-                    csvQuiz3(view, quizList);
+                    csvQuiz3(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(false);
@@ -195,7 +199,7 @@ public class QuizFragment extends Fragment {
     private void csvQuiz3(View view, List<Question> quizList) {
         Question current_quiz;
 
-        current_quiz = quizList.get(3);
+        current_quiz = quizList.get(2);
         setQuizView(view, current_quiz, 4);
         clickOption(view, current_quiz);
 
@@ -206,9 +210,11 @@ public class QuizFragment extends Fragment {
             public void onClick(View v) {
                 navController = Navigation.findNavController(view);
                 //navController.navigate(R.id.action_rankingFragment_to_quizFragment);  // 수정 필요
-                if (answerChecker.isCorrectAnswer(USER_ANSWER)) {
+
+                // 사용자가 선택한 답이 정답인지 확인
+                if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     setResultView(true);
-                    csvQuiz4(view, quizList);
+                    csvQuiz4(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(false);
@@ -221,7 +227,7 @@ public class QuizFragment extends Fragment {
     private void csvQuiz4(View view, List<Question> quizList) {
         Question current_quiz;
 
-        current_quiz = quizList.get(4);
+        current_quiz = quizList.get(3);
         setQuizView(view, current_quiz, 5);
         clickOption(view, current_quiz);
 
@@ -232,8 +238,11 @@ public class QuizFragment extends Fragment {
             public void onClick(View v) {
                 navController = Navigation.findNavController(view);
                 //navController.navigate(R.id.action_rankingFragment_to_quizFragment);  // 수정 필요
-                if (answerChecker.isCorrectAnswer(USER_ANSWER)) {
+
+                // 사용자가 선택한 답이 정답인지 확인
+                if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     setResultView(true);
+                    setCompleteView();      // 퀴즈 종료 시 설정
                 } else {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(false);
@@ -281,6 +290,14 @@ public class QuizFragment extends Fragment {
         btn_option2.setText(quiz.getOption2());
         btn_option3.setText(quiz.getOption3());
         btn_option4.setText(quiz.getOption4());
+
+        int blueColorValue = Color.parseColor("#1876E3");
+        ColorStateList blue = ColorStateList.valueOf(blueColorValue);      // 기본
+
+        btn_option1.setBackgroundTintList(blue);
+        btn_option2.setBackgroundTintList(blue);
+        btn_option3.setBackgroundTintList(blue);
+        btn_option4.setBackgroundTintList(blue);
     }
 
     private void setResultView(boolean iscorrect) {
@@ -321,18 +338,22 @@ public class QuizFragment extends Fragment {
                     }
                 });
             }
-        }, 1000); // 2s
+        }, 0);
 
         // 틀렸을 경우, '그만','다음' 버튼 비활성화
         if (!iscorrect) {
-            btn_complete.setVisibility(View.VISIBLE);
-            btn_stop.setVisibility(View.INVISIBLE);
-            btn_next.setVisibility(View.INVISIBLE);
-        } else{
-
+            setCompleteView();
         }
     }
 
+    // 퀴즈 종료 시 설정
+    private void setCompleteView() {
+        btn_complete.setVisibility(View.VISIBLE);
+        btn_stop.setVisibility(View.INVISIBLE);
+        btn_next.setVisibility(View.INVISIBLE);
+    }
+
+    // 보기1,2,3,4 버튼 클릭 시 설정
     private void clickOption(View view, Question quiz) {
         int greenColorValue = Color.parseColor("#00ff00");
         int blueColorValue = Color.parseColor("#1876E3");
@@ -348,7 +369,7 @@ public class QuizFragment extends Fragment {
                 btn_option2.setBackgroundTintList(blue);
                 btn_option3.setBackgroundTintList(blue);
                 btn_option4.setBackgroundTintList(blue);
-                USER_ANSWER.put(quiz.getId(), quiz.getOption1());
+                USER_ANSWER = quiz.getOption1();
             }
         });
 
@@ -360,7 +381,7 @@ public class QuizFragment extends Fragment {
                 btn_option2.setBackgroundTintList(green);
                 btn_option3.setBackgroundTintList(blue);
                 btn_option4.setBackgroundTintList(blue);
-                USER_ANSWER.put(quiz.getId(), quiz.getOption2());
+                USER_ANSWER = quiz.getOption2();
             }
         });
 
@@ -372,7 +393,7 @@ public class QuizFragment extends Fragment {
                 btn_option2.setBackgroundTintList(blue);
                 btn_option3.setBackgroundTintList(green);
                 btn_option4.setBackgroundTintList(blue);
-                USER_ANSWER.put(quiz.getId(), quiz.getOption3());
+                USER_ANSWER = quiz.getOption3();
             }
         });
 
@@ -384,7 +405,7 @@ public class QuizFragment extends Fragment {
                 btn_option2.setBackgroundTintList(blue);
                 btn_option3.setBackgroundTintList(blue);
                 btn_option4.setBackgroundTintList(green);
-                USER_ANSWER.put(quiz.getId(), quiz.getOption4());
+                USER_ANSWER = quiz.getOption4();
             }
         });
     }

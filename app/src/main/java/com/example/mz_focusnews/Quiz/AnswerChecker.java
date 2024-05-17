@@ -21,19 +21,15 @@ public class AnswerChecker {
     }
 
     // 사용자가 입력한 답을 받아 정답과 비교하여 점수를 계산합니다.
-    public boolean isCorrectAnswer(Map<Integer, String> userAnswers) {
-        
-        // 각 문제의 답을 비교하면서 정답인 경우 score를 증가시킴
-        for (int id : userAnswers.keySet()) {
-            String userAnswer = userAnswers.get(id);
-            String correctAnswer = correctAnswers.get(id);
+    public boolean isCorrectAnswer(String userAnswer, Question question) {
+        String correctAnswer = question.getCorrectAnswer();
 
-            if (userAnswer.equals(correctAnswer)) {
-                System.out.println("정답입니다!!!");     // 테스트
-                return true;
-            }
+        if(userAnswer.equals(correctAnswer)){
+            System.out.println("정답입니다!!!");     // 테스트
+            return true;
+        } else{
+            System.out.println("틀렸습니다!");     // 테스트
+            return false;
         }
-
-        return false;
     }
 }

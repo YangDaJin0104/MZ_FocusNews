@@ -98,8 +98,8 @@ public class QuestionGenerator {
             // CSV 데이터에서 문제 정보 추출
             String[] questionData = csvData.get(randomIndex);
 
-            // 문제가 이미 해결된 문제인지 확인
-            String questionId = questionData[0];        // 출제할 문제ID
+            // 문제가 이미 해결된 문제인지 확인    
+            int questionId = Integer.parseInt(questionData[0].replaceAll("\uFEFF", ""));    // 출제할 문제ID, 문자열 앞에 유니코드 BOM 문자가 있어서 제거하고 파싱
             String strUserID = String.valueOf(userId);              // int -> String 형변환
             String strQuestionID = String.valueOf(questionId);      // int -> String 형변환
 
