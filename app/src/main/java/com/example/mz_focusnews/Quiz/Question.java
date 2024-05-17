@@ -2,6 +2,7 @@ package com.example.mz_focusnews.Quiz;
 
 public class Question {
     private int id;                     // 문제 아이디
+    private int level;                  // 문제 레벨 (1~4)
     private String question;            // 문제
     private String correctAnswer;      // 정답
     private String option1;             // 보기1
@@ -9,8 +10,9 @@ public class Question {
     private String option3;             // 보기3
     private String option4;             // 보기4
 
-    public Question(int id, String question, String correctAnswer, String option1, String option2, String option3, String option4) {
+    public Question(int id, int level, String question, String correctAnswer, String option1, String option2, String option3, String option4) {
         this.id = id;
+        this.level = level;
         this.question = question;
         this.correctAnswer = correctAnswer;
         this.option1 = option1;
@@ -21,6 +23,9 @@ public class Question {
 
     public int getId() {
         return id;
+    }
+    public int getLevel() {
+        return level;
     }
 
     public String getQuestion() {

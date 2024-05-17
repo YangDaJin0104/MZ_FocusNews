@@ -40,8 +40,6 @@ public class CSVFileReader {
     public List<String[]> readQuizSolvedCSVFile(Context context, String fileName) {
         List<String[]> lines = new ArrayList<>();
 
-        Log.d(TAG, "================================================");
-
         try {
             // 파일에 저장된 데이터를 읽어오기 위해 FileInputStream 열기
             FileInputStream fis = context.openFileInput(fileName);

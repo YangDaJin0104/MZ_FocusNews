@@ -35,7 +35,6 @@ public class QuizFragment extends Fragment {
     private static final String TAG = "QuizActivity";
     private static final String QUIZ_FILE_NAME = "quiz.csv";
     private static final String QUIZ_SOLVED_FILE_NAME = "quiz_solved.csv";
-    private static final int QUESTION_COUNT = 4;        // 문제 갯수 (오늘의 퀴즈 제외)
     private int SCORE = 0;      // 사용자 획득 점수
 
     // 테스트용 데이터
@@ -97,7 +96,7 @@ public class QuizFragment extends Fragment {
             csvFileReader.readQuizCSVFile(context, QUIZ_FILE_NAME);
 
             // 2~5번째 퀴즈 출제: 문제은행 퀴즈 - quiz.csv 파일에 저장된 퀴즈 리스트 중 4문제
-            List<Question> quizQuestions = QuestionGenerator.generateQuestions(context, QUIZ_FILE_NAME, QUIZ_SOLVED_FILE_NAME, USER_ID, QUESTION_COUNT);
+            List<Question> quizQuestions = QuestionGenerator.generateQuestions(context, USER_ID);
 
             quiz(view, quizQuestions);
         }

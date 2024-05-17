@@ -15,8 +15,8 @@ public class CSVFileWriter {
     private static final String TAG = "CSVFileWriter";
     private static final String FILENAME = "quiz_solved.csv";
 
-    public void writeCSVFile(Context context, String userId, int questionID) {
-        String struserId = String.valueOf(userId);
+    public void writeCSVFile(Context context, String userId, int level, int questionID) {
+        String strLevel = String.valueOf(level);
         String strQuestionID = String.valueOf(questionID);
 
         try {
@@ -26,7 +26,7 @@ public class CSVFileWriter {
             BufferedWriter writer = new BufferedWriter(osw);
 
             // CSV 형식으로 데이터 작성
-            String csvLine = struserId + "," + strQuestionID + "\n";
+            String csvLine = userId + "," + strLevel + "," + strQuestionID + "\n";
 
             // 파일에 데이터 쓰기
             writer.write(csvLine);
