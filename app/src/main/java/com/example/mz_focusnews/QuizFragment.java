@@ -89,6 +89,7 @@ public class QuizFragment extends Fragment {
             CSVFileWriter csvFileWriter = new CSVFileWriter();
             Context context = requireContext();         // 컨텍스트 가져오기
 
+            // TODO: 실제 배포 시 아래 주석처리
             // quiz_solved.csv 파일 초기화 (테스트용)
             csvFileWriter.clearQuizSolvedCSVFile(context, QUIZ_SOLVED_FILE_NAME);
 
@@ -119,7 +120,7 @@ public class QuizFragment extends Fragment {
 
         AnswerChecker answerChecker = new AnswerChecker(todayQuiz);
 
-        final Question static_question = todayQuiz;
+        final Question final_question = todayQuiz;
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,13 +128,14 @@ public class QuizFragment extends Fragment {
                 //navController.navigate(R.id.action_rankingFragment_to_quizFragment);  // 수정 필요
 
                 // 사용자가 선택한 답이 정답인지 확인
-                if (answerChecker.isCorrectAnswer(USER_ANSWER, static_question)) {
+                if (answerChecker.isCorrectAnswer(USER_ANSWER, final_question)) {
                     SCORE = 1;
-                    setResultView(true);
+                    setResultView(true, final_question);
                     csvQuiz1(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false);
+                    setResultView(false, final_question);
+                    setIncorrectView(final_question);
                     updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
@@ -158,11 +160,12 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     SCORE = 3;
-                    setResultView(true);
+                    setResultView(true, current_quiz);
                     csvQuiz2(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false);
+                    setResultView(false, current_quiz);
+                    setIncorrectView(current_quiz);
                     updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
@@ -188,11 +191,12 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     SCORE = 5;
-                    setResultView(true);
+                    setResultView(true, current_quiz);
                     csvQuiz3(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false);
+                    setResultView(false, current_quiz);
+                    setIncorrectView(current_quiz);
                     updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
@@ -218,11 +222,12 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     SCORE = 7;
-                    setResultView(true);
+                    setResultView(true, current_quiz);
                     csvQuiz4(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false);
+                    setResultView(false, current_quiz);
+                    setIncorrectView(current_quiz);
                     updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
@@ -248,11 +253,12 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     SCORE = 10;
-                    setResultView(true);
-                    setCompleteView();      // 퀴즈 종료 시 설정
+                    setResultView(true, current_quiz);
+                    setCompleteView();      // 퀴즈 종료 시 설정 (마지막 문제이기 때문)
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false);
+                    setResultView(false, current_quiz);
+                    setIncorrectView(current_quiz);
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
                 }
                 updateDBQuizScore();
@@ -308,7 +314,7 @@ public class QuizFragment extends Fragment {
         btn_option4.setBackgroundTintList(blue);
     }
 
-    private void setResultView(boolean iscorrect) {
+    private void setResultView(boolean iscorrect, Question quiz) {
         ObjectAnimator fadeOut;
 
         if (iscorrect) {
@@ -356,9 +362,26 @@ public class QuizFragment extends Fragment {
 
     // 퀴즈 종료 시 설정
     private void setCompleteView() {
+        // 하단 버튼 설정('그만', '다음', '완료')
         btn_complete.setVisibility(View.VISIBLE);
         btn_stop.setVisibility(View.INVISIBLE);
         btn_next.setVisibility(View.INVISIBLE);
+    }
+
+    private void setIncorrectView(Question quiz){
+        // 정답 표시
+        int redColorValue = Color.parseColor("#de2121");
+        ColorStateList red = ColorStateList.valueOf(redColorValue);
+
+        if(quiz.getCorrectAnswer().equals(btn_option1.getText())){
+            btn_option1.setBackgroundTintList(red);
+        } else if(quiz.getCorrectAnswer().equals(btn_option2.getText())){
+            btn_option2.setBackgroundTintList(red);
+        } else if(quiz.getCorrectAnswer().equals(btn_option3.getText())){
+            btn_option3.setBackgroundTintList(red);
+        } else if(quiz.getCorrectAnswer().equals(btn_option4.getText())){
+            btn_option4.setBackgroundTintList(red);
+        }
     }
 
     // 보기1,2,3,4 버튼 클릭 시 설정
