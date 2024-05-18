@@ -2,4 +2,24 @@
 plugins {
 alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+    id("com.chaquo.python") version "15.0.1" apply false
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://chaquo.com/maven" } //추가
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.0'
+        classpath "com.chaquo.python:gradle:10.0.1" //추가
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
