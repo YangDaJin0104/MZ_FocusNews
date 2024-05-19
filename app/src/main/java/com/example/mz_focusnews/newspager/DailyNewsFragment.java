@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,12 @@ import com.example.mz_focusnews.R;
 import com.example.mz_focusnews.UserSession;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class DailyNewsFragment extends Fragment {
 
@@ -49,13 +52,15 @@ public class DailyNewsFragment extends Fragment {
     // 오늘의 뉴스를 로드하는 메소드
     private void loadDailyNews() {
         String todayDate = getCurrentDate();
+        Log.d("loadNews", "loadDailyNews: todayDate=" + todayDate);
         NewsUtils.loadNews(getContext(), todayDate, "daily", daily_title, daily_content, userSessions, this);
     }
 
     // 현재 날짜를 가져오는 메소드
     private String getCurrentDate() {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")); // 한국 표준시로 설정
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Date currentDate = new Date();
-        return dateFormat.format(currentDate);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        return dateFormat.format(calendar.getTime());
     }
 }

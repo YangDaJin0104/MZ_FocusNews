@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class WeeklyNewsFragment extends Fragment {
 
@@ -46,13 +48,20 @@ public class WeeklyNewsFragment extends Fragment {
 
     private void loadWeeklyNews() {
         String startDate = getStartDateOfWeek();
+        Log.d("loadNews", "loadWeeklyNews: startDate=" + startDate); // 추가된 로그
         NewsUtils.loadNews(getContext(), startDate, "weekly", weekly_title, weekly_content, userSessions, this);
     }
 
     private String getStartDateOfWeek() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")); // 한국 표준시로 설정
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+
+        // 현재 날짜에서 주의 첫 번째 날(월요일)로 이동
+        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+        }
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         return dateFormat.format(calendar.getTime());
-    }
-}
+    }}

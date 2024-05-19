@@ -115,7 +115,7 @@ public class NewsUtils {
         Log.d("NewsUtils", "loadNews: 뉴스 로드 요청 시작, 날짜=" + date + ", 타입=" + type);
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        NewsRequest newsRequest = new NewsRequest(date,
+        NewsRequest newsRequest = new NewsRequest(date, type, // type 파라미터 추가
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -128,9 +128,10 @@ public class NewsUtils {
 
                                 String title = topNews.getString("title");
                                 String content = topNews.getString("summary");
+                                String newsDate = topNews.getString("date"); // date 필드 추가
 
                                 titleView.setText(title);
-                                contentView.setText(content);
+                                contentView.setText(content); // 뉴스 내용과 날짜를 함께 표시
 
                                 titleView.setTag(topNews);
 
