@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="210dp"
+    android:layout_height="280dp"
+    android:layout_marginRight="15dp"
+    android:padding="10dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/background_shape_white">
+
+    <ImageView
+        android:id="@+id/news_image"
+        android:layout_width="180dp"
+        android:layout_height="130dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_sample_panda" />
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/sample_title_28"
+        android:textStyle="bold"
+        android:textSize="13.5dp" />
+
+    <TextView
+        android:id="@+id/news_description"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/sample_content_57"
+        android:textSize="10dp" />
+
+    <TextView
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:background="@drawable/background_shape_littleblue"
+        android:text="6h 30min ago"
+        android:textColor="@color/blue"
+        android:textSize="10dp" />
+
+</LinearLayout>
