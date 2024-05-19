@@ -13,10 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class HomeFragment extends Fragment {
 
@@ -50,16 +53,15 @@ public class HomeFragment extends Fragment {
         nowDate = view.findViewById(R.id.current_date);
 
         // 현재 날짜 가져오기
-        long now = System.currentTimeMillis();
-        Date currentDate = new Date(now);
-
-        // 날짜를 원하는 형식으로 포맷
-        java.text.DateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = formatter.format(currentDate);
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")); // 한국 표준시로 설정
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        String formattedDate = dateFormat.format(calendar.getTime());
 
         // TextView에 현재 날짜 설정
         nowDate.setText(formattedDate);
 
+        // 오늘, 이주, 이달의 뉴스 띄우는 어댑터 설정
         ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(getActivity());
         ViewPager2 viewPager2 = view.findViewById(R.id.news_view_pager);
         viewPager2.setAdapter(viewPager2Adapter);
