@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.mz_focusnews.MainActivity;
 import com.example.mz_focusnews.R;
 
 import java.util.ArrayList;
@@ -49,7 +50,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         Glide.with(context)
                 .load(article.getImageUrl())
                 .into(holder.imageView);
-    }
+        holder.itemView.setOnClickListener(v -> {
+            if (context instanceof MainActivity) {
+                ((MainActivity) context).showArticleInWebView(article.getLink());
+            }
+        });    }
 
     @Override
     public int getItemCount() {

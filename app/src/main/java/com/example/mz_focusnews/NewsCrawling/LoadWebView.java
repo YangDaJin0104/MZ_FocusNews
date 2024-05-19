@@ -46,12 +46,11 @@ public class LoadWebView extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                //Log.d(TAG, "Page loaded: " + url);
                 if (callback != null) {
                     view.evaluateJavascript(
                             "(function() { return document.documentElement.outerHTML; })();",
                             value -> {
-                                //Log.d(TAG, "Extracted content: " + value);
+                                Log.d(TAG, "Extracted content: " + value);
                                 callback.onContentExtracted(value);
                             }
                     );

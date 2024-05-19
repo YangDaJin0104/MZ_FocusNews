@@ -1,59 +1,77 @@
 package com.example.mz_focusnews;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.fragment.app.FragmentManager;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
-
-import com.example.mz_focusnews.NewsCrawling.*;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.mz_focusnews.NewsCrawling.NewsAdapter;
+import com.example.mz_focusnews.NewsCrawling.NewsArticle;
+import com.example.mz_focusnews.NewsCrawling.NewsScraper;
+import com.example.mz_focusnews.NewsCrawling.NewsScraperCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
     private RecyclerView recyclerView;
     private WebView webView;
-    private NewsAdapter newsAdapter;
-    private NewsScraper newsScraper;
-    private NavController navController;
-    private BottomNavigationView bottomNavigationView;
-
-    // 하단 네비게이션 바를 위한 변수
-    private FragmentManager fragmentManager = getSupportFragmentManager();
-    ContentFragment contentFragment;
-    CategoryFragment categoryFragment;
+    private NewsAdapter adapter;
+    private ArrayList<NewsArticle> articles;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerView);
-        webView = findViewById(R.id.webview);
+        webView = findViewById(R.id.webView);
 
+        articles = new ArrayList<>();
+        adapter = new NewsAdapter(this, articles);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        newsAdapter = new NewsAdapter(this, new ArrayList<>());
-        recyclerView.setAdapter(newsAdapter);
+        recyclerView.setAdapter(adapter);
 
-        newsScraper = new NewsScraper(this);
+        setupWebView();
+
+        fetchNews();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (newsScraper != null) {
-            newsScraper.shutdown();
-        }
+    private void setupWebView() {
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webView.setWebChromeClient(new WebChromeClient());
+    }
+
+    private void fetchNews() {
+        NewsScraper scraper = new NewsScraper(this);
+        scraper.fetchNews(new NewsScraperCallback() {
+            @Override
+            public void onSuccess(List<NewsArticle> articles) {
+                runOnUiThread(() -> {
+                    adapter.updateData(new ArrayList<>(articles));
+                    recyclerView.setVisibility(View.VISIBLE);
+                    webView.setVisibility(View.GONE);
+                });
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                // 예외 처리 코드 추가
+            }
+        });
+    }
+
+    public void showArticleInWebView(String url) {
+        recyclerView.setVisibility(View.GONE);
+        webView.setVisibility(View.VISIBLE);
+        webView.loadUrl(url);
     }
 }
+
+
