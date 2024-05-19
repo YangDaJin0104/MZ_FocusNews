@@ -20,6 +20,7 @@ import java.util.List;
 
 public class CategoryFragment extends Fragment {
 
+/*
     private RecyclerView recyclerView;
     private NewsAdapter adapter;
     private List<NewsItem> newsItemList;
@@ -60,6 +61,7 @@ public class CategoryFragment extends Fragment {
 
         return view;
     }
+*/
 
 
 }
