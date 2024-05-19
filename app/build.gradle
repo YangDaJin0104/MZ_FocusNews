@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.mz_focusnews"
-        minSdk 21
+        minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -47,7 +47,6 @@ android {
 }
 
 dependencies {
-
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -59,6 +58,9 @@ dependencies {
     implementation libs.ui.graphics
     implementation libs.ui.tooling.preview
     implementation libs.material3
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
+    implementation 'com.android.volley:volley:1.2.1'
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -67,8 +69,21 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.google.android.gms:play-services-location:21.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
     implementation 'org.jsoup:jsoup:1.17.2'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'me.relex:circleindicator:2.1.6'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    // MySQL 의존성 추가
+    implementation files('libs/mysql-connector-java-5.1.49-bin.jar')
+}
+
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation "org.mockito:mockito-core:3.+"
 }

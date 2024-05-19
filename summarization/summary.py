@@ -1,7 +1,8 @@
 import openai
 
 # OpenAI API 키 설정
-openai.api_key = 'sk-proj-Q4tE2EXdkUDlYyldBOnVT3BlbkFJxglTyMW2QBeQoJZV5Tay'
+
+openai.api_key = ''   #보안 문제로, api key는 따로 보관 
 
 def summarize_korean_text(text):
     """
@@ -15,7 +16,7 @@ def summarize_korean_text(text):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",  # 적절한 모델명으로 수정
             messages=[
-                {"role": "system", "content": "다음 글을 3문장으로 요약해줘."},
+                {"role": "system", "content": "다음 글을 3문장으로 요약해줘. 공백 포함 200글자 내외로 써줘."},
                 {"role": "user", "content": text}
             ],
             max_tokens=300,  # 최소 토큰 수로 설정하여 크레딧 절약
@@ -56,4 +57,20 @@ A씨는 “많은 분이 제 SNS 페이지를 캡처해 공격하고 있다. 마
 
 # 함수 호출 및 요약 결과 출력
 summary = summarize_korean_text(example_text)
-print("요약된 텍스트:", summary)
+
+#문장 분리
+sentences = summary.split('. ')
+sentence1 = sentences[0] + '.'
+sentence2 = sentences[1] + '.'
+sentence3 = sentences[2]
+
+
+<<<<<<< HEAD
+# print("원본: ", example_text)
+=======
+#print("원본: ", example_text)
+>>>>>>> origin/master
+print("\n\n\n요약된 텍스트\n")
+print(sentence1)
+print(sentence2)
+print(sentence3)

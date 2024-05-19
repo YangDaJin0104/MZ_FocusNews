@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/littleblue"/> <!-- 배경의 색상 -->
+    <corners android:radius="18dp"/> <!-- 모서리의 둥글기 -->
+    <size android:width="200dp"/> <!-- 배경의 크기 -->
+</shape>
