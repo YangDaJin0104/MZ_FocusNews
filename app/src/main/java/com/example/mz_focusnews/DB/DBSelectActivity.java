@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 
 import com.example.mz_focusnews.R;
-import com.example.mz_focusnews.UsersAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
