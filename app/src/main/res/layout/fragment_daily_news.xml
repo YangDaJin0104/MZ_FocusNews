@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".newspager.DailyNewsFragment">
-
-
     <LinearLayout
         android:layout_width="385dp"
         android:layout_height="190dp"
@@ -21,6 +19,7 @@
             android:layout_gravity="left"
             android:layout_marginBottom="10dp"
             android:text="Today's News"
+            android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -37,7 +36,7 @@
                 android:layout_width="160dp"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/img_sample_panda" />
+                android:src="@drawable/img_sample" />
 
             <LinearLayout
                 android:layout_width="190dp"
@@ -51,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:paddingBottom="5dp"
-                    android:text="푸바옹푸바옹푸바옹푸바옹푸바옹푸바옹푸바옹푸바옹"
+                    android:text="@string/sample_title_26"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -60,10 +59,9 @@
                     android:id="@+id/daily_content"
                     android:layout_width="180dp"
                     android:layout_height="60dp"
-                    android:text="의대 교수들이 '2천명 증원 백지화'를 대화의 조건으로 들고 있는 가운데, 정부는..."
+                    android:text="@string/sample_content_45"
                     android:textSize="13sp"
                     android:textStyle="bold" />
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

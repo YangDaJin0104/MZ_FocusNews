@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/whiteblue">
 
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".homeActivitiy_2">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +18,7 @@
 
             <TextView
                 android:id="@+id/user_name"
-                android:layout_width="wrap_content"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:text="Hi, User Name"
                 android:textSize="30dp"
@@ -31,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:layout_marginTop="40dp"
-                android:layout_marginLeft="150dp"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/bell"/>
         </LinearLayout>
 
@@ -75,128 +74,26 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:background="@color/gray" />
+            android:background="#DBDBDB" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
+            android:text="무슨 일이 일어나고 있나요?"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="무슨 일이 일어나고 있나요?"
-                android:textSize="17dp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginLeft="30dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
-                android:text="See All"
-                android:textSize="17dp"
-                android:textStyle="bold"
-                android:textColor="@color/blue" />
-
-        </LinearLayout>
-
-        <HorizontalScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_interest_content"
             android:layout_width="350dp"
-            android:layout_height="250dp"
+            android:layout_height="360dp"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp">
-
-                    <ImageView
-                        android:layout_width="180dp"
-                        android:layout_height="100dp"
-                        android:src="@color/cardview_dark_background" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔다랄라"
-                        android:textStyle="bold"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔는데어쩌구저쩌구슬프다는둥아니라는둥"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
-
-
-
-                <!--카드 부분 완성되면 여기다가 복붙할 것-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp">
-
-                    <ImageView
-                        android:layout_width="180dp"
-                        android:layout_height="100dp"
-                        android:src="@color/cardview_dark_background" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔다랄라"
-                        android:textStyle="bold"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔는데어쩌구저쩌구슬프다는둥아니라는둥"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp">
-
-                    <ImageView
-                        android:layout_width="180dp"
-                        android:layout_height="100dp"
-                        android:src="@color/cardview_dark_background" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔다랄라"
-                        android:textStyle="bold"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔는데어쩌구저쩌구슬프다는둥아니라는둥"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-        </HorizontalScrollView>
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" />
     </LinearLayout>
 </ScrollView>
