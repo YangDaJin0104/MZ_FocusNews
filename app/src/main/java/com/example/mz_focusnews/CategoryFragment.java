@@ -1,5 +1,8 @@
 package com.example.mz_focusnews;
 
+import static com.example.mz_focusnews.NewsUtils.*;
+import static com.example.mz_focusnews.NewsUtils.logUserInteraction;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,15 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-import com.example.mz_focusnews.request.NewsViewCountRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CategoryFragment extends Fragment {
 
@@ -29,11 +28,13 @@ public class CategoryFragment extends Fragment {
     private NewsAdapter adapter;
     private List<NewsItem> newsItemList;
     private NavController navController;
+    private Map<String, UserSession> userSessions;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+        userSessions = new HashMap<>();
     }
 
     @Nullable
@@ -53,9 +54,9 @@ public class CategoryFragment extends Fragment {
         newsItemList = new ArrayList<>();
 
         // 예시 데이터
-        newsItemList.add(new NewsItem(1, "AI가 새로운 의료 기술을 개발", "한국일보", "2002-11-08"));
-        newsItemList.add(new NewsItem(2, "로켓 발사 성공, 새로운 우주 시대의 시작", "우주뉴스", "2024-04-02"));
-        newsItemList.add(new NewsItem(3, "미국에서 새로운 화성 탐사 임무 발표", "NASA News", "2024-04-03"));
+        newsItemList.add(new NewsItem(1, "AI가 새로운 의료 기술을 개발", "한국일보", "2002-11-08", "요약1", "sports"));
+        newsItemList.add(new NewsItem(2, "로켓 발사 성공, 새로운 우주 시대의 시작", "우주뉴스", "2024-04-02", "요약2", "economy"));
+        newsItemList.add(new NewsItem(3, "미국에서 새로운 화성 탐사 임무 발표", "NASA News", "2024-04-03", "요약3", "economy"));
         // 추가 데이터...
 
         // 어댑터 초기화 및 RecyclerView에 설정
@@ -63,37 +64,21 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onNewsItemClick(NewsItem newsItem) {
                 // 클릭된 뉴스 아이템 정보를 서버에 전송 (조회수 증가)
-                sendNewsItemToServer(newsItem);
+                sendNewsItemToServer(getContext(), newsItem);
+
+                // 클릭된 뉴스 아이템 정보를 사용자 세션에 추가
+                logUserInteraction(getContext(), userSessions, "romi", newsItem);
 
                 // 클릭된 뉴스 아이템 정보를 Bundle에 담아서 NavGraph로 전달 (뉴스 데이터 전달)
-                /**
-                 * 지금은 그냥 간단하게 제목이랑 시간대만 보내는데..
-                 * 추후에는 newsItem 자체에 내용도 담아서 같이 전달하던가 등등의 방법을 모색해야할듯 (아이디만 전달해도 될듯)
-                 */
+                // 지금은 그냥 간단하게 제목이랑 시간대만 전송
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("news_item", newsItem);
-                navController.navigate(R.id.action_categoryFragment_to_contentFragment, bundle);            }
+                navController.navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
+            }
         });
 
         recyclerView.setAdapter(adapter);
 
         return view;
-    }
-
-    // 클릭된 뉴스 아이템의 정보를 서버에 전송하는 메소드
-    private void sendNewsItemToServer(NewsItem newsItem) {
-        // 클릭된 뉴스 아이템의 ID를 서버에 전송
-        int newsId = newsItem.getNewsId();
-
-        NewsViewCountRequest request = new NewsViewCountRequest(newsId, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(getContext(), "뉴스 조회수가 증가했습니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // RequestQueue에 Request 객체 추가
-        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
-        requestQueue.add(request);
     }
 }
