@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_homeFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_quizStartActivity"
-            app:destination="@id/quizStartActivity" />
         <action
             android:id="@+id/action_homeFragment_to_myPage"
             app:destination="@id/myPage" />
@@ -43,12 +40,6 @@
         android:name="com.example.mz_focusnews.ContentFragment"
         android:label="fragment_content"
         tools:layout="@layout/fragment_content" />
-
-    <activity
-        android:id="@+id/quizStartActivity"
-        android:name="com.example.mz_focusnews.QuizStartActivity"
-        android:label="activity_quiz_start"
-        tools:layout="@layout/activity_quiz_start" />
 
     <activity
         android:id="@+id/myPage"

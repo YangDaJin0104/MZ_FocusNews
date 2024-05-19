@@ -8,27 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
+import com.example.mz_focusnews.NewsUtils;
 import com.example.mz_focusnews.R;
-import com.example.mz_focusnews.request.NewsRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.mz_focusnews.UserSession;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class DailyNewsFragment extends Fragment {
 
-    TextView daily_title;
-    TextView daily_content;
+    private TextView daily_title;
+    private TextView daily_content;
+    private Map<String, UserSession> userSessions;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,58 +31,25 @@ public class DailyNewsFragment extends Fragment {
 
         daily_title = view.findViewById(R.id.daily_title);
         daily_content = view.findViewById(R.id.daily_content);
+        userSessions = new HashMap<>();
+
+        daily_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewsUtils.handleNewsItemClick(DailyNewsFragment.this, daily_title, userSessions, "romi");
+//                NavHostFragment.findNavController(DailyNewsFragment.this)
+//                        .navigate(R.id.action_homeFragment_to_contentFragment);
+            }
+        });
 
         loadDailyNews();
-
         return view;
     }
 
-    // 오늘의 뉴스를 조회하는 메소드
+    // 오늘의 뉴스를 로드하는 메소드
     private void loadDailyNews() {
         String todayDate = getCurrentDate();
-
-        /**
-         * 일단 날짜 기준 없이 조회수 많은 뉴스 불러와보기
-         */
-
-        // Volley 요청 큐 생성
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-
-        // JSON 요청 생성
-        NewsRequest newsRequest = new NewsRequest(
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            boolean success = response.getBoolean("success");
-                            if (success) {
-                                JSONArray newsArray = response.getJSONArray("news");
-                                JSONObject topNews = newsArray.getJSONObject(0); // 조회수가 가장 많은 뉴스 가져오기
-
-                                String title = topNews.getString("title");
-                                String content = topNews.getString("summary");
-
-                                daily_title.setText(title);
-                                daily_content.setText(content);
-                            } else {
-                                Toast.makeText(getActivity(), "뉴스를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // 오류 처리
-                    }
-                });
-
-        // 요청 큐에 요청 추가
-        queue.add(newsRequest);
-
+        NewsUtils.loadNews(getContext(), todayDate, "daily", daily_title, daily_content, userSessions, this);
     }
 
     // 현재 날짜를 가져오는 메소드
@@ -96,6 +58,4 @@ public class DailyNewsFragment extends Fragment {
         Date currentDate = new Date();
         return dateFormat.format(currentDate);
     }
-
-
 }

@@ -22,9 +22,9 @@ public class ViewPager2Adapter extends FragmentStateAdapter {
             case 0:
                 return new DailyNewsFragment();
             case 1:
-                return new MonthlyNewsFragment();
-            case 2:
                 return new WeeklyNewsFragment();
+            case 2:
+                return new MonthlyNewsFragment();
             default:
                 return null;
         }

@@ -2,24 +2,24 @@ package com.example.mz_focusnews.request;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONObject;
+import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewsRequest extends JsonObjectRequest {
+public class NewsRequest extends StringRequest {
 
     private static final String URL = "http://43.201.173.245/getNewsView.php";
+    private final Map<String, String> params;
 
-    public NewsRequest(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, URL, null, listener, errorListener);
+    public NewsRequest(String date, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(Method.POST, URL, listener, errorListener);
+        params = new HashMap<>();
+        params.put("date", date);
     }
 
     @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
-        Map<String, String> headers = new HashMap<>();
-        return headers;
+    protected Map<String, String> getParams() throws AuthFailureError {
+        return params;
     }
 }
