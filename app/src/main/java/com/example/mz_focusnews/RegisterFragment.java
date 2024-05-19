@@ -31,7 +31,6 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         signup_username = view.findViewById(R.id.et_name);
@@ -98,6 +97,13 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
+                // 아이디 형식 체크
+                if (!user_id.matches("[a-zA-Z0-9]{6,12}")) {
+                    Toast.makeText(getActivity(), "아이디는 6~12자 이내의 영문/숫자 조합이어야 합니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 // 서버로부터의 응답 처리
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -146,6 +152,13 @@ public class RegisterFragment extends Fragment {
                     Toast.makeText(getActivity(), "모두 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                // 비밀번호 형식 체크
+                if (!user_pw.matches("(?=.*[0-9])(?=.*[a-zA-Z]).{8,}")) {
+                    Toast.makeText(getActivity(), "비밀번호는 8자 이상의 영문/숫자 조합이어야 합니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 // 응답 처리
                 Response.Listener<String> responseListener = new Response.Listener<String>() {

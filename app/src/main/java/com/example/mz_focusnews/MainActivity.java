@@ -1,34 +1,17 @@
-
 package com.example.mz_focusnews;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-
-import com.example.mz_focusnews.NewsCrawling.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private NewsAdapter newsAdapter;
-    private NewsScraper newsScraper;
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
-
-    // 하단 네비게이션 바를 위한 변수
-    private FragmentManager fragmentManager = getSupportFragmentManager();
-    ContentFragment contentFragment;
-    CategoryFragment categoryFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

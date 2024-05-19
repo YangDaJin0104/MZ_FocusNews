@@ -13,7 +13,7 @@ import java.util.List;
 
 
 /**
- * 뉴스 목록을 표시하는 데 사용되는 클래스 (리스트 스크롤 구현)
+ * 뉴스 목록을 표시하는 데 사용되는 클래스 (categoryFragment 리스트 스크롤 구현)
  */
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
