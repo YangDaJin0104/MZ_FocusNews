@@ -1,4 +1,4 @@
-package com.example.mz_focusnews;
+package com.example.mz_focusnews.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mz_focusnews.NewsItem;
+import com.example.mz_focusnews.R;
+
 import java.util.List;
 
 public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHolder> {
@@ -37,9 +41,16 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NewsItem item = newsItemList.get(position);
-        holder.newsTitle.setText(item.getTitle());
-        holder.newsDescription.setText(item.getSummary());
-//        holder.newsImage // 이미지 처리를 위한 코드 추가
+        holder.tv_title.setText(item.getTitle());
+        holder.tv_description.setText(item.getSummary());
+        holder.tv_date.setText(item.getDate());
+        //holder.이미지
+
+        // 디버깅 로그 추가
+        Log.d("InterestAdapter", "Binding news item at position " + position + ": " + item.getTitle());
+
+        // NewsItem 객체를 태그로 설정
+        holder.itemView.setTag(item);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,15 +72,17 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView newsImage;
-        TextView newsTitle;
-        TextView newsDescription;
+        ImageView iv_image;
+        TextView tv_title;
+        TextView tv_description;
+        TextView tv_date;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            newsImage = itemView.findViewById(R.id.news_image);
-            newsTitle = itemView.findViewById(R.id.news_title);
-            newsDescription = itemView.findViewById(R.id.news_description);
+            iv_image = itemView.findViewById(R.id.interest_image);
+            tv_title = itemView.findViewById(R.id.interest_title);
+            tv_description = itemView.findViewById(R.id.interest_description);
+            tv_date = itemView.findViewById(R.id.interest_time);
         }
     }
 }

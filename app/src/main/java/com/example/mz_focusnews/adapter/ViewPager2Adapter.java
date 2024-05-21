@@ -1,4 +1,4 @@
-package com.example.mz_focusnews;
+package com.example.mz_focusnews.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
