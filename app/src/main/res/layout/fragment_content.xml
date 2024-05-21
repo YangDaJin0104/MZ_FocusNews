@@ -59,7 +59,7 @@
                     android:src="@drawable/img_sample" />
 
                 <TextView
-                    android:id="@+id/news_title"
+                    android:id="@+id/interest_title"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"

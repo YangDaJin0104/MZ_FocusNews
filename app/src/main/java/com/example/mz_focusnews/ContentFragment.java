@@ -19,7 +19,7 @@ public class ContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
 
-        tv_title = view.findViewById(R.id.news_title);
+        tv_title = view.findViewById(R.id.interest_title);
         tv_time = view.findViewById(R.id.news_date);
 
         // Bundle로부터 전달받은 데이터를 가져옴
@@ -29,7 +29,7 @@ public class ContentFragment extends Fragment {
             if (newsItem != null) {
                 // 뉴스 아이템 정보를 TextView에 설정
                 tv_title.setText(newsItem.getTitle());
-                tv_time.setText(newsItem.getTime());
+                tv_time.setText(newsItem.getDate());
             } else {
                 Log.e("ContentFragment", "Received null NewsItem");
             }
