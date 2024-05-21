@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Map;
 
 public class NewsUtils {
@@ -42,43 +43,51 @@ public class NewsUtils {
         Log.d("NewsUtils", "sendNewsItemToServer: 뉴스 조회수 증가 요청 큐에 추가됨, 뉴스 ID=" + newsId);
     }
 
-    // 선호 카테고리 반영하는 메소드
     public static void logUserInteraction(Context context, Map<String, UserSession> userSessions, String userId, NewsItem newsItem) {
         Log.d("NewsUtils", "logUserInteraction: 사용자 상호작용 시작, 사용자 ID=" + userId + ", 뉴스 ID=" + newsItem.getNewsId());
         UserSession session = userSessions.computeIfAbsent(userId, id -> new UserSession());
         session.logInteraction(newsItem.getNewsId(), newsItem.getCategory());
 
-        String preferredCategory = session.getPreferredCategory();
-        updateUserInterestCategory(context, userId, preferredCategory);
+        List<String> preferredCategories = session.getPreferredCategories();
+        try {
+            JSONArray jsonCategoriesArray = new JSONArray(preferredCategories);
+            JSONObject jsonRequest = new JSONObject();
+            jsonRequest.put("user_id", userId);
+            jsonRequest.put("interest_category", jsonCategoriesArray);
 
-        Log.d("NewsUtils", "logUserInteraction: 사용자 상호작용 완료, 사용자 ID=" + userId + ", 선호 카테고리=" + preferredCategory);
+            // JSON 데이터 로그 출력
+            Log.d("NewsUtils", "logUserInteraction: 생성된 JSON 객체: " + jsonRequest.toString());
+
+            updateUserInterestCategory(context, jsonRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    // 서버에 사용자의 선호 카테고리를 업데이트하는 메소드
-    public static void updateUserInterestCategory(Context context, String userId, String category) {
-        Log.d("NewsUtils", "updateUserInterestCategory: 사용자 선호 카테고리 업데이트 요청 시작, 사용자 ID=" + userId + ", 선호 카테고리=" + category);
-        UpdateCategoryRequest request = new UpdateCategoryRequest(userId, category, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if (success) {
-                        Toast.makeText(context, "선호 카테고리가 업데이트되었습니다.", Toast.LENGTH_SHORT).show();
-                        Log.d("NewsUtils", "updateUserInterestCategory: 선호 카테고리 업데이트 성공, 사용자 ID=" + userId + ", 선호 카테고리=" + category);
-                    } else {
-                        Toast.makeText(context, "선호 카테고리 업데이트에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                        Log.d("NewsUtils", "updateUserInterestCategory: 선호 카테고리 업데이트 실패, 사용자 ID=" + userId + ", 선호 카테고리=" + category);
-                    }
-                } catch (JSONException e) {
-                    Log.d("NewsUtils", "updateUserInterestCategory: JSON 파싱 오류, 사용자 ID=" + userId + ", 선호 카테고리=" + category, e);
+    public static void updateUserInterestCategory(Context context, JSONObject jsonCategories) {
+        Log.d("NewsUtils", "updateUserInterestCategory: 사용자 선호 카테고리 업데이트 요청 시작, 선호 카테고리=" + jsonCategories.toString());
+        Response.Listener<JSONObject> responseListener = response -> {
+            try {
+                if (response.getBoolean("success")) {
+                    Toast.makeText(context, "선호 카테고리 업데이트 성공.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "선호 카테고리 업데이트 실패.", Toast.LENGTH_SHORT).show();
                 }
+            } catch (JSONException e) {
+                Toast.makeText(context, "JSON 파싱 오류.", Toast.LENGTH_SHORT).show();
             }
-        });
+        };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(request);
-        Log.d("NewsUtils", "updateUserInterestCategory: 사용자 선호 카테고리 업데이트 요청 큐에 추가됨, 사용자 ID=" + userId + ", 선호 카테고리=" + category);
+        Response.ErrorListener errorListener = error -> Toast.makeText(context, "네트워크 오류.", Toast.LENGTH_SHORT).show();
+
+        try {
+            String userId = jsonCategories.getString("user_id");
+            UpdateCategoryRequest request = new UpdateCategoryRequest(userId, jsonCategories, responseListener, errorListener);
+            RequestQueue queue = Volley.newRequestQueue(context);
+            queue.add(request);
+        } catch (JSONException e) {
+            Toast.makeText(context, "JSON 파싱 오류: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     // 클릭된 뉴스 아이템을 처리하고 화면을 전환하는 메소드
@@ -128,14 +137,15 @@ public class NewsUtils {
 
                                 String title = topNews.getString("title");
                                 String content = topNews.getString("summary");
-                                String newsDate = topNews.getString("date"); // date 필드 추가
+                                String newsDate = topNews.getString("date");
+                                String newsId = topNews.getString("news_id");
 
                                 titleView.setText(title);
                                 contentView.setText(content); // 뉴스 내용과 날짜를 함께 표시
 
                                 titleView.setTag(topNews);
 
-                                Log.d("NewsUtils", "loadNews: 뉴스 로드 성공, 제목=" + title);
+                                Log.d("NewsUtils", "loadNews: 뉴스 로드 성공, 뉴스 아이디=" +newsId+ ", 제목=" + title);
                             } else {
                                 Toast.makeText(context, "뉴스를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
                                 Log.d("NewsUtils", "loadNews: 뉴스 로드 실패, 성공 플래그 false");

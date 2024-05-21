@@ -40,8 +40,6 @@ public class DailyNewsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NewsUtils.handleNewsItemClick(DailyNewsFragment.this, daily_title, userSessions, "romi");
-//                NavHostFragment.findNavController(DailyNewsFragment.this)
-//                        .navigate(R.id.action_homeFragment_to_contentFragment);
             }
         });
 
