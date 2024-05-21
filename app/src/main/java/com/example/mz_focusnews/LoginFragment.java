@@ -1,5 +1,7 @@
 package com.example.mz_focusnews;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +76,13 @@ public class LoginFragment extends Fragment {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("user_id", user_id);
                                 bundle.putString("user_name", user_name);
+
+                                // UserData라는 이름으로 식별되는 공유 환경설정 파일, 비공개 모드
+                                // 데이터를 읽어올 때는 똑같이 sp 선언 하고 getString(key, value)로 호출
+                                SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString("user_id", user_id);
+                                editor.apply();
 
                                 // HomeFragment로 이동
                                 NavHostFragment.findNavController(LoginFragment.this)

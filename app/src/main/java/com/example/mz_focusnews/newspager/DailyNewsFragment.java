@@ -1,5 +1,7 @@
 package com.example.mz_focusnews.newspager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,13 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mz_focusnews.NewsItem;
 import com.example.mz_focusnews.NewsUtils;
 import com.example.mz_focusnews.R;
 import com.example.mz_focusnews.UserSession;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -27,8 +29,10 @@ public class DailyNewsFragment extends Fragment {
     private TextView daily_title;
     private TextView daily_content;
     private Map<String, UserSession> userSessions;
+    private String user_id;
 
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily_news, container, false);
 
@@ -36,10 +40,16 @@ public class DailyNewsFragment extends Fragment {
         daily_content = view.findViewById(R.id.daily_content);
         userSessions = new HashMap<>();
 
+        SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        user_id = sp.getString("user_id", null);
+
         daily_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewsUtils.handleNewsItemClick(DailyNewsFragment.this, daily_title, userSessions, "romi");
+                NewsItem newsItem = (NewsItem) daily_title.getTag();
+                if (newsItem != null) {
+                    NewsUtils.handleNewsItemClick(DailyNewsFragment.this, newsItem, userSessions, user_id);
+                }
             }
         });
 
