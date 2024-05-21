@@ -1,28 +1,27 @@
 package com.example.mz_focusnews;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.mz_focusnews.Quiz.InitializeQuizTime;
 import com.example.mz_focusnews.Ranking.Ranking;
 import com.example.mz_focusnews.Ranking.RankingParser;
 
@@ -40,20 +39,22 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class RankingFragment extends Fragment {
-
-    private Button btn_quiz_start;
     private NavController navController;
     private static final String TAG = "RankingFragment";
     private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";
     private static final String PREFS_NAME = "QuizPrefs";
     private static final String IS_SOLVED_QUIZ_KEY = "123";
+    private static final int POPUP_WIDTH = 700;
+    private int POPUP_HEIGHT = 800;     // HEIGHT는 상태에 따라 바뀜
 
-    TextView score1;
-    TextView score2;
-    TextView score3;
-    TextView score_user;
-    TextView rank_user;
-    ImageView dot;
+    private Button btn_quiz_start;
+    private TextView score1;
+    private TextView score2;
+    private TextView score3;
+    private TextView score_user;
+    private TextView rank_user;
+    private ImageView dot;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,8 +77,6 @@ public class RankingFragment extends Fragment {
 
         showRanking(view);
 
-        //setDailyResetAlarm();
-
         btn_quiz_start = view.findViewById(R.id.quizStart);
 
         // 게임 시작 버튼 클릭 시 퀴즈 화면으로 이동
@@ -86,10 +85,11 @@ public class RankingFragment extends Fragment {
             public void onClick(View v) {
                 final boolean isSolvedQuiz = preferences.getBoolean(IS_SOLVED_QUIZ_KEY, false);
                 if(isSolvedQuiz){
-                   // 이미 오늘 퀴즈를 푼 경우, 팝업창(?) 출력
-                    Log.d(TAG, "System: 이미 오늘의 퀴즈를 풀었습니다! 내일 다시 도전하세요.");   // 임시
+                    Log.d(TAG, "System: 이미 오늘의 퀴즈를 풀었습니다! 내일 다시 도전하세요.");
+                    setPopupAlreadySolvedQuiz(v);   // 이미 오늘 퀴즈를 푼 경우, 팝업창 출력
                 } else{
-                    Log.d(TAG, "System: 초기화 됐습니다. 문제 출제 중!");   // 임시
+                    Log.d(TAG, "System: 초기화 됐습니다. 문제 출제 중!");
+                    setPopupGenerateQuiz(v);        // 오늘 퀴즈를 풀지 않은 경우, 문제 생성 중이라는 팝업창 출력
                     setSolvedQuizFlag(true);
                     navController = Navigation.findNavController(view);
                     navController.navigate(R.id.action_rankingFragment_to_quizFragment);
@@ -113,9 +113,9 @@ public class RankingFragment extends Fragment {
         // 매일 오전 6시(한국시간)에 퀴즈 초기화
         Calendar now = Calendar.getInstance();
         Calendar next6AM = Calendar.getInstance();
-        next6AM.set(Calendar.HOUR_OF_DAY, 21);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h
-        next6AM.set(Calendar.MINUTE, 0);
-        next6AM.set(Calendar.SECOND, 0);
+        next6AM.set(Calendar.HOUR_OF_DAY, 18);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
+        next6AM.set(Calendar.MINUTE, 6);
+        next6AM.set(Calendar.SECOND, 50);
         next6AM.set(Calendar.MILLISECOND, 0);
 
         // 이미 오전 6시가 지난 경우, 내일 오전 6시에 초기화
@@ -215,6 +215,55 @@ public class RankingFragment extends Fragment {
             e.printStackTrace();
             return null;
         }
+    }
+
+    // 문제 생성 시 나타나는 팝업 창 설정
+    private void setPopupGenerateQuiz(View view){
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_ranking, null);
+
+        // PopupWindow 생성
+        POPUP_HEIGHT = 800;
+        final PopupWindow popupWindow = new PopupWindow(popupView, POPUP_WIDTH, POPUP_HEIGHT, true);
+
+        TextView popupMessage = popupView.findViewById(R.id.popup_message);
+        popupMessage.setText("초기화 됐습니다.\n문제 출제 중!");
+
+        Button closeButton = popupView.findViewById(R.id.popup_close);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+    }
+
+    // 이미 오늘의 퀴즈를 풀었을 시 나타나는 팝업 창 설정
+    private void setPopupAlreadySolvedQuiz(View view){
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_ranking, null);
+
+        // PopupWindow 생성
+        POPUP_HEIGHT = 600;
+        final PopupWindow popupWindow = new PopupWindow(popupView, POPUP_WIDTH, POPUP_HEIGHT, true);
+
+        TextView popupMessage = popupView.findViewById(R.id.popup_message);
+        popupMessage.setText("이미 오늘의 퀴즈를 풀었습니다!\n내일 다시 도전하세요.");
+
+        ProgressBar popupProgressBar = popupView.findViewById(R.id.popup_progress_bar);
+        popupProgressBar.setVisibility(View.GONE);
+
+        Button closeButton = popupView.findViewById(R.id.popup_close);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
 
 }
