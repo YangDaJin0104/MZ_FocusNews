@@ -27,9 +27,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class RankingFragment extends Fragment {
 
@@ -48,6 +50,12 @@ public class RankingFragment extends Fragment {
     ImageView dot;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        scheduleQuizTimeReset();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
 
@@ -59,7 +67,6 @@ public class RankingFragment extends Fragment {
         dot = view.findViewById(R.id.dot);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        boolean isSolvedQuiz = preferences.getBoolean(IS_SOLVED_QUIZ_KEY, false);
 
         showRanking(view);
 
@@ -69,31 +76,56 @@ public class RankingFragment extends Fragment {
         btn_quiz_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final boolean isSolvedQuiz = preferences.getBoolean(IS_SOLVED_QUIZ_KEY, false);
                 if(isSolvedQuiz){
                    // 이미 오늘 퀴즈를 푼 경우, 팝업창(?) 출력
-                    Log.d(TAG, "이미 오늘의 퀴즈를 풀었습니다! 내일 다시 도전하세요.");   // 임시
+                    Log.d(TAG, "System: 이미 오늘의 퀴즈를 풀었습니다! 내일 다시 도전하세요.");   // 임시
                 } else{
-                    Log.d(TAG, "First");
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean(IS_SOLVED_QUIZ_KEY, true);
-                    editor.apply();
-
+                    Log.d(TAG, "System: 초기화 됐습니다. 문제 출제 중!");   // 임시
+                    setSolvedQuizFlag(true);
                     navController = Navigation.findNavController(view);
                     navController.navigate(R.id.action_rankingFragment_to_quizFragment);
                 }
             }
         });
 
-        setSolvedQuizFlag(isSolvedQuiz);
-
         return view;
     }
 
-    private void setSolvedQuizFlag(boolean isSolved) {
+    private void scheduleQuizTimeReset() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        Runnable resetQuizFlagTask = new Runnable() {
+            @Override
+            public void run() {
+                setSolvedQuizFlag(false);
+                handler.postDelayed(this, TimeUnit.DAYS.toMillis(1));   // 하루 뒤 같은 작업 예약
+            }
+        };
+
+        // 매일 오전 6시(한국시간)에 퀴즈 초기화
+        Calendar now = Calendar.getInstance();
+        Calendar next6AM = Calendar.getInstance();
+        next6AM.set(Calendar.HOUR_OF_DAY, 21);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h
+        next6AM.set(Calendar.MINUTE, 0);
+        next6AM.set(Calendar.SECOND, 0);
+        next6AM.set(Calendar.MILLISECOND, 0);
+
+        // 이미 오전 6시가 지난 경우, 내일 오전 6시에 초기화
+        if (now.after(next6AM)) {
+            next6AM.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        long initialDelay = next6AM.getTimeInMillis() - now.getTimeInMillis();
+        handler.postDelayed(resetQuizFlagTask, initialDelay);
+    }
+
+    private boolean setSolvedQuizFlag(boolean isSolved) {
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(IS_SOLVED_QUIZ_KEY, isSolved);
         editor.apply();
+
+        return isSolved;
     }
 
     private void setView(View view, List<Ranking> rankingList){

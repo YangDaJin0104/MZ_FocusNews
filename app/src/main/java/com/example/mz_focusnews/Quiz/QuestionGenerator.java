@@ -106,8 +106,8 @@ public class QuestionGenerator {
 
             // 문제가 이미 해결된 문제인지 확인
             //String questionId = questionData[0];        // 출제할 문제ID
-            String strLevel = String.valueOf(level);                // int -> String 형변환
-            String strQuestionID = String.valueOf(questionData[0]);      // int -> String 형변환
+            String strLevel = String.valueOf(level);      // int -> String 형변환
+            String strQuestionID = questionData[0];
 
             // 이미 해당 유저에게 출제된 문제인지 확인
             if (!isSolved(solvedQuestions, userId, strLevel, strQuestionID)) {
