@@ -10,9 +10,10 @@ public class NewsItem implements Parcelable {
     private int newsId;
     private String title; // 뉴스 제목
     private String publisher; // 출판사
-    private String time; // 게시 시간
+    private String date; // 게시 시간
     private String summary;
     private String category;
+
 
     // usage: 오늘/이주/이달의 뉴스
     public NewsItem(int newsId, String title, String summary) {
@@ -31,21 +32,32 @@ public class NewsItem implements Parcelable {
 
 
     // usage: 사용자 맞춤형 뉴스 추천
-    public NewsItem(int newsId, String title, String summary, String time) {
+    public NewsItem(int newsId, String title, String summary, String date) {
         this.newsId = newsId;
         this.title = title;
-        this.time = time;
+        this.date = date;
         this.summary = summary;
     }
 
 
-    public NewsItem(int newsId, String title, String publisher, String time, String summary, String category) {
+    // 카테고리 표시
+    public NewsItem(int newsId, String title, String publisher, String date, String summary, String category) {
         this.newsId = newsId;
         this.title = title;
         this.publisher = publisher;
-        this.time = time;
+        this.date = date;
         this.summary = summary;
         this.category = category;
+    }
+
+    // 사용자 맞춤형 뉴스 추천
+    public NewsItem(int newsId, String title, String summary, String category, String date) {
+        this.newsId = newsId;
+        this.title = title;
+        this.summary = summary;
+        this.category = category;
+        this.date = date;
+
     }
 
     /**
@@ -75,12 +87,12 @@ public class NewsItem implements Parcelable {
         this.publisher = publisher;
     }
 
-    public String getTime() {
-        return time;
+    public String getDate() {
+        return date;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getSummary() {
@@ -112,16 +124,18 @@ public class NewsItem implements Parcelable {
         dest.writeInt(newsId);
         dest.writeString(title);
         dest.writeString(publisher);
-        dest.writeString(time);
+        dest.writeString(date);
         dest.writeString(summary);
+        dest.writeString(category);
     }
 
     public void readFromParcel(Parcel in) {
         newsId = in.readInt();
         title = in.readString();
         publisher = in.readString();
-        time = in.readString();
+        date = in.readString();
         summary = in.readString();
+        category = in.readString();
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

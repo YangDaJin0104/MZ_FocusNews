@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mz_focusnews.NewsItem;
 import com.example.mz_focusnews.NewsUtils;
 import com.example.mz_focusnews.R;
 import com.example.mz_focusnews.UserSession;
@@ -38,7 +39,10 @@ public class WeeklyNewsFragment extends Fragment {
         weekly_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewsUtils.handleNewsItemClick(WeeklyNewsFragment.this, weekly_title, userSessions, "romi");
+                NewsItem newsItem = (NewsItem) weekly_title.getTag();
+                if (newsItem != null) {
+                    NewsUtils.handleNewsItemClick(WeeklyNewsFragment.this, newsItem, userSessions, "romi");
+                }
             }
         });
 
@@ -64,4 +68,5 @@ public class WeeklyNewsFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         return dateFormat.format(calendar.getTime());
-    }}
+    }
+}

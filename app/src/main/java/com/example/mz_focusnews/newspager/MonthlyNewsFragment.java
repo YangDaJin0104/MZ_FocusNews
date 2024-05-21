@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mz_focusnews.NewsItem;
 import com.example.mz_focusnews.NewsUtils;
 import com.example.mz_focusnews.R;
 import com.example.mz_focusnews.UserSession;
@@ -38,7 +39,10 @@ public class MonthlyNewsFragment extends Fragment {
         monthly_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewsUtils.handleNewsItemClick(MonthlyNewsFragment.this, monthly_title, userSessions, "romi");
+                NewsItem newsItem = (NewsItem) monthly_title.getTag();
+                if (newsItem != null) {
+                    NewsUtils.handleNewsItemClick(MonthlyNewsFragment.this, newsItem, userSessions, "romi");
+                }
             }
         });
 
