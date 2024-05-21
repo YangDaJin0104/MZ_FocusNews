@@ -3,17 +3,20 @@ package com.example.mz_focusnews.Quiz;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 public class InitializeQuizTime extends BroadcastReceiver {
     private static final String TAG = "InitializeQuizTime";
-    public static boolean myBoolean = false;
+    private static final String IS_SOLVED_QUIZ_KEY = "123";
+    private static final String PREFS_NAME = "QuizPrefs";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction() != null && intent.getAction().equals("com.example.SET_BOOLEAN_TRUE")) {
-            myBoolean = true;
-            Log.d(TAG, "Boolean variable set to true");
-        }
+        SharedPreferences preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(IS_SOLVED_QUIZ_KEY, false); // Reset the boolean variable
+        editor.apply();
+        Log.d(TAG, "Quiz flag reset to false.");
     }
 }

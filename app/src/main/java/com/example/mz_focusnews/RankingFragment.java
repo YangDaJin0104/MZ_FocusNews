@@ -70,16 +70,18 @@ public class RankingFragment extends Fragment {
 
         showRanking(view);
 
+        setDailyResetAlarm();
+
         btn_quiz_start = view.findViewById(R.id.quizStart);
 
         // 게임 시작 버튼 클릭 시 퀴즈 화면으로 이동
         btn_quiz_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isSolvedQuiz){
-                   // 이미 오늘 퀴즈를 푼 경우, 팝업창(?) 출력
+                if (isSolvedQuiz) {
+                    // 이미 오늘 퀴즈를 푼 경우, 팝업창(?) 출력
                     Log.d(TAG, "이미 오늘의 퀴즈를 풀었습니다! 내일 다시 도전하세요.");   // 임시
-                } else{
+                } else {
                     Log.d(TAG, "First");
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putBoolean(IS_SOLVED_QUIZ_KEY, true);
@@ -96,10 +98,13 @@ public class RankingFragment extends Fragment {
         return view;
     }
 
-    private void setDailyAlarm(Context context) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(context.ALARM_SERVICE);
+
+    private void setDailyResetAlarm() {
+        Context context = getContext();
+        if (context == null) return;
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, InitializeQuizTime.class);
-        intent.setAction("com.example.SET_BOOLEAN_TRUE");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
@@ -109,10 +114,15 @@ public class RankingFragment extends Fragment {
         calendar.set(Calendar.SECOND, 0);
 
         if (alarmManager != null) {
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, pendingIntent);
+            alarmManager.setInexactRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(),
+                    AlarmManager.INTERVAL_DAY,
+                    pendingIntent
+            );
         }
     }
+
 
     private void setSolvedQuizFlag(boolean isSolved) {
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
