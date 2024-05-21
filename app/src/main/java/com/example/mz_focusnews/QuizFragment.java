@@ -67,6 +67,16 @@ public class QuizFragment extends Fragment {
         img_correct = view.findViewById(R.id.quiz_correct);
         img_incorrect = view.findViewById(R.id.quiz_incorrect);
 
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Current Score == " + SCORE);
+                updateDBQuizScore();
+                navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_quizFragment_to_rankingFragment);
+            }
+        });
+
         showQuiz(view);
 
 
@@ -129,14 +139,21 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, final_question)) {
                     SCORE = 1;
-                    setResultView(true, final_question);
+                    setResultView(view, true, final_question);
                     csvQuiz1(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false, final_question);
+                    setResultView(view, false, final_question);
                     setIncorrectView(final_question);
                     updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+                    btn_complete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            navController = Navigation.findNavController(view);
+                            navController.navigate(R.id.action_quizFragment_to_rankingFragment);
+                        }
+                    });
                 }
             }
         });
@@ -159,14 +176,21 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     SCORE = 3;
-                    setResultView(true, current_quiz);
+                    setResultView(view, true, current_quiz);
                     csvQuiz2(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false, current_quiz);
+                    setResultView(view, false, current_quiz);
                     setIncorrectView(current_quiz);
                     updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+                    btn_complete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            navController = Navigation.findNavController(view);
+                            navController.navigate(R.id.action_quizFragment_to_rankingFragment);
+                        }
+                    });
                 }
             }
         });
@@ -190,14 +214,21 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     SCORE = 5;
-                    setResultView(true, current_quiz);
+                    setResultView(view, true, current_quiz);
                     csvQuiz3(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false, current_quiz);
+                    setResultView(view, false, current_quiz);
                     setIncorrectView(current_quiz);
                     updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+                    btn_complete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            navController = Navigation.findNavController(view);
+                            navController.navigate(R.id.action_quizFragment_to_rankingFragment);
+                        }
+                    });
                 }
             }
         });
@@ -221,14 +252,21 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     SCORE = 7;
-                    setResultView(true, current_quiz);
+                    setResultView(view, true, current_quiz);
                     csvQuiz4(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false, current_quiz);
+                    setResultView(view, false, current_quiz);
                     setIncorrectView(current_quiz);
                     updateDBQuizScore();
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+                    btn_complete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            navController = Navigation.findNavController(view);
+                            navController.navigate(R.id.action_quizFragment_to_rankingFragment);
+                        }
+                    });
                 }
             }
         });
@@ -252,13 +290,20 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                     SCORE = 10;
-                    setResultView(true, current_quiz);
-                    setCompleteView();      // 퀴즈 종료 시 설정 (마지막 문제이기 때문)
+                    setResultView(view, true, current_quiz);
+                    setCompleteView(view);      // 퀴즈 종료 시 설정 (마지막 문제이기 때문)
                 } else {
                     Log.d(TAG, "틀렸습니다!");
-                    setResultView(false, current_quiz);
+                    setResultView(view, false, current_quiz);
                     setIncorrectView(current_quiz);
                     // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+                    btn_complete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            navController = Navigation.findNavController(view);
+                            navController.navigate(R.id.action_quizFragment_to_rankingFragment);
+                        }
+                    });
                 }
                 updateDBQuizScore();
             }
@@ -313,7 +358,7 @@ public class QuizFragment extends Fragment {
         btn_option4.setBackgroundTintList(blue);
     }
 
-    private void setResultView(boolean iscorrect, Question quiz) {
+    private void setResultView(View view, boolean iscorrect, Question quiz) {
         ObjectAnimator fadeOut;
 
         if (iscorrect) {
@@ -355,16 +400,24 @@ public class QuizFragment extends Fragment {
 
         // 틀렸을 경우, '그만','다음' 버튼 비활성화
         if (!iscorrect) {
-            setCompleteView();
+            setCompleteView(view);
         }
     }
 
     // 퀴즈 종료 시 설정
-    private void setCompleteView() {
+    private void setCompleteView(View view) {
         // 하단 버튼 설정('그만', '다음', '완료')
         btn_complete.setVisibility(View.VISIBLE);
         btn_stop.setVisibility(View.INVISIBLE);
         btn_next.setVisibility(View.INVISIBLE);
+
+        btn_complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_quizFragment_to_rankingFragment);
+            }
+        });
     }
 
     private void setIncorrectView(Question quiz){
