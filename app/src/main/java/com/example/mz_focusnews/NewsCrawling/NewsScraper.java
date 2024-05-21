@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -44,11 +45,6 @@ public class NewsScraper {
                     String pubDate = item.select("pubDate").text();
                     String publisher = item.select("source").text();
                     String link = item.select("link").first().textNodes().get(0).text().trim();
-
-                    // 크롤링된 데이터 로그 출력
-                    Log.d(TAG, "Title: " + title);
-                    Log.d(TAG, "Publication Date: " + pubDate);
-                    Log.d(TAG, "Link: " + link);
 
                     CompletableFuture<String> imageUrlFuture = NewsImage.fetchImageUrl(context, link);
                     CompletableFuture<String> contentFuture = NewsContent.fetchArticleContent(context, link);
@@ -79,43 +75,48 @@ public class NewsScraper {
             }
         });
     }
-
     private void insertLinkTitleAndPubDateToDatabase(String title, String link, String pubDate) {
         executor.submit(() -> {
+            HttpURLConnection httpURLConnection = null;
             try {
-                URL url = new URL("http://43.201.173.245/NewsInsert.php"); // URL 확인
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
+                URL url = new URL("http://43.201.173.245/NewsInsert.php");
+                httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
 
-                String postParameters = "title=" + title + "&link=" + link + "&pubDate=" + pubDate;
+                String postParameters = "title=" + URLEncoder.encode(title, "UTF-8") +
+                        "&link=" + URLEncoder.encode(link, "UTF-8") +
+                        "&pubDate=" + URLEncoder.encode(pubDate, "UTF-8");
 
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
+                try (OutputStream outputStream = httpURLConnection.getOutputStream()) {
+                    outputStream.write(postParameters.getBytes("UTF-8"));
+                    outputStream.flush();
+                }
 
                 int responseStatusCode = httpURLConnection.getResponseCode();
                 if (responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    InputStream inputStream = httpURLConnection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    try (InputStream inputStream = httpURLConnection.getInputStream();
+                         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))) {
 
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        sb.append(line);
+                        StringBuilder sb = new StringBuilder();
+                        String line;
+                        while ((line = bufferedReader.readLine()) != null) {
+                            sb.append(line);
+                        }
+
+                        Log.d(TAG, "insertLinkTitleAndPubDateToDatabase response - " + sb.toString());
                     }
-
-                    bufferedReader.close();
-                    Log.d(TAG, "insertLinkTitleAndPubDateToDatabase response - " + sb.toString());
                 } else {
                     Log.e(TAG, "Error in insertLinkTitleAndPubDateToDatabase - " + responseStatusCode);
                 }
             } catch (Exception e) {
                 Log.e(TAG, "Exception in insertLinkTitleAndPubDateToDatabase", e);
+            } finally {
+                if (httpURLConnection != null) {
+                    httpURLConnection.disconnect();
+                }
             }
         });
     }

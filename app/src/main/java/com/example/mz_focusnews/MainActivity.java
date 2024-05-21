@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
+
+        // 추가 설정: 하드웨어 가속 비활성화
+        webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+
         webView.setWebChromeClient(new WebChromeClient());
     }
 

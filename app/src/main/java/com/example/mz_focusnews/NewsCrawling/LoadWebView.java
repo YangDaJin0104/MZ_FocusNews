@@ -30,17 +30,19 @@ public class LoadWebView extends WebView {
     }
 
     private void init() {
-        // WebView 설정 초기화
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setUseWideViewPort(true);
 
+        // 추가 설정: 하드웨어 가속 비활성화
+        setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+
         setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false; // WebView에서 URL 로딩을 처리하도록 함
+                return false;
             }
 
             @Override
@@ -50,7 +52,7 @@ public class LoadWebView extends WebView {
                     view.evaluateJavascript(
                             "(function() { return document.documentElement.outerHTML; })();",
                             value -> {
-                                Log.d(TAG, "Extracted content: " + value);
+                                Log.d(TAG, "Extracted content from URL: " + url);
                                 callback.onContentExtracted(value);
                             }
                     );
@@ -65,7 +67,6 @@ public class LoadWebView extends WebView {
         this.callback = callback;
     }
 
-    // URL을 로드하는 메소드
     public void loadUrlInView(String url) {
         if (url != null && !url.isEmpty()) {
             loadUrl(url);
@@ -78,3 +79,4 @@ public class LoadWebView extends WebView {
         void onContentExtracted(String content);
     }
 }
+

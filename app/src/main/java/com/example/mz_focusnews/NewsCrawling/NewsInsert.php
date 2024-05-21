@@ -2,17 +2,18 @@
     // 가상서버 - /var/www/html/NewsInsert.php
 
     error_reporting(E_ALL);
-    ini_set('display_errors',1);
+    ini_set('display_errors', 1);
 
+    $username = 'coddl';    // MySQL 계정 아이디
     $php_connect = 'DBConnection.php'; // Connection 파일명
     include($php_connect);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $title = $_POST['title'];
-        $link = $_POST['link'];
-        $pubDate = $_POST['pubDate'];
+        $title = $_POST['title'] ?? '';
+        $link = $_POST['link'] ?? '';
+        $pubDate = $_POST['pubDate'] ?? '';
 
-        if(empty($title) || empty($link) || empty($pubDate)) {
+        if (empty($title) || empty($link) || empty($pubDate)) {
             echo json_encode(array("status" => "error", "message" => "제목, 링크, 발행 날짜를 입력하세요."));
             exit();
         }
@@ -37,3 +38,4 @@
         echo json_encode(array("status" => "error", "message" => "Invalid request method"));
     }
 ?>
+
