@@ -1,5 +1,7 @@
 package com.example.mz_focusnews;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -35,6 +37,8 @@ public class RankingFragment extends Fragment {
     private NavController navController;
     private static final String TAG = "RankingFragment";
     private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";
+    private static final String PREFS_NAME = "QuizPrefs";
+    private static final String IS_SOLVED_QUIZ_KEY = "123";
 
     TextView score1;
     TextView score2;
@@ -54,6 +58,9 @@ public class RankingFragment extends Fragment {
         rank_user = view.findViewById(R.id.rank_user);
         dot = view.findViewById(R.id.dot);
 
+        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        boolean isSolvedQuiz = preferences.getBoolean(IS_SOLVED_QUIZ_KEY, false);
+
         showRanking(view);
 
         btn_quiz_start = view.findViewById(R.id.quizStart);
@@ -62,12 +69,31 @@ public class RankingFragment extends Fragment {
         btn_quiz_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController = Navigation.findNavController(view);
-                navController.navigate(R.id.action_rankingFragment_to_quizFragment);
+                if(isSolvedQuiz){
+                   // 이미 오늘 퀴즈를 푼 경우, 팝업창(?) 출력
+                    Log.d(TAG, "이미 오늘의 퀴즈를 풀었습니다! 내일 다시 도전하세요.");   // 임시
+                } else{
+                    Log.d(TAG, "First");
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean(IS_SOLVED_QUIZ_KEY, true);
+                    editor.apply();
+
+                    navController = Navigation.findNavController(view);
+                    navController.navigate(R.id.action_rankingFragment_to_quizFragment);
+                }
             }
         });
 
+        setSolvedQuizFlag(isSolvedQuiz);
+
         return view;
+    }
+
+    private void setSolvedQuizFlag(boolean isSolved) {
+        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(IS_SOLVED_QUIZ_KEY, isSolved);
+        editor.apply();
     }
 
     private void setView(View view, List<Ranking> rankingList){

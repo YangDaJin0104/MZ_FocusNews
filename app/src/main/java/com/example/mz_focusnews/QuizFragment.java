@@ -67,11 +67,11 @@ public class QuizFragment extends Fragment {
         img_correct = view.findViewById(R.id.quiz_correct);
         img_incorrect = view.findViewById(R.id.quiz_incorrect);
 
+        // 이전 문제를 맞춘 상태이고, '그만' 버튼을 클릭할 경우
         btn_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "Current Score == " + SCORE);
-                updateDBQuizScore();
+                updateDBQuizScore();        // users DB quiz_score 값 업데이트
                 navController = Navigation.findNavController(view);
                 navController.navigate(R.id.action_quizFragment_to_rankingFragment);
             }
