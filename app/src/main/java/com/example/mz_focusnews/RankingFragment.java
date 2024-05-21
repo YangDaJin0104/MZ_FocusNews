@@ -1,6 +1,11 @@
 package com.example.mz_focusnews;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.mz_focusnews.Quiz.InitializeQuizTime;
 import com.example.mz_focusnews.Ranking.Ranking;
 import com.example.mz_focusnews.Ranking.RankingParser;
 
@@ -69,6 +75,8 @@ public class RankingFragment extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         showRanking(view);
+
+        //setDailyResetAlarm();
 
         btn_quiz_start = view.findViewById(R.id.quizStart);
 
