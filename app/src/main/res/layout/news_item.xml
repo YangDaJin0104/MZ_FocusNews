@@ -1,16 +1,10 @@
-<!-- fragment_category_list -->
+<!-- news_item.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="20dp"
     android:orientation="vertical">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,6 +23,7 @@
 
             <ImageView
                 android:id="@+id/newsImageView"
+                android:src="@drawable/ic_launcher_foreground"
                 android:layout_width="160dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop" />
@@ -43,21 +38,13 @@
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="80sp"
                     android:padding="10dp"
-                    android:text="중국어 열공 푸바오 할부지에 갤 S24 울트라 선물한 삼성"
+                    android:text="@string/sample_title_26"
                     android:textColor="@color/black"
                     android:textSize="14.5sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/publisher"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    android:text="한국 경제"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/publicationDate"
@@ -70,5 +57,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

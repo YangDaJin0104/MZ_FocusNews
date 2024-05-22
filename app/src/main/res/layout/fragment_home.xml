@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/whiteblue">
 
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".homeActivitiy_2">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/user_name"
-                android:layout_width="200dp"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
-                android:hint="Hi, User Name"
+                android:text="Hi, User Name"
                 android:textSize="30dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:layout_gravity="center_vertical|right"
-                android:layout_marginLeft="150dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/bell"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/now_date"
+            android:id="@+id/current_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="yyyy년mm월dd일"
@@ -44,44 +43,32 @@
             android:layout_marginTop="4dp"
             android:layout_marginLeft="20dp"/>
 
+
         <Button
             android:id="@+id/quizStart"
             android:layout_width="380dp"
             android:layout_height="50dp"
-            android:drawableLeft="@drawable/siren"
             android:layout_gravity="center_horizontal"
-            android:text="[속보] 푸바오 오늘 중국행 비행기 탑승"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="20dp"
+            android:drawableLeft="@drawable/siren"
             android:textColor="@color/white"
             android:background="@drawable/background_shape_blue"/>
 
-        <FrameLayout
+
+        <!-- 안에 담길 내용들은 fragment_daliy... 들에 있음-->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/news_view_pager"
+            android:layout_width="385dp"
+            android:layout_height="190dp"
             android:layout_gravity="center"
-            android:layout_width="350dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="15dp">
+            android:layout_margin="10dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:scaleType="fitXY" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/news"
-                android:layout_gravity="center"
-                android:clipToPadding="false"
-                android:clipChildren="false"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="10dp"/>
-
-            <!--<me.relex.circleindicator.CircleIndicator3
-                android:id="@+id/indicator"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="bottom"/>-->
-
-        </FrameLayout>
-
-        <EditText
-            android:id="@+id/editTextText"
+        <View
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -111,96 +98,27 @@
             android:layout_width="350dp"
             android:layout_height="250dp"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp">
-
-                    <ImageView
-                        android:layout_width="180dp"
-                        android:layout_height="100dp"
-                        android:src="@color/cardview_dark_background" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔다랄라"
-                        android:textStyle="bold"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔는데어쩌구저쩌구슬프다는둥아니라는둥"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
+            android:layout_marginBottom="20dp"
+            android:background="#DBDBDB" />
 
 
-
-                <!--카드 부분 완성되면 여기다가 복붙할 것-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp">
-
-                    <ImageView
-                        android:layout_width="180dp"
-                        android:layout_height="100dp"
-                        android:src="@color/cardview_dark_background" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔다랄라"
-                        android:textStyle="bold"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔는데어쩌구저쩌구슬프다는둥아니라는둥"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingRight="10dp">
-
-                    <ImageView
-                        android:layout_width="180dp"
-                        android:layout_height="100dp"
-                        android:src="@color/cardview_dark_background" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔다랄라"
-                        android:textStyle="bold"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:text="판다가 중국에 갔는데어쩌구저쩌구슬프다는둥아니라는둥"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="무슨 일이 일어나고 있나요?"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp" />
 
 
-            </LinearLayout>
-        </HorizontalScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_interest_content"
+            android:layout_width="350dp"
+            android:layout_height="370dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" />
     </LinearLayout>
 </ScrollView>

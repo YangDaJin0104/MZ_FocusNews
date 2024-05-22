@@ -3,7 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/rankingFragment">
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.mz_focusnews.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.mz_focusnews.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment">
+            <!--            <argument-->
+            <!--                android:name="user_name"-->
+            <!--                app:argType="string" />-->
+            <!--            <argument-->
+            <!--                android:name="user_id"-->
+            <!--                app:argType="string" />-->
+        </action>
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
@@ -19,9 +49,6 @@
         <action
             android:id="@+id/action_homeFragment_to_contentFragment"
             app:destination="@id/contentFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_rankingFragment"
-            app:destination="@id/rankingFragment" />
     </fragment>
 
     <fragment
@@ -31,7 +58,11 @@
         tools:layout="@layout/fragment_category" >
         <action
             android:id="@+id/action_categoryFragment_to_contentFragment"
-            app:destination="@id/contentFragment" />
+            app:destination="@id/contentFragment">
+            <argument
+                android:name="newsItem"
+                app:argType="com.example.mz_focusnews.NewsItem" />
+        </action>
     </fragment>
 
     <fragment
@@ -39,32 +70,4 @@
         android:name="com.example.mz_focusnews.ContentFragment"
         android:label="fragment_content"
         tools:layout="@layout/fragment_content" />
-
-    <activity
-        android:id="@+id/myPage"
-        android:name="com.example.mz_focusnews.MyPage"
-        android:label="activity_my_page"
-        tools:layout="@layout/activity_my_page" />
-
-    <fragment
-        android:id="@+id/rankingFragment"
-        android:name="com.example.mz_focusnews.RankingFragment"
-        android:label="fragment_quiz_start"
-        tools:layout="@layout/fragment_ranking" >
-        <action
-            android:id="@+id/action_rankingFragment_to_quizFragment"
-            app:destination="@id/quizFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/quizFragment"
-        android:name="com.example.mz_focusnews.QuizFragment"
-        android:label="fragment_quiz"
-        tools:layout="@layout/fragment_quiz" >
-        <action
-            android:id="@+id/action_quizFragment_to_rankingFragment"
-            app:destination="@id/rankingFragment" />
-    </fragment>
-
-
 </navigation>
