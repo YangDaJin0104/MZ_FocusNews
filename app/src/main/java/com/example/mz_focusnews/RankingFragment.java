@@ -111,8 +111,8 @@ public class RankingFragment extends Fragment {
         Calendar now = Calendar.getInstance();
         Calendar next6AM = Calendar.getInstance();
         // TODO: 실제 배포 시 next6AM.set(Calendar.HOUR_OF_DAY, 21); 로 바꿔야 함.
-        next6AM.set(Calendar.HOUR_OF_DAY, 6);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
-        next6AM.set(Calendar.MINUTE, 42);
+        next6AM.set(Calendar.HOUR_OF_DAY, 7);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
+        next6AM.set(Calendar.MINUTE, 40);
         next6AM.set(Calendar.SECOND, 0);
         next6AM.set(Calendar.MILLISECOND, 0);
 
