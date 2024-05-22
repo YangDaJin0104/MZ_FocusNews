@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.mz_focusnews.Quiz.AnswerChecker;
@@ -35,8 +34,7 @@ import java.util.List;
 
 public class QuizFragment extends Fragment {
     private static final String TAG = "QuizActivity";
-    private static final String QUIZ_FILE_NAME = "quiz.csv";
-    private static final String QUIZ_SOLVED_FILE_NAME = "quiz_solved.csv";
+    private static final String QUIZ_SOLVED_FILE_NAME = "quiz_solved.csv";      // 절대 수정 금지 (내부 저장소 파일)
     private int SCORE = 0;      // 사용자 획득 점수
 
     // 테스트용 데이터
@@ -79,7 +77,6 @@ public class QuizFragment extends Fragment {
 
         showQuiz(view);
 
-
         return view;
     }
 
@@ -101,9 +98,6 @@ public class QuizFragment extends Fragment {
             // TODO: 실제 배포 시 아래 주석처리
             // quiz_solved.csv 파일 초기화 (테스트용)
             csvFileWriter.clearQuizSolvedCSVFile(context, QUIZ_SOLVED_FILE_NAME);
-
-            // CSV 파일을 읽어옴
-            csvFileReader.readQuizCSVFile(context, QUIZ_FILE_NAME);
 
             // 2~5번째 퀴즈 출제: 문제은행 퀴즈 - quiz.csv 파일에 저장된 퀴즈 리스트 중 4문제
             List<Question> quizQuestions = QuestionGenerator.generateQuestions(context, USER_ID);
@@ -151,7 +145,7 @@ public class QuizFragment extends Fragment {
                     setResultView(view, false, final_question);
                     setIncorrectView(final_question);
                     updateDBQuizScore();
-                    // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+
                     btn_complete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -176,7 +170,6 @@ public class QuizFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController = Navigation.findNavController(view);
-                //navController.navigate(R.id.action_rankingFragment_to_quizFragment);  // 수정 필요
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
@@ -188,7 +181,7 @@ public class QuizFragment extends Fragment {
                     setResultView(view, false, current_quiz);
                     setIncorrectView(current_quiz);
                     updateDBQuizScore();
-                    // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+
                     btn_complete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -226,7 +219,7 @@ public class QuizFragment extends Fragment {
                     setResultView(view, false, current_quiz);
                     setIncorrectView(current_quiz);
                     updateDBQuizScore();
-                    // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+
                     btn_complete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -264,7 +257,7 @@ public class QuizFragment extends Fragment {
                     setResultView(view, false, current_quiz);
                     setIncorrectView(current_quiz);
                     updateDBQuizScore();
-                    // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+
                     btn_complete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -301,7 +294,7 @@ public class QuizFragment extends Fragment {
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(view, false, current_quiz);
                     setIncorrectView(current_quiz);
-                    // TODO: '그만' 버튼 클릭 시 fragment_ranking 화면으로 넘어가야 함.
+
                     btn_complete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
