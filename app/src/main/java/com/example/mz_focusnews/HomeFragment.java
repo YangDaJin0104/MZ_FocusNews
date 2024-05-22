@@ -35,10 +35,12 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class HomeFragment extends Fragment {
+
+    private String user_id;
+
     private RecyclerView recyclerView;
     private InterestAdapter interestAdapter;
     private List<NewsItem> newsItemList;
-    private String user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

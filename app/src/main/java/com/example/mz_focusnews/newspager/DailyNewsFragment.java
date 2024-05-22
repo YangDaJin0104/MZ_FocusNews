@@ -26,10 +26,11 @@ import java.util.TimeZone;
 
 public class DailyNewsFragment extends Fragment {
 
+    private String user_id;
+
     private TextView daily_title;
     private TextView daily_content;
     private Map<String, UserSession> userSessions;
-    private String user_id;
 
     @Override
 

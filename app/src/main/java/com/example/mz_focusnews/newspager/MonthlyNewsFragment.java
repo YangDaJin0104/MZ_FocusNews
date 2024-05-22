@@ -1,5 +1,7 @@
 package com.example.mz_focusnews.newspager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,6 +26,8 @@ import java.util.TimeZone;
 
 public class MonthlyNewsFragment extends Fragment {
 
+    private String user_id;
+
     private TextView monthly_title;
     private TextView monthly_content;
     private Map<String, UserSession> userSessions;
@@ -35,6 +39,9 @@ public class MonthlyNewsFragment extends Fragment {
         monthly_title = view.findViewById(R.id.monthly_title);
         monthly_content = view.findViewById(R.id.monthly_content);
         userSessions = new HashMap<>();
+
+        SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        user_id = sp.getString("user_id", null);
 
         monthly_title.setOnClickListener(new View.OnClickListener() {
             @Override

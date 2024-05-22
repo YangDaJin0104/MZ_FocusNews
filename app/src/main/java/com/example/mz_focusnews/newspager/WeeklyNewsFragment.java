@@ -1,5 +1,7 @@
 package com.example.mz_focusnews.newspager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -27,6 +29,7 @@ public class WeeklyNewsFragment extends Fragment {
     private TextView weekly_title;
     private TextView weekly_content;
     private Map<String, UserSession> userSessions;
+    private String user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,12 +39,15 @@ public class WeeklyNewsFragment extends Fragment {
         weekly_content = view.findViewById(R.id.weekly_content);
         userSessions = new HashMap<>();
 
+        SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        user_id = sp.getString("user_id", null);
+
         weekly_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NewsItem newsItem = (NewsItem) weekly_title.getTag();
                 if (newsItem != null) {
-                    NewsUtils.handleNewsItemClick(WeeklyNewsFragment.this, newsItem, userSessions, "romi");
+                    NewsUtils.handleNewsItemClick(WeeklyNewsFragment.this, newsItem, userSessions, user_id);
                 }
             }
         });

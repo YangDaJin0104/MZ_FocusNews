@@ -3,6 +3,8 @@ package com.example.mz_focusnews;
 import static com.example.mz_focusnews.NewsUtils.*;
 import static com.example.mz_focusnews.NewsUtils.logUserInteraction;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,8 @@ import java.util.Map;
 
 public class CategoryFragment extends Fragment {
 
+    private String user_id;
+
     private RecyclerView recyclerView;
     private NewsAdapter adapter;
     private List<NewsItem> newsItemList;
@@ -37,6 +41,10 @@ public class CategoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
         userSessions = new HashMap<>();
+
+        SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        user_id = sp.getString("user_id", null);
+
     }
 
     @Nullable
@@ -70,7 +78,7 @@ public class CategoryFragment extends Fragment {
                 sendNewsItemToServer(getContext(), newsItem);
 
                 // 클릭된 뉴스 아이템 정보를 사용자 세션에 추가
-                logUserInteraction(getContext(), userSessions, "romi", newsItem);
+                logUserInteraction(getContext(), userSessions, user_id, newsItem);
 
                 // 클릭된 뉴스 아이템 정보를 Bundle에 담아서 NavGraph로 전달 (뉴스 데이터 전달)
                 // 지금은 그냥 간단하게 제목이랑 시간대만 전송
