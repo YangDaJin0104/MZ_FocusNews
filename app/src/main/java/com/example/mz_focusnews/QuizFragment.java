@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.mz_focusnews.Quiz.AnswerChecker;
@@ -28,6 +29,7 @@ import com.example.mz_focusnews.Quiz.ChatGPTAPI;
 import com.example.mz_focusnews.Quiz.Question;
 import com.example.mz_focusnews.Quiz.QuestionGenerator;
 import com.example.mz_focusnews.Quiz.UpdateDBQuizScore;
+import com.example.mz_focusnews.Ranking.PopupManager;
 
 import java.util.List;
 
@@ -40,9 +42,7 @@ public class QuizFragment extends Fragment {
     // 테스트용 데이터
     private static final String USER_ID = "user3";             // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
     private String USER_ANSWER;    // 사용자가 입력한 정답
-    private static final String SUMMARIZE = "우리은행이 한국신용데이터가 주도하는 인터넷전문은행 컨소시엄에 투자 의사를 밝혔다. " +
-            "한국신용데이터는 소상공인을 대상으로 하는 인터넷전문은행을 만들 계획이며, 소상공인에 대한 자체적인 신용평가 서비스를 제공한다." +
-            "컨소시엄은 예비인가 신청 후 금융감독원 및 금융위의 심사를 거쳐 인가를 받으면 6개월 이내에 영업을 개시할 예정이다.";    // 3문장 요약
+    private static final String SUMMARIZE = "금융위원회가 청년도약계좌 운영현황 점검 결과 발표. 123만명 가입, 평균납입잔액 469만원, 정부 기여금 평균 수령 17만원. 은행들이 3년 이상 유지 시 중도해지이율을 3.8~4.5% 수준으로 상향 조정.";    // 3문장 요약
 
     // 프론트
     private NavController navController;
@@ -120,6 +120,11 @@ public class QuizFragment extends Fragment {
         while (todayQuiz == null) {
             response = ChatGPTAPI.chatGPT(SUMMARIZE);
             todayQuiz = QuestionGenerator.generateTodayQuiz(response);
+        }
+
+        // 오늘의 퀴즈 생성 시, 팝업창이 떠있다면 팝업창 닫기
+        if(PopupManager.getInstance().getPopupWindow() != null){
+            PopupManager.getInstance().getPopupWindow().dismiss();
         }
 
         // 1번째 문제: 오늘의 퀴즈 - 오늘의 뉴스 기반의 문제 출제

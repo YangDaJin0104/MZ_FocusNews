@@ -14,8 +14,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-        android:text="System"
-        android:textSize="20sp"
+        android:text="[ System ]"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <TextView

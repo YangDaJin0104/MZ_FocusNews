@@ -51,7 +51,6 @@
         android:name="com.example.mz_focusnews.RankingFragment"
         android:label="fragment_quiz_start"
         tools:layout="@layout/fragment_ranking" >
-
         <action
             android:id="@+id/action_rankingFragment_to_quizFragment"
             app:destination="@id/quizFragment" />

@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.mz_focusnews.Ranking.PopupManager;
 import com.example.mz_focusnews.Ranking.Ranking;
 import com.example.mz_focusnews.Ranking.RankingParser;
 
@@ -42,7 +43,7 @@ public class RankingFragment extends Fragment {
     private static final String PREFS_NAME = "QuizPrefs";
     private static final String IS_SOLVED_QUIZ_KEY = "ISSOLVED";
     private static final int POPUP_WIDTH = 700;
-    private int POPUP_HEIGHT = 800;
+    private int POPUP_HEIGHT = 600;
 
     private Button btn_quiz_start;
     private TextView score1;
@@ -111,8 +112,8 @@ public class RankingFragment extends Fragment {
         Calendar now = Calendar.getInstance();
         Calendar next6AM = Calendar.getInstance();
         // TODO: 실제 배포 시 next6AM.set(Calendar.HOUR_OF_DAY, 21); 로 바꿔야 함.
-        next6AM.set(Calendar.HOUR_OF_DAY, 7);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
-        next6AM.set(Calendar.MINUTE, 40);
+        next6AM.set(Calendar.HOUR_OF_DAY, 21);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
+        next6AM.set(Calendar.MINUTE, 0);
         next6AM.set(Calendar.SECOND, 0);
         next6AM.set(Calendar.MILLISECOND, 0);
 
@@ -221,19 +222,18 @@ public class RankingFragment extends Fragment {
         View popupView = inflater.inflate(R.layout.popup_ranking, null);
 
         // PopupWindow 생성
-        POPUP_HEIGHT = 800;
         final PopupWindow popupWindow = new PopupWindow(popupView, POPUP_WIDTH, POPUP_HEIGHT, true);
 
+        // PopupWindow 저장 (QuizFragment에서 PopupWindow 객체 사용하기 위함)
+        PopupManager.getInstance().setPopupWindow(popupWindow);
+
+        // 팝업창 메시지 설정
         TextView popupMessage = popupView.findViewById(R.id.popup_message);
         popupMessage.setText("초기화 됐습니다.\n문제 출제 중!");
 
+        // CLOSE 버튼 숨김
         Button closeButton = popupView.findViewById(R.id.popup_close);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
+        closeButton.setVisibility(View.GONE);
 
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
@@ -244,15 +244,17 @@ public class RankingFragment extends Fragment {
         View popupView = inflater.inflate(R.layout.popup_ranking, null);
 
         // PopupWindow 생성
-        POPUP_HEIGHT = 600;
         final PopupWindow popupWindow = new PopupWindow(popupView, POPUP_WIDTH, POPUP_HEIGHT, true);
 
+        // 팝업창 메시지 설정
         TextView popupMessage = popupView.findViewById(R.id.popup_message);
         popupMessage.setText("이미 오늘의 퀴즈를 풀었습니다!\n내일 다시 도전하세요.");
+
 
         ProgressBar popupProgressBar = popupView.findViewById(R.id.popup_progress_bar);
         popupProgressBar.setVisibility(View.GONE);
 
+        // CLOSE 버튼
         Button closeButton = popupView.findViewById(R.id.popup_close);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,5 +265,4 @@ public class RankingFragment extends Fragment {
 
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
-
 }
