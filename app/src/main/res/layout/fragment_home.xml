@@ -45,7 +45,7 @@
             android:layout_marginLeft="20dp"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/quizStart"
             android:layout_width="380dp"
             android:layout_height="50dp"
             android:drawableLeft="@drawable/siren"
@@ -105,11 +105,6 @@
                 android:text="See All"
                 android:textColor="@color/blue"
                 android:background="@color/white"/>
-<<<<<<< HEAD
-
-=======
->>>>>>> romi
-
         </LinearLayout>
 
         <HorizontalScrollView

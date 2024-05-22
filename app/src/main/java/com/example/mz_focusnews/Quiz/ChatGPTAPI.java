@@ -1,24 +1,16 @@
-package com.example.mz_focusnews.NewsSummary;
+package com.example.mz_focusnews.Quiz;
 
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
-public class Summary {
+public class ChatGPTAPI {
     private static final String TAG = "ChatGPTAPI";
-    private static final String API_KEY = "//";    // openAI API key
+    private static final String API_KEY = "//";     // 최민경의 API secret key
 
-    public static String chatGPT_summary(String article) {
+    public static String chatGPT(String summarize) {
         String url = "https://api.openai.com/v1/chat/completions";
         String model = "gpt-3.5-turbo";
 
@@ -30,7 +22,7 @@ public class Summary {
             connection.setRequestProperty("Content-Type", "application/json");
 
             // prompt 생성
-            String prompt = article + " 이 글을 3문장으로 요약해줘. 각 문장은 공백 포함 50글자 내외로 써줘.";
+            String prompt = summarize + "위 내용을 바탕으로 객관식 문제를 새로 만들어줘. 문제 내용, 정답, 선택지1, 선택지2, 선택지3, 선택지4를 question, answer, option1, option2, option3, option4 Json 형태로 보내줘(answer==option1||2||3||4)";
 
             // request body
             String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";
@@ -45,22 +37,13 @@ public class Summary {
             while ((line = br.readLine()) != null) {
                 response.append(line);
             }
-            Log.d("ChatGPT Summary", "Response from API: " + response.toString());
             br.close();
 
-            // 파싱 후 content만 추출
-            JSONObject jsonResponse = new JSONObject(response.toString());
-            JSONArray choices = jsonResponse.getJSONArray("choices");
-            if (choices.length() > 0) {
-                JSONObject firstChoice = choices.getJSONObject(0);
-                JSONObject message = firstChoice.getJSONObject("message");
-                String content = message.getString("content");
-                return content;  // 여기서 content만 반환
-            }
-        } catch (IOException | JSONException e) {
+            return response.toString();
+
+        } catch (IOException e) {
             Log.e(TAG, "Error in ChatGPT request: " + e.getMessage());
             return null;
         }
-        return null;
     }
 }

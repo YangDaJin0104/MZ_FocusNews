@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginActivity">
+    app:startDestination="@id/contentFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -14,14 +14,14 @@
             android:id="@+id/action_homeFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_quizStartActivity"
-            app:destination="@id/quizStartActivity" />
-        <action
             android:id="@+id/action_homeFragment_to_myPage"
             app:destination="@id/myPage" />
         <action
             android:id="@+id/action_homeFragment_to_contentFragment"
             app:destination="@id/contentFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_rankingFragment"
+            app:destination="@id/rankingFragment" />
     </fragment>
 
     <fragment
@@ -41,26 +41,27 @@
         tools:layout="@layout/fragment_content" />
 
     <activity
-        android:id="@+id/quizStartActivity"
-        android:name="com.example.mz_focusnews.QuizStartActivity"
-        android:label="activity_quiz_stsart"
-        tools:layout="@layout/activity_quiz_start" />
-
-    <activity
         android:id="@+id/myPage"
         android:name="com.example.mz_focusnews.MyPage"
         android:label="activity_my_page"
         tools:layout="@layout/activity_my_page" />
 
-    <activity
-        android:id="@+id/loginActivity"
-        android:name="com.example.mz_focusnews.LoginActivity"
-        android:label="activity_login"
-        tools:layout="@layout/activity_login" />
+    <fragment
+        android:id="@+id/rankingFragment"
+        android:name="com.example.mz_focusnews.RankingFragment"
+        android:label="fragment_quiz_start"
+        tools:layout="@layout/fragment_ranking" >
 
-    <activity
-        android:id="@+id/signupActivity"
-        android:name="com.example.mz_focusnews.SignupActivity"
-        android:label="activity_signup"
-        tools:layout="@layout/activity_signup" />
+        <action
+            android:id="@+id/action_rankingFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.mz_focusnews.QuizFragment"
+        android:label="fragment_quiz"
+        tools:layout="@layout/fragment_quiz" />
+
+
 </navigation>
