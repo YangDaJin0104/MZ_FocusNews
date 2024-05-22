@@ -38,7 +38,7 @@ public class QuizFragment extends Fragment {
     private int SCORE = 0;      // 사용자 획득 점수
 
     // 테스트용 데이터
-    private static final String USER_ID = "user3";             // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
+    private static final String USER_ID = "user1";             // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
     private String USER_ANSWER;    // 사용자가 입력한 정답
     private static final String SUMMARIZE = "금융위원회가 청년도약계좌 운영현황 점검 결과 발표. 123만명 가입, 평균납입잔액 469만원, 정부 기여금 평균 수령 17만원. 은행들이 3년 이상 유지 시 중도해지이율을 3.8~4.5% 수준으로 상향 조정.";    // 3문장 요약
 
@@ -137,7 +137,7 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, final_question)) {
-                    SCORE = 1;
+                    SCORE += 10;
                     setResultView(view, true, final_question);
                     csvQuiz1(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
@@ -173,7 +173,7 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
-                    SCORE = 3;
+                    SCORE += 5;
                     setResultView(view, true, current_quiz);
                     csvQuiz2(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
@@ -211,7 +211,7 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
-                    SCORE = 5;
+                    SCORE += 10;
                     setResultView(view, true, current_quiz);
                     csvQuiz3(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
@@ -249,7 +249,7 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
-                    SCORE = 7;
+                    SCORE += 15;
                     setResultView(view, true, current_quiz);
                     csvQuiz4(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
@@ -287,7 +287,7 @@ public class QuizFragment extends Fragment {
 
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
-                    SCORE = 10;
+                    SCORE += 20;
                     setResultView(view, true, current_quiz);
                     setCompleteView(view);      // 퀴즈 종료 시 설정 (마지막 문제이기 때문)
                 } else {

@@ -32,6 +32,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -41,7 +42,7 @@ public class RankingFragment extends Fragment {
     private static final String TAG = "RankingFragment";
     private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";
     private static final String PREFS_NAME = "QuizPrefs";
-    private static final String IS_SOLVED_QUIZ_KEY = "ISSOLVED";
+    private static final String USER_ID = "coddl";
     private static final int POPUP_WIDTH = 700;
     private int POPUP_HEIGHT = 600;
 
@@ -73,6 +74,15 @@ public class RankingFragment extends Fragment {
 
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
+        // SharedPreferences 변수 모두 초기화용
+        // TODO: 아래 삭제 필요
+        Map<String, ?> mapData = preferences.getAll();
+        for (Map.Entry<String, ?> entry : mapData.entrySet()) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(entry.getKey(), true);
+            editor.apply();
+        }
+
         showRanking(view);
 
         btn_quiz_start = view.findViewById(R.id.quizStart);
@@ -81,11 +91,10 @@ public class RankingFragment extends Fragment {
         btn_quiz_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final boolean isSolvedQuiz = preferences.getBoolean(IS_SOLVED_QUIZ_KEY, false);
-                if(isSolvedQuiz){
+                if (isSolvedQuiz(preferences)) {
                     Log.d(TAG, "System: 이미 오늘의 퀴즈를 풀었습니다! 내일 다시 도전하세요.");
                     setPopupAlreadySolvedQuiz(v);   // 이미 오늘 퀴즈를 푼 경우, 팝업창 출력
-                } else{
+                } else {
                     Log.d(TAG, "System: 초기화 됐습니다. 문제 출제 중!");
                     setPopupGenerateQuiz(v);        // 오늘 퀴즈를 풀지 않은 경우, 문제 생성 중이라는 팝업창 출력
                     setSolvedQuizFlag(true);
@@ -96,6 +105,35 @@ public class RankingFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private Boolean isSolvedQuiz(SharedPreferences preferences) {
+        boolean isSolvedQuiz = false;
+        Map<String, ?> mapData = preferences.getAll();
+        boolean found = false;      // USER_ID가 있는지 여부
+
+        for (Map.Entry<String, ?> entry : mapData.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            Log.d(TAG, "MAP - key = " + key + "/ value = " + value);
+
+            if (key.equals(USER_ID) && value instanceof Boolean) {
+                Log.d(TAG, "FIND - USER_ID: " + USER_ID + " value: " + value);
+                isSolvedQuiz = (boolean) value;
+                found = true; // USER_ID를 찾았음을 표시
+                break;
+            }
+        }
+
+        if (!found) {
+            // USER_ID를 찾지 못했을 경우 기본값으로 false인 데이터를 넣어줍니다.
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(USER_ID, false);
+            editor.apply();
+            isSolvedQuiz = false;
+        }
+
+        return isSolvedQuiz;
     }
 
     private void scheduleQuizTimeReset() {
@@ -112,8 +150,8 @@ public class RankingFragment extends Fragment {
         Calendar now = Calendar.getInstance();
         Calendar next6AM = Calendar.getInstance();
         // TODO: 실제 배포 시 next6AM.set(Calendar.HOUR_OF_DAY, 21); 로 바꿔야 함.
-        next6AM.set(Calendar.HOUR_OF_DAY, 21);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
-        next6AM.set(Calendar.MINUTE, 0);
+        next6AM.set(Calendar.HOUR_OF_DAY, 12);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
+        next6AM.set(Calendar.MINUTE, 47);
         next6AM.set(Calendar.SECOND, 0);
         next6AM.set(Calendar.MILLISECOND, 0);
 
@@ -129,13 +167,14 @@ public class RankingFragment extends Fragment {
     private boolean setSolvedQuizFlag(boolean isSolved) {
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(IS_SOLVED_QUIZ_KEY, isSolved);
+
+        editor.putBoolean(USER_ID, isSolved);
         editor.apply();
 
         return isSolved;
     }
 
-    private void setView(View view, List<Ranking> rankingList){
+    private void setView(View view, List<Ranking> rankingList) {
         String str;
 
         // rankingList가 null이 아니고 최소 세 개의 요소가 있는지 확인
@@ -147,7 +186,7 @@ public class RankingFragment extends Fragment {
             str = rankingList.get(2).getUserName() + ": " + rankingList.get(2).getScore() + "점";
             score3.setText(str);
 
-            if(rankingList.size() == 4){
+            if (rankingList.size() == 4) {
                 str = rankingList.get(3).getUserName() + ": " + rankingList.get(3).getScore() + "점";
                 Log.d(TAG, "STR = " + str);
                 score_user.setText(str);
@@ -155,11 +194,11 @@ public class RankingFragment extends Fragment {
                 String rank = Integer.toString(rankingList.get(3).getRank());
                 rank_user.setText(rank);
 
-                if(rankingList.get(3).getRank() == 4){
+                if (rankingList.get(3).getRank() == 4) {
                     dot.setVisibility((View.GONE));
                 }
 
-            } else{
+            } else {
                 score_user.setVisibility(View.GONE);
                 rank_user.setVisibility(View.GONE);
             }
@@ -217,7 +256,7 @@ public class RankingFragment extends Fragment {
     }
 
     // 문제 생성 시 나타나는 팝업 창 설정
-    private void setPopupGenerateQuiz(View view){
+    private void setPopupGenerateQuiz(View view) {
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_ranking, null);
 
@@ -239,7 +278,7 @@ public class RankingFragment extends Fragment {
     }
 
     // 이미 오늘의 퀴즈를 풀었을 시 나타나는 팝업 창 설정
-    private void setPopupAlreadySolvedQuiz(View view){
+    private void setPopupAlreadySolvedQuiz(View view) {
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_ranking, null);
 
