@@ -1,11 +1,18 @@
 package com.example.mz_focusnews;
 
 import android.os.Build;
+import static com.example.mz_focusnews.NewsUtils.*;
+import static com.example.mz_focusnews.NewsUtils.logUserInteraction;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,11 +24,14 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.mz_focusnews.adapter.NewsAdapter;
+
 import com.example.mz_focusnews.NewsDB.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -30,19 +40,57 @@ import retrofit2.Response;
 
 public class CategoryFragment extends Fragment {
 
+    private String user_id;
+
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
     private ProgressBar progressBar;
+    private List<News> newsList;
+    private NavController navController;
+    private Map<String, UserSession> userSessions;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+        userSessions = new HashMap<>();
+
+        SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        user_id = sp.getString("user_id", null);
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_category, container, false);
+
+        // 어댑터 초기화 및 RecyclerView에 설정
+        newsAdapter = new NewsAdapter(getActivity(), newsList, new NewsAdapter.OnNewsClickListener() {
+            @Override
+            public void onNewsClick(News news) {
+                // 클릭된 뉴스 아이템 정보를 서버에 전송 (조회수 증가)
+                sendNewsItemToServer(getContext(), news);
+
+                // 클릭된 뉴스 아이템 정보를 사용자 세션에 추가
+                logUserInteraction(getContext(), userSessions, user_id, news);
+
+                // 클릭된 뉴스 아이템 정보를 Bundle에 담아서 NavGraph로 전달 (뉴스 데이터 전달)
+                // 지금은 그냥 간단하게 제목이랑 시간대만 전송
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("news_item", news);
+                navController.navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
+
+            }
+        });
+        recyclerView.setAdapter(newsAdapter);
+
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        newsAdapter = new NewsAdapter(new ArrayList<>());
+//        newsAdapter = new NewsAdapter(new ArrayList<>());
         recyclerView.setAdapter(newsAdapter);
 
         Button politicsButton = view.findViewById(R.id.politics);
@@ -67,6 +115,7 @@ public class CategoryFragment extends Fragment {
 
         return view;
     }
+
     private void loadNewsByCategory(String category) {
         progressBar.setVisibility(View.VISIBLE); // 로딩 인디케이터 표시
 
@@ -104,3 +153,4 @@ public class CategoryFragment extends Fragment {
         });
     }
 }
+
