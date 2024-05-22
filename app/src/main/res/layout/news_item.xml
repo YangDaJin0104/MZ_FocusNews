@@ -1,4 +1,4 @@
-<!-- fragment_category_list -->
+<!-- news_item.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="200dp"
-                    android:layout_height="80"
+                    android:layout_height="80sp"
                     android:padding="10dp"
                     android:text="중국어 열공 푸바오 할부지에 갤 S24 울트라 선물한 삼성"
                     android:textColor="@color/black"

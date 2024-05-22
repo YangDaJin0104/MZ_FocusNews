@@ -80,6 +80,12 @@ dependencies {
 
     // MySQL 의존성 추가
     implementation files('libs/mysql-connector-java-5.1.49-bin.jar')
+
+    // 스프링 부트 Retrofit 설정
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
+
 }
 
 
