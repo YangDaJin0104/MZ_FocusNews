@@ -30,6 +30,7 @@ public class DailyNewsFragment extends Fragment {
 
     private TextView daily_title;
     private TextView daily_content;
+    private TextView daily_date;
     private Map<String, UserSession> userSessions;
 
     @Override
@@ -39,6 +40,7 @@ public class DailyNewsFragment extends Fragment {
 
         daily_title = view.findViewById(R.id.daily_title);
         daily_content = view.findViewById(R.id.daily_content);
+        daily_date = view.findViewById(R.id.daily_date);
         userSessions = new HashMap<>();
 
         SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
@@ -62,7 +64,7 @@ public class DailyNewsFragment extends Fragment {
     private void loadDailyNews() {
         String todayDate = getCurrentDate();
         Log.d("loadNews", "loadDailyNews: todayDate=" + todayDate);
-        NewsUtils.loadNews(getContext(), todayDate, "daily", daily_title, daily_content, userSessions, this);
+        NewsUtils.loadNews(getContext(), todayDate, "daily", daily_title, daily_content, daily_date, userSessions, this);
     }
 
     // 현재 날짜를 가져오는 메소드

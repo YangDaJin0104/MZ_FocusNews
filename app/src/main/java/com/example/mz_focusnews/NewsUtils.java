@@ -20,7 +20,12 @@ import com.example.mz_focusnews.request.UpdateInterestRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 public class NewsUtils {
@@ -97,11 +102,11 @@ public class NewsUtils {
     }
 
     // 뉴스 데이터를 로드하는 공통 메서드
-    public static void loadNews(Context context, String date, String type, TextView titleView, TextView contentView, Map<String, UserSession> userSessions, Fragment fragment) {
+    public static void loadNews(Context context, String date, String type, TextView titleView, TextView contentView, TextView dateView, Map<String, UserSession> userSessions, Fragment fragment) {
         Log.d("NewsUtils", "loadNews: 뉴스 로드 요청, 날짜=" + date + ", 타입=" + type);
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        NewsRequest newsRequest = new NewsRequest(date, type, // type 파라미터 추가
+        NewsRequest newsRequest = new NewsRequest(date, type,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -119,10 +124,15 @@ public class NewsUtils {
                                     String category = topNews.optString("category", "Uncategorized");
                                     String date = topNews.getString("date");
 
-                                    NewsItem newsItem = new NewsItem(newsId, title, summary, category, date);
+                                    NewsItem newsItem = new NewsItem(newsId, title, summary, date, category);
 
                                     titleView.setText(newsItem.getTitle());
-                                    contentView.setText(newsItem.getSummary()); // 뉴스 내용과 날짜를 함께 표시
+
+                                    String truncatedSummary = truncateSummary(newsItem.getSummary(), 30);
+                                    contentView.setText(truncatedSummary);
+
+                                    // 날짜 형식을 yyyy-MM-dd로 포맷팅
+                                    dateView.setText(formatDateString(newsItem.getDate()));
 
                                     titleView.setTag(newsItem);
 
@@ -148,5 +158,44 @@ public class NewsUtils {
                 });
 
         queue.add(newsRequest);
+    }
+
+    private static String truncateSummary(String summary, int maxLength) {
+        if (summary.length() <= maxLength) {
+            return summary;
+        }
+
+        // 내용을 maxLength 길이로 자르기
+        String truncated = summary.substring(0, maxLength);
+
+        // 역순으로 뒤집기
+        String reversed = new StringBuilder(truncated).reverse().toString();
+
+        // 첫 번째 공백의 위치 찾기
+        int firstSpaceIndex = reversed.indexOf(' ');
+        if (firstSpaceIndex != -1) {
+            // 첫 번째 공백 뒤의 문자열 잘라내기
+            truncated = reversed.substring(firstSpaceIndex + 1);
+
+            // 다시 원래 순서로 뒤집기
+            truncated = new StringBuilder(truncated).reverse().toString();
+        } else {
+            truncated = new StringBuilder(reversed).reverse().toString();
+        }
+
+        // "..." 붙이기
+        return truncated + "...";
+    }
+
+    private static String formatDateString(String dateString) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            Date date = inputFormat.parse(dateString);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "반환 실패"; // 오류가 발생하면 원래 날짜 문자열 반환
+        }
     }
 }

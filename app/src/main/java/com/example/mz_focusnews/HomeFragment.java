@@ -1,5 +1,7 @@
 package com.example.mz_focusnews;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -37,6 +39,7 @@ import java.util.TimeZone;
 public class HomeFragment extends Fragment {
 
     private String user_id;
+    private String user_name;
 
     private RecyclerView recyclerView;
     private InterestAdapter interestAdapter;
@@ -50,27 +53,23 @@ public class HomeFragment extends Fragment {
         TextView userName = view.findViewById(R.id.user_name);
         TextView nowDate = view.findViewById(R.id.current_date);
 
-        // 사용자 이름 설정
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String name = bundle.getString("user_name");
-            if (name != null) {
-                userName.setText("Hi, " + name);
-                user_id = bundle.getString("user_id");
-            }
-        }
+        // SharedPreferences로 데이터 받아오기: 아이디 , 이름
+        SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        user_id = sp.getString("user_id", null);
+        user_name = sp.getString("user_name", null);
 
-        // 현재 날짜 설정
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")); // 한국 표준시로 설정
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-        String formattedDate = dateFormat.format(calendar.getTime());
-        nowDate.setText(formattedDate);
+        userName.setText("Hi, " + user_name);
+
+        setCurrentDate(nowDate);
 
         // ViewPager2 설정 (오늘, 이주, 이달의 뉴스)
         ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(getActivity());
         ViewPager2 viewPager2 = view.findViewById(R.id.news_view_pager);
         viewPager2.setAdapter(viewPager2Adapter);
+
+        /**
+         * 사용자 맞춤형 뉴스 추천 파트
+         */
 
         // 리사이클러뷰 초기화
         recyclerView = view.findViewById(R.id.rv_interest_content);
@@ -92,12 +91,12 @@ public class HomeFragment extends Fragment {
         });
         recyclerView.setAdapter(interestAdapter);
 
-        // 뉴스 데이터 가져오기
         fetchNewsData();
 
         return view;
     }
 
+    // 뉴스 데이터 가져오는 메소드
     private void fetchNewsData() {
         Response.Listener<String> responseListener = response -> {
             try {
@@ -112,9 +111,9 @@ public class HomeFragment extends Fragment {
                                 newsObject.getInt("news_id"),
                                 newsObject.getString("title"),
                                 newsObject.getString("summary"),
-                                newsObject.getString("category"),
-                                newsObject.getString("date")
-                        );
+                                newsObject.getString("date"),
+                                newsObject.getString("category")
+                                );
                         newsItemList.add(newsItem); // 뉴스 항목을 리스트에 추가
                     }
                     interestAdapter.notifyDataSetChanged(); // 어댑터에 데이터 변경 알림
@@ -139,9 +138,18 @@ public class HomeFragment extends Fragment {
     }
 
 
-    // 사용자 세션을 관리하는 Map을 가져오는 메서드
+    // 사용자 세션을 관리하는 Map을 가져오는 메소드
     private Map<String, UserSession> getUserSessions() {
         NewsApp app = (NewsApp) getActivity().getApplication();
         return app.getUserSessions();
+    }
+
+    // 현재 날짜 불러오는 메소드
+    private static void setCurrentDate(TextView nowDate) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")); // 한국 표준시로 설정
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        String formattedDate = dateFormat.format(calendar.getTime());
+        nowDate.setText(formattedDate);
     }
 }

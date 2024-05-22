@@ -25,11 +25,12 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class WeeklyNewsFragment extends Fragment {
+    private String user_id;
 
     private TextView weekly_title;
     private TextView weekly_content;
+    private TextView weekly_date;
     private Map<String, UserSession> userSessions;
-    private String user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class WeeklyNewsFragment extends Fragment {
 
         weekly_title = view.findViewById(R.id.weekly_title);
         weekly_content = view.findViewById(R.id.weekly_content);
+        weekly_date = view.findViewById(R.id.weekly_date);
         userSessions = new HashMap<>();
 
         SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
@@ -59,7 +61,7 @@ public class WeeklyNewsFragment extends Fragment {
     private void loadWeeklyNews() {
         String startDate = getStartDateOfWeek();
         Log.d("loadNews", "loadWeeklyNews: startDate=" + startDate); // 추가된 로그
-        NewsUtils.loadNews(getContext(), startDate, "weekly", weekly_title, weekly_content, userSessions, this);
+        NewsUtils.loadNews(getContext(), startDate, "weekly", weekly_title, weekly_content, weekly_date, userSessions, this);
     }
 
     private String getStartDateOfWeek() {

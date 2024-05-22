@@ -30,6 +30,7 @@ public class MonthlyNewsFragment extends Fragment {
 
     private TextView monthly_title;
     private TextView monthly_content;
+    private TextView monthly_date;
     private Map<String, UserSession> userSessions;
 
     @Override
@@ -38,6 +39,7 @@ public class MonthlyNewsFragment extends Fragment {
 
         monthly_title = view.findViewById(R.id.monthly_title);
         monthly_content = view.findViewById(R.id.monthly_content);
+        monthly_date = view.findViewById(R.id.monthly_date);
         userSessions = new HashMap<>();
 
         SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
@@ -60,7 +62,7 @@ public class MonthlyNewsFragment extends Fragment {
     private void loadMonthlyNews() {
         String startDate = getStartDateOfMonth();
         Log.d("loadNews", "loadMonthlyNews: startDate=" + startDate);
-        NewsUtils.loadNews(getContext(), startDate, "monthly", monthly_title, monthly_content, userSessions, this);
+        NewsUtils.loadNews(getContext(), startDate, "monthly", monthly_title, monthly_content, monthly_date, userSessions, this);
     }
 
     private String getStartDateOfMonth() {
@@ -69,4 +71,5 @@ public class MonthlyNewsFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         return dateFormat.format(calendar.getTime());
-    }}
+    }
+}

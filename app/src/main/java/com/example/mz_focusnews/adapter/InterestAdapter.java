@@ -13,7 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mz_focusnews.NewsItem;
 import com.example.mz_focusnews.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHolder> {
 
@@ -43,11 +48,14 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
         NewsItem item = newsItemList.get(position);
         holder.tv_title.setText(item.getTitle());
         holder.tv_description.setText(item.getSummary());
-        holder.tv_date.setText(item.getDate());
-        //holder.이미지
+        holder.tv_category.setText(item.getCategory());
+
+        // 날짜를 상대 시간으로 변환하여 설정
+        String relativeTime = getRelativeTime(item.getDate());
+        holder.tv_date.setText(relativeTime);
 
         // 디버깅 로그 추가
-        Log.d("InterestAdapter", "Binding news item at position " + position + ": " + item.getTitle());
+        Log.d("InterestAdapter", "Original date string: " + item.getDate());
 
         // NewsItem 객체를 태그로 설정
         holder.itemView.setTag(item);
@@ -65,7 +73,6 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
         });
     }
 
-
     @Override
     public int getItemCount() {
         return newsItemList.size();
@@ -76,6 +83,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
         TextView tv_title;
         TextView tv_description;
         TextView tv_date;
+        TextView tv_category;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +91,35 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
             tv_title = itemView.findViewById(R.id.interest_title);
             tv_description = itemView.findViewById(R.id.interest_description);
             tv_date = itemView.findViewById(R.id.interest_time);
+            tv_category = itemView.findViewById(R.id.interest_category);
         }
     }
-}
+
+    private String getRelativeTime(String dateString) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        try {
+            Date date = sdf.parse(dateString);
+            long currentTime = System.currentTimeMillis();
+            long time = date != null ? date.getTime() : currentTime;
+            long diff = currentTime - time;
+
+            long seconds = diff / 1000;
+            long minutes = seconds / 60;
+            long hours = minutes / 60;
+            long days = hours / 24;
+
+            if (days > 0) {
+                return days + " days ago";
+            } else if (hours > 0) {
+                return hours + " hours ago";
+            } else if (minutes > 0) {
+                return minutes + " minutes ago";
+            } else {
+                return "Just now";
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return dateString;
+        }
+    }}

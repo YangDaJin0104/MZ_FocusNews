@@ -8,10 +8,10 @@ import androidx.annotation.NonNull;
 public class NewsItem implements Parcelable {
 
     private int newsId;
-    private String title; // 뉴스 제목
-    private String publisher; // 출판사
-    private String date; // 게시 시간
+    private String title;
+    private String publisher;
     private String summary;
+    private String date;
     private String category;
 
 
@@ -22,26 +22,7 @@ public class NewsItem implements Parcelable {
         this.summary = summary;
     }
 
-    // usage: 카테고리 별 뉴스 목록
-//    public NewsItem(int newsId, String title, String publisher, String time) {
-//        this.newsId = newsId;
-//        this.title = title;
-//        this.publisher = publisher;
-//        this.time = time;
-//    }
-
-
-    // usage: 사용자 맞춤형 뉴스 추천
-    public NewsItem(int newsId, String title, String summary, String date) {
-        this.newsId = newsId;
-        this.title = title;
-        this.date = date;
-        this.summary = summary;
-    }
-
-
-    // 카테고리 표시
-    public NewsItem(int newsId, String title, String publisher, String date, String summary, String category) {
+    public NewsItem(int newsId, String title, String publisher, String summary, String date, String category) {
         this.newsId = newsId;
         this.title = title;
         this.publisher = publisher;
@@ -51,13 +32,12 @@ public class NewsItem implements Parcelable {
     }
 
     // 사용자 맞춤형 뉴스 추천
-    public NewsItem(int newsId, String title, String summary, String category, String date) {
+    public NewsItem(int newsId, String title, String summary, String date, String category) {
         this.newsId = newsId;
         this.title = title;
         this.summary = summary;
         this.category = category;
         this.date = date;
-
     }
 
     /**
@@ -72,7 +52,7 @@ public class NewsItem implements Parcelable {
     }
 
     public String getTitle() {
-        return title;
+        return truncateTitle(title); // 뒤에 출판사 제거한 스트링 반환
     }
 
     public void setTitle(String title) {
@@ -140,11 +120,20 @@ public class NewsItem implements Parcelable {
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public NewsItem createFromParcel(Parcel in) {
-            return new NewsItem(in.readInt(), in.readString(), in.readString(), in.readString());
+            return new NewsItem(in.readInt(), in.readString(), in.readString());
         }
 
         public NewsItem[] newArray(int size) {
             return new NewsItem[size];
         }
     };
+
+    private String truncateTitle(String title) {
+        int dashIndex = title.indexOf('-');
+        if (dashIndex != -1) {
+            // "-" 문자 앞의 문자열만 사용(출판사 제거)
+            return title.substring(0, dashIndex).trim();
+        }
+        return title;
+    }
 }

@@ -73,20 +73,17 @@ public class LoginFragment extends Fragment {
 
                                 Toast.makeText(getActivity(), "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("user_id", user_id);
-                                bundle.putString("user_name", user_name);
-
                                 // UserData라는 이름으로 식별되는 공유 환경설정 파일, 비공개 모드
                                 // 데이터를 읽어올 때는 똑같이 sp 선언 하고 getString(key, value)로 호출
                                 SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sp.edit();
                                 editor.putString("user_id", user_id);
+                                editor.putString("user_name", user_name);
                                 editor.apply();
 
                                 // HomeFragment로 이동
                                 NavHostFragment.findNavController(LoginFragment.this)
-                                        .navigate(R.id.action_loginFragment_to_homeFragment, bundle);
+                                        .navigate(R.id.action_loginFragment_to_homeFragment);
 
                             } else {    // 로그인 실패
                                 Toast.makeText(getActivity(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
