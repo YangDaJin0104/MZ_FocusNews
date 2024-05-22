@@ -2,8 +2,7 @@ package com.example.mz_focusnews;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,8 +24,6 @@ import androidx.navigation.Navigation;
 import com.example.mz_focusnews.Ranking.Ranking;
 import com.example.mz_focusnews.Ranking.RankingParser;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,9 +40,9 @@ public class RankingFragment extends Fragment {
     private static final String TAG = "RankingFragment";
     private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";
     private static final String PREFS_NAME = "QuizPrefs";
-    private static final String IS_SOLVED_QUIZ_KEY = "123";
+    private static final String IS_SOLVED_QUIZ_KEY = "ISSOLVED";
     private static final int POPUP_WIDTH = 700;
-    private int POPUP_HEIGHT = 800;     // HEIGHT는 상태에 따라 바뀜
+    private int POPUP_HEIGHT = 800;
 
     private Button btn_quiz_start;
     private TextView score1;
@@ -113,9 +110,10 @@ public class RankingFragment extends Fragment {
         // 매일 오전 6시(한국시간)에 퀴즈 초기화
         Calendar now = Calendar.getInstance();
         Calendar next6AM = Calendar.getInstance();
-        next6AM.set(Calendar.HOUR_OF_DAY, 18);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
-        next6AM.set(Calendar.MINUTE, 6);
-        next6AM.set(Calendar.SECOND, 50);
+        // TODO: 실제 배포 시 next6AM.set(Calendar.HOUR_OF_DAY, 21); 로 바꿔야 함.
+        next6AM.set(Calendar.HOUR_OF_DAY, 6);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
+        next6AM.set(Calendar.MINUTE, 42);
+        next6AM.set(Calendar.SECOND, 0);
         next6AM.set(Calendar.MILLISECOND, 0);
 
         // 이미 오전 6시가 지난 경우, 내일 오전 6시에 초기화

@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class InitializeQuizTime extends BroadcastReceiver {
     private static final String TAG = "InitializeQuizTime";
-    private static final String IS_SOLVED_QUIZ_KEY = "123";
+    private static final String IS_SOLVED_QUIZ_KEY = "ISSOLVED";
     private static final String PREFS_NAME = "QuizPrefs";
 
     @Override
