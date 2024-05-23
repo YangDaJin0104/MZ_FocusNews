@@ -13,6 +13,8 @@ public class News {
     private String date;
     private Integer relatedNews1;
     private Integer relatedNews2;
+    private String publish;
+    private String imgUrl;
 
     // Getters and setters
     public Integer getNewsId() {
@@ -86,4 +88,21 @@ public class News {
     public void setRelatedNews2(Integer relatedNews2) {
         this.relatedNews2 = relatedNews2;
     }
+
+    public String getPublish() {
+        return publish;
+    }
+
+    public void setPublish(String publish) {
+        this.publish = publish;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
 }
