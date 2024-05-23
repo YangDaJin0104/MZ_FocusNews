@@ -21,12 +21,23 @@
             android:orientation="horizontal"
             android:padding="15dp">
 
-            <ImageView
-                android:id="@+id/newsImageView"
+            <LinearLayout
                 android:src="@drawable/ic_launcher_foreground"
                 android:layout_width="160dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop" />
+                android:gravity="center"
+                android:padding="1dp"
+                android:layout_marginRight="10dp">
+
+                <ImageView
+                    android:id="@+id/newsImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/round_background_border"
+                    android:clipToOutline="true" />
+
+            </LinearLayout>
 
 
             <!-- 기사 내용: 제목, 출판사, 시간-->
@@ -38,7 +49,7 @@
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="200dp"
-                    android:layout_height="65sp"
+                    android:layout_height="70sp"
                     android:padding="10dp"
                     android:text="중국어 열공 푸바오 할부지에 갤 S24 울트라 선물한 삼성"
                     android:textColor="@color/black"

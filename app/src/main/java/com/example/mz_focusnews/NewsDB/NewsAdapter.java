@@ -1,6 +1,5 @@
 package com.example.mz_focusnews.NewsDB;
 
-import android.media.Image;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,8 +42,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         News news = newsList.get(position);
-        holder.title.setText(news.getTitle());
-        holder.date.setText(news.getDate());
+        // 수정된 제목을 설정
+        holder.title.setText(getModifiedTitle(news.getTitle()));
+        // 날짜 포맷팅
+        holder.date.setText(formatDate(news.getDate()));
         holder.publish.setText(news.getPublish());
         // 이미지 로딩은 Glide 또는 Picasso와 같은 라이브러리를 사용할 수 있습니다.
         Glide.with(holder.itemView.getContext())
@@ -52,6 +53,34 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .fallback(R.drawable.character)
                 .into(holder.imageView);
+    }
+
+    private String getModifiedTitle(String originalTitle) {
+        if (originalTitle == null || originalTitle.isEmpty()) {
+            return originalTitle;
+        }
+        int index = originalTitle.lastIndexOf("-");
+        String modifiedTitle;
+        if (index != -1) {
+            modifiedTitle = originalTitle.substring(0, index).trim();
+        } else {
+            modifiedTitle = originalTitle;
+        }
+
+        // 제목이 26자를 넘어가면 "..."으로 표시
+        if (modifiedTitle.length() > 33) {
+            modifiedTitle = modifiedTitle.substring(0, 33) + "...";
+        }
+
+        return modifiedTitle;
+    }
+
+    private String formatDate(String dateString) {
+        if (dateString == null || dateString.isEmpty()) {
+            return dateString;
+        }
+        LocalDateTime dateTime = LocalDateTime.parse(dateString, DateTimeFormatter.ISO_DATE_TIME);
+        return dateTime.format(formatter);
     }
 
     @Override
