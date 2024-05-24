@@ -19,25 +19,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null) {
-            CategoryFragment categoryFragment = new CategoryFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, categoryFragment);
-            transaction.commit();
-<<<<<<< HEAD
-        }*/
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
 }
-=======
-        }
-    }
-
-}
-
-
->>>>>>> dajin
