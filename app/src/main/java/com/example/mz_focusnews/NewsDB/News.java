@@ -15,6 +15,8 @@ public class News implements Parcelable {
     private String date;
     private Integer relatedNews1;
     private Integer relatedNews2;
+    private String publish;
+    private String imgUrl;
 
     public News(Integer newsId, int view, String link, String summary, String title, String category, String date, Integer relatedNews1, Integer relatedNews2) {
         this.newsId = newsId;
@@ -176,5 +178,20 @@ public class News implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(relatedNews2);
         }
+    }
+    public String getPublish() {
+        return publish;
+    }
+
+    public void setPublish(String publish) {
+        this.publish = publish;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

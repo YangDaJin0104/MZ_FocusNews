@@ -9,13 +9,14 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.DELETE;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface NewsApi {
     @GET("/api/news")
     Call<List<News>> getAllNews();
 
     @GET("/api/news/category/{category}")
-    Call<List<News>> getNewsByCategory(@Path("category") String category);
+    Call<List<News>> getNewsByCategory(@Path("category") String category, @Query("sort") String sort);
 
     @POST("/api/news")
     Call<News> createNews(@Body News news);

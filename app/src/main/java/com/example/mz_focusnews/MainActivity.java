@@ -1,6 +1,7 @@
 package com.example.mz_focusnews;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.NavController;
@@ -18,11 +19,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-/*        if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
             CategoryFragment categoryFragment = new CategoryFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, categoryFragment);
             transaction.commit();
+<<<<<<< HEAD
         }*/
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -31,3 +33,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
 }
+=======
+        }
+    }
+
+}
+
+
+>>>>>>> dajin
