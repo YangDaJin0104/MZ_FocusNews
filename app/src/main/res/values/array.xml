@@ -1,0 +1,8 @@
+<!-- res/values/arrays.xml -->
+<resources>
+    <string-array name="sort_options">
+        <item>최신순</item>
+        <item>기본순</item>
+        <item>조회수순</item>
+    </string-array>
+</resources>
