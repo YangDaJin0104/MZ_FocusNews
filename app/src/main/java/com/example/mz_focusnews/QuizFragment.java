@@ -76,7 +76,6 @@ public class QuizFragment extends Fragment {
         });
 
         showQuiz(view);
-
         return view;
     }
 

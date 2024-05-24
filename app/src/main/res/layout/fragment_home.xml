@@ -45,7 +45,7 @@
 
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/quizStart"
             android:layout_width="380dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"

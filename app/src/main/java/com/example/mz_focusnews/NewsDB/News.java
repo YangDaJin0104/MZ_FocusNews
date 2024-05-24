@@ -30,10 +30,6 @@ public class News implements Parcelable {
         this.relatedNews2 = relatedNews2;
     }
 
-    // Getters and setters
-    public Integer getNewsId() {
-        return newsId;
-    }
     public void setNewsId(Integer newsId) {
         this.newsId = newsId;
     }
@@ -62,9 +58,7 @@ public class News implements Parcelable {
         this.summary = summary;
     }
 
-    public String getTitle() {
-        return truncateTitle(title);
-    }
+    public String getTitle() { return truncateTitle(title); }
 
     public void setTitle(String title) {
         this.title = title;
