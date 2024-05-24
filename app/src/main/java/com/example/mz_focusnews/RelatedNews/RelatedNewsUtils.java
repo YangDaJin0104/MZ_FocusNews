@@ -14,10 +14,21 @@ import java.util.Map;
 
 public class RelatedNewsUtils {
 
+    private static RequestQueue queue; // 클래스 필드로 RequestQueue 추가
+
+    // RequestQueue를 초기화하는 메서드
+    private static void initQueue(Context context) {
+        if (queue == null) {
+            queue = Volley.newRequestQueue(context.getApplicationContext());
+        }
+    }
+
     public static void updateRelatedNews(Context context, int newsId, int related1, int related2) {
+        initQueue(context);
+
         String url = "http://43.201.173.245//updateRelatedNews.php"; // PHP 스크립트 URL
 
-        RequestQueue queue = Volley.newRequestQueue(context);
+//        RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

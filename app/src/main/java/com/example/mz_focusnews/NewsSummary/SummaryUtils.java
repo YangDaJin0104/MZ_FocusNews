@@ -13,10 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SummaryUtils {
-    public void sendSummaryToServer(Context context, String link, String summary) {
+    private  RequestQueue queue;
+
+    public SummaryUtils(Context context) {
+        queue = Volley.newRequestQueue(context);
+    }
+    public void sendSummaryToServer(Context context, int newsId, String summary) {
         String url = "http://43.201.173.245//SummaryInsert.php";
 
-        RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -38,7 +42,7 @@ public class SummaryUtils {
                 // 요청 파라미터 설정
                 Map<String, String> params = new HashMap<>();
                 params.put("summary", summary);
-                params.put("link", link);
+                params.put("newsId", String.valueOf(newsId));
                 return params;
             }
         };
@@ -46,4 +50,6 @@ public class SummaryUtils {
         // 요청을 RequestQueue에 추가
         queue.add(postRequest);
     }
+
+
 }

@@ -30,6 +30,7 @@ public class ContentFragment extends Fragment {
     private TextView summary1, summary2, summary3;
     private TextView newsTitle;
     private TextView relatedNews1, relatedNews2;
+    private RequestQueue requestQueue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,16 +46,15 @@ public class ContentFragment extends Fragment {
         relatedNews1 = view.findViewById(R.id.news_related1);
         relatedNews2 = view.findViewById(R.id.news_related2);
 
-        fetchSummaryData(getActivity(), 36);     //요약문 가져오기
+        requestQueue = Volley.newRequestQueue(getActivity());
+
+        fetchSummaryData(getActivity(), 1214);     //요약문 가져오기  //후에 homefragment나 categoryfragment에서 넘겨받아야함
 
         return view;
     }
 
     public void fetchSummaryData(Context context, int newsId) {         // 요약문 읽어와서 보여주는 함수
         String url = "http://43.201.173.245/getSummary.php";
-
-        // RequestQueue 초기화
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         // URL에 파라미터 추가
         String urlWithParams = url + "?news_id=" + newsId;
@@ -101,7 +101,7 @@ public class ContentFragment extends Fragment {
     private void fetchRelatedSummary(Context context, int newsId, TextView targetTextView) {
         String url = "http://43.201.173.245/getSummary.php?news_id=" + newsId;
 
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+//        RequestQueue requestQueue = Volley.newRequestQueue(context);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -110,10 +110,8 @@ public class ContentFragment extends Fragment {
                             JSONArray jsonResponse = new JSONArray(response);
                             if (jsonResponse.length() > 0) {
                                 JSONObject firstItem = jsonResponse.getJSONObject(0);
-                                Log.d("JSONObject FetchRelated", firstItem.toString());
                                 if (firstItem.has("title") && !firstItem.isNull("title")) {
                                     String title = firstItem.getString("title");
-                                    Log.d("JSONObject FetchRelated2", title);
                                     targetTextView.setText(title);
                                 } else {
                                     Log.e("Error", "No title found for news_id: " + newsId);
@@ -136,7 +134,6 @@ public class ContentFragment extends Fragment {
     private void updateRelatedSummaries(Context context, NewsData item) {
         fetchRelatedSummary(context, item.getRelated1(), relatedNews1);
         fetchRelatedSummary(context, item.getRelated2(), relatedNews2);
-        Log.d("updateRelatedSummariesCheck", item.getRelated1() + " " + item.getRelated2());
     }
 
 
@@ -148,9 +145,6 @@ public class ContentFragment extends Fragment {
         int related2 = newsItem.optInt("related_news2", 0);
 
         NewsData item = new NewsData(id, title, summary, related1, related2);
-
-        // UI 업데이트, 기타 처리 로직 추가
-        Log.d("News Data processNewsItem", "ID: " + id + ", Title: " + title + ", Summary: " + summary + "related1: " + related1 + "related2: " + related2);
 
         String[] summaries = summary.split("\\. ");
         if (summaries.length >= 3) {

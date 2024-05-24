@@ -22,6 +22,7 @@ public class Summary {
         String url = "https://api.openai.com/v1/chat/completions";
         String model = "gpt-3.5-turbo";
 
+
         try {
             URL obj = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
@@ -30,7 +31,7 @@ public class Summary {
             connection.setRequestProperty("Content-Type", "application/json");
 
             // prompt 생성
-            String prompt = article + " 이 글을 3문장으로 요약해줘. 각 문장은 공백 포함 50글자 내외로 써줘.";
+            String prompt = article + " 이 뉴스기사를 3문장으로 요약해줘. 각 문장은 공백 포함 70글자 내외로 써줘.";
 
             // request body
             String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";
@@ -45,18 +46,27 @@ public class Summary {
             while ((line = br.readLine()) != null) {
                 response.append(line);
             }
-            Log.d("ChatGPT Summary", "Response from API: " + response.toString());
             br.close();
 
             // 파싱 후 content만 추출
             JSONObject jsonResponse = new JSONObject(response.toString());
             JSONArray choices = jsonResponse.getJSONArray("choices");
+
             if (choices.length() > 0) {
                 JSONObject firstChoice = choices.getJSONObject(0);
-                JSONObject message = firstChoice.getJSONObject("message");
-                String content = message.getString("content");
-                return content;  // 여기서 content만 반환
+                if (firstChoice.has("message")) {
+                    JSONObject message = firstChoice.getJSONObject("message");
+                    if (message.has("content")) {
+                        String content = message.getString("content");
+                        return content;  // 여기서 content만 반환
+                    } else {
+                        Log.e(TAG, "No 'content' in message");
+                    }
+                } else {
+                    Log.e(TAG, "No 'message' in first choice");
+                }
             }
+
         } catch (IOException | JSONException e) {
             Log.e(TAG, "Error in ChatGPT request: " + e.getMessage());
             return null;

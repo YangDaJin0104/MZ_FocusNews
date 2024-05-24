@@ -9,22 +9,13 @@ import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -102,7 +93,6 @@ public class NewsDataStore {
 
         Map<String, Object> map_data = new HashMap<>();
         map_data.put("input", texts);
-        Log.d("getEmbeddings check", texts.toString());
         map_data.put("model", ENGINE);
 
         Gson gson = new Gson();
@@ -123,18 +113,10 @@ public class NewsDataStore {
             }
         } catch (IOException e) {
             Log.e("HTTP Error", "Error reading from the HTTP connection", e);
-            return null;  // 실패 경우 null 반환 또는 적절한 예외 처리
+            return null;
         }
 
-//        try {
-//            Map<String, List<Map<String, List<Double>>>> responseMap = gson.fromJson(response.toString(), new TypeToken<Map<String, List<Map<String, List<Double>>>>>() {}.getType());
-//            List<Map<String, List<Double>>> data = responseMap.get("data");
-//            double[][] matrixData = data.stream().map(e -> e.get("embedding").stream().mapToDouble(d -> d).toArray()).toArray(double[][]::new);
-//            return new Array2DRowRealMatrix(matrixData, false);
-//        } catch (JsonSyntaxException e) {
-//            Log.e("JSON Parsing Error", "Error parsing JSON response: " + response.toString(), e);
-//            return null;  // JSON 파싱 실패 처리
-//        }
+
         try {
             Type type = new TypeToken<Map<String, Object>>() {}.getType();
             Map<String, Object> responseMap = gson.fromJson(response.toString(), type);
@@ -147,7 +129,6 @@ public class NewsDataStore {
                     .filter(e -> e != null && e.containsKey("embedding"))
                     .map(e -> ((List<Double>) e.get("embedding")).stream().mapToDouble(Double::doubleValue).toArray())
                     .toArray(double[][]::new);
-            Log.d("return Matrix Check", matrixData.toString());
             return new Array2DRowRealMatrix(matrixData, false);
         } catch (Exception e) {  // 모든 예외를 처리
             Log.e("JSON Parsing Error", "Error parsing JSON response: " + response.toString(), e);

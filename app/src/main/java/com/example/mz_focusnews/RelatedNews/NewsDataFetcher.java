@@ -16,10 +16,12 @@ import org.json.JSONObject;
 
 public class NewsDataFetcher {
     private NewsDataStore newsDataStore;  // NewsDataStore 객체를 저장할 필드 추가
+    private RequestQueue queue;
 
     // 생성자 정의: NewsDataStore 객체를 인수로 받음
-    public NewsDataFetcher(NewsDataStore newsDataStore) {
+    public NewsDataFetcher(NewsDataStore newsDataStore, Context context) {
         this.newsDataStore = newsDataStore;  // 인스턴스 변수 초기화
+        this.queue = Volley.newRequestQueue(context);
     }
     public void fetchAllNews(Context context, FetchCompleteListener listener) {
         String url = "http://43.201.173.245/getSummary.php";
@@ -39,7 +41,6 @@ public class NewsDataFetcher {
                                 String title = news.getString("title");
                                 int related1 = news.getInt("related_news1");
                                 int related2 = news.getInt("related_news2");
-                                Log.d("News Summary FetchallNews", "ID: " + newsId + ", Title:" + title + ", Summary: " + summary);
                                 newsDataStore.addNewsItem(newsId, title, summary, related1, related2);
                             }
                             listener.onFetchComplete();
@@ -51,6 +52,7 @@ public class NewsDataFetcher {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Volley Error", "Error fetching data: " + error.getMessage());
+                listener.onFetchFailed(error);
             }
         });
 

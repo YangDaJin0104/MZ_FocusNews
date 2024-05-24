@@ -48,6 +48,7 @@
             android:id="@+id/quizStart"
             android:layout_width="380dp"
             android:layout_height="50dp"
+            android:paddingHorizontal="20dp"
             android:drawableLeft="@drawable/siren"
             android:layout_gravity="center_horizontal"
             android:text="[속보] 푸바오 오늘 중국행 비행기 탑승"
