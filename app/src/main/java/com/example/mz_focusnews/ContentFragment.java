@@ -52,18 +52,18 @@ public class ContentFragment extends Fragment {
 
         requestQueue = Volley.newRequestQueue(getActivity());
 
-        // Bundle로부터 전달받은 데이터를 가져옴
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            News newsItem = bundle.getParcelable("news_item");
-            if (newsItem != null) {
-                // 뉴스 아이템 정보를 TextView에 설정
-                tv_title.setText(newsItem.getTitle());
-                tv_time.setText(newsItem.getDate());
-            } else {
-                Log.e("ContentFragment", "Received null NewsItem");
-            }
-        }
+//        // Bundle로부터 전달받은 데이터를 가져옴
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            News newsItem = bundle.getParcelable("news_item");
+//            if (newsItem != null) {
+//                // 뉴스 아이템 정보를 TextView에 설정
+//                tv_title.setText(newsItem.getTitle());
+//                tv_time.setText(newsItem.getDate());
+//            } else {
+//                Log.e("ContentFragment", "Received null NewsItem");
+//            }
+//        }
 
         fetchSummaryData(getActivity(), 1214);     //요약문 가져오기  //후에 homefragment나 categoryfragment에서 넘겨받아야함
 
@@ -171,7 +171,7 @@ public class ContentFragment extends Fragment {
             summary3.setText(summaries[2].trim());
         }
 
-//        newsTitle.setText(title);
+        tv_title.setText(title);
 
         updateRelatedSummaries(getActivity(), item);
     }

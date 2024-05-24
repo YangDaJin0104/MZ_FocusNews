@@ -31,7 +31,7 @@ public class Summary {
             connection.setRequestProperty("Content-Type", "application/json");
 
             // prompt 생성
-            String prompt = article + " 이 뉴스기사를 3문장으로 요약해줘. 각 문장은 공백 포함 70글자 내외로 써줘.";
+            String prompt = article + " 이 뉴스기사를 3문장으로 요약해줘. 각 문장은 -다. 형식으로 공백 포함 70글자 내외로 써줘.";
 
             // request body
             String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";

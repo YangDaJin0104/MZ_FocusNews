@@ -71,7 +71,7 @@
                     android:id="@+id/news_date"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
-                    android:text="2099년 5월 19일"
+                    android:text="2024년 5월 20일"
                     android:gravity="right"
                     android:textSize="13sp" />
 
@@ -141,16 +141,16 @@
                         android:id="@+id/news_related_keyword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="의대교수 사직서"
+                        android:text="연관 기사"
                         android:textStyle="bold"
                         android:textSize="15sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="에 대해 더 알고싶다면?"
-                        android:textStyle="bold"
-                        android:textSize="15sp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="에 대해 더 알고싶다면?"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textSize="15sp" />-->
                 </LinearLayout>
 
                 <TextView

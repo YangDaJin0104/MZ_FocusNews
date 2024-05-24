@@ -21,7 +21,6 @@
             android:orientation="horizontal"
             android:padding="15dp">
 
-<<<<<<< HEAD
             <LinearLayout
                 android:src="@drawable/ic_launcher_foreground"
                 android:layout_width="160dp"
