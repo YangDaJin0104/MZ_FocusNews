@@ -27,20 +27,25 @@ android {
             debuggable true
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         compose true
         viewBinding true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion '1.5.1'
     }
+
     packaging {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -48,9 +53,9 @@ android {
     }
 
     // 빌드에서 제외 (임시)
-    sourceSets{
-        main{
-            java{
+    sourceSets {
+        main {
+            java {
                 exclude '**/MyPage.java'
                 exclude '**/LoginActivity.java'
                 exclude '**/NewsAdapter.java'
@@ -72,68 +77,57 @@ android {
             }
         }
     }
-}
 
-dependencies {
-    implementation libs.appcompat
-    implementation libs.material
-    implementation libs.activity
-    implementation libs.constraintlayout
-    implementation libs.lifecycle.runtime.ktx
-    implementation libs.activity.compose
-    implementation platform(libs.compose.bom)
-    implementation libs.ui
-    implementation libs.ui.graphics
-    implementation libs.ui.tooling.preview
-    implementation libs.material3
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
-    implementation 'com.android.volley:volley:1.2.1'
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
-    androidTestImplementation libs.espresso.core
+    dependencies {
+        implementation libs.appcompat
+        implementation libs.material
+        implementation libs.activity
+        implementation libs.constraintlayout
+        implementation libs.lifecycle.runtime.ktx
+        implementation libs.activity.compose
+        implementation platform(libs.compose.bom)
+        implementation libs.ui
+        implementation libs.ui.graphics
+        implementation libs.ui.tooling.preview
+        implementation libs.material3
+        implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
+        implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
+        implementation 'com.android.volley:volley:1.2.1'
+        testImplementation libs.junit
+        androidTestImplementation libs.ext.junit
+        androidTestImplementation libs.espresso.core
 
-<<<<<<< HEAD
-=======
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-    implementation 'com.google.android.gms:play-services-location:21.2.0'
->>>>>>> 1139e617dc1c3593961843fcf75ca6e403a712e2
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+        implementation 'com.google.code.gson:gson:2.10.1'
+        implementation 'com.github.bumptech.glide:glide:4.12.0'
+        annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+        implementation 'com.google.android.gms:play-services-location:21.2.0'
+        implementation 'com.github.bumptech.glide:glide:4.12.0'
+        annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
-    implementation 'org.jsoup:jsoup:1.17.2'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
-    implementation 'me.relex:circleindicator:2.1.6'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+        implementation 'org.jsoup:jsoup:1.17.2'
+        implementation 'com.google.android.material:material:1.11.0'
+        implementation 'androidx.viewpager2:viewpager2:1.0.0'
+        implementation 'me.relex:circleindicator:2.1.6'
+        implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
-    // MySQL 의존성 추가
-    implementation files('libs/mysql-connector-java-5.1.49-bin.jar')
-<<<<<<< HEAD
-=======
+        // MySQL 의존성 추가
+        implementation files('libs/mysql-connector-java-5.1.49-bin.jar')
 
-    // 스프링 부트 Retrofit 설정
-    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
+        // 스프링 부트 Retrofit 설정
+        implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+        implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+        implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
 
-}
->>>>>>> 1139e617dc1c3593961843fcf75ca6e403a712e2
+        // OpenCSV 라이브러리 - csv 파일 읽을 때 사용
+        implementation 'com.opencsv:opencsv:5.5.2'
 
-    // OpenCSV 라이브러리 - csv 파일 읽을 때 사용
-    implementation 'com.opencsv:opencsv:5.5.2'
-}
-
-dependencies {
-
-    implementation libs.navigation.fragment
-    implementation libs.navigation.ui
-    androidTestImplementation platform(libs.compose.bom)
-    androidTestImplementation libs.ui.test.junit4
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
-    testImplementation "org.mockito:mockito-core:3.+"
-    debugImplementation libs.ui.tooling
-    debugImplementation libs.ui.test.manifest
+        implementation libs.navigation.fragment
+        implementation libs.navigation.ui
+        androidTestImplementation platform(libs.compose.bom)
+        androidTestImplementation libs.ui.test.junit4
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+        testImplementation "org.mockito:mockito-core:3.+"
+        debugImplementation libs.ui.tooling
+        debugImplementation libs.ui.test.manifest
+    }
 }
