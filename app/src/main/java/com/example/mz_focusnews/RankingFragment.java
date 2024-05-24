@@ -42,7 +42,7 @@ public class RankingFragment extends Fragment {
     private static final String TAG = "RankingFragment";
     private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";
     private static final String PREFS_NAME = "QuizPrefs";
-    private static final String USER_ID = "coddl";
+    private static final String USER_ID = "coddl";      // TODO: 코드 상으로 user_id 가져와야 함.
     private static final int POPUP_WIDTH = 700;
     private int POPUP_HEIGHT = 600;
 
@@ -73,15 +73,6 @@ public class RankingFragment extends Fragment {
         dot = view.findViewById(R.id.dot);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-
-        // SharedPreferences 변수 모두 초기화용
-        // TODO: 아래 삭제 필요
-        Map<String, ?> mapData = preferences.getAll();
-        for (Map.Entry<String, ?> entry : mapData.entrySet()) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(entry.getKey(), true);
-            editor.apply();
-        }
 
         showRanking(view);
 
@@ -136,12 +127,13 @@ public class RankingFragment extends Fragment {
         return isSolvedQuiz;
     }
 
+    // TODO: 한국 시간 오전 6시 이후 유저 정보 초기화 됐는지 확인
     private void scheduleQuizTimeReset() {
         Handler handler = new Handler(Looper.getMainLooper());
         Runnable resetQuizFlagTask = new Runnable() {
             @Override
             public void run() {
-                setSolvedQuizFlag(false);
+                setAllSolvedQuizFlagToFalse();
                 handler.postDelayed(this, TimeUnit.DAYS.toMillis(1));   // 하루 뒤 같은 작업 예약
             }
         };
@@ -149,10 +141,9 @@ public class RankingFragment extends Fragment {
         // 매일 오전 6시(한국시간)에 퀴즈 초기화
         Calendar now = Calendar.getInstance();
         Calendar next6AM = Calendar.getInstance();
-        // TODO: 실제 배포 시 next6AM.set(Calendar.HOUR_OF_DAY, 21); 로 바꿔야 함.
-        next6AM.set(Calendar.HOUR_OF_DAY, 12);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
-        next6AM.set(Calendar.MINUTE, 47);
-        next6AM.set(Calendar.SECOND, 0);
+        next6AM.set(Calendar.HOUR_OF_DAY, 16);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
+        next6AM.set(Calendar.MINUTE, 10);
+        next6AM.set(Calendar.SECOND, 10);
         next6AM.set(Calendar.MILLISECOND, 0);
 
         // 이미 오전 6시가 지난 경우, 내일 오전 6시에 초기화
@@ -164,6 +155,7 @@ public class RankingFragment extends Fragment {
         handler.postDelayed(resetQuizFlagTask, initialDelay);
     }
 
+    // SharedPreferences 변수 값 true/false(파라메터)로 저장
     private boolean setSolvedQuizFlag(boolean isSolved) {
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -172,6 +164,27 @@ public class RankingFragment extends Fragment {
         editor.apply();
 
         return isSolved;
+    }
+
+    // 모든 SharedPreferences 변수 값 false로 저장 - 모든 유저에 대한 퀴즈 푼 여부를 false로 바꿈
+    private void setAllSolvedQuizFlagToFalse() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Map<String, ?> mapData = preferences.getAll();
+
+        for (Map.Entry<String, ?> entry : mapData.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            Log.d(TAG, "모든 MAP - key = " + key + "/ value = " + value);
+
+            if (value instanceof Boolean) {
+                editor.putBoolean(key, false);
+            }
+        }
+
+        editor.apply();
     }
 
     private void setView(View view, List<Ranking> rankingList) {

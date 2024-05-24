@@ -38,9 +38,11 @@ public class QuizFragment extends Fragment {
     private int SCORE = 0;      // 사용자 획득 점수
 
     // 테스트용 데이터
-    private static final String USER_ID = "user1";             // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
+    private static final String USER_ID = "user1";      // TODO: 코드 상으로 user_id 가져와야 함.
     private String USER_ANSWER;    // 사용자가 입력한 정답
-    private static final String SUMMARIZE = "금융위원회가 청년도약계좌 운영현황 점검 결과 발표. 123만명 가입, 평균납입잔액 469만원, 정부 기여금 평균 수령 17만원. 은행들이 3년 이상 유지 시 중도해지이율을 3.8~4.5% 수준으로 상향 조정.";    // 3문장 요약
+    private static final String SUMMARIZE = "금융위원회가 청년도약계좌 운영현황 점검 결과 발표." +
+            "123만명 가입, 평균납입잔액 469만원, 정부 기여금 평균 수령 17만원." +
+            "은행들이 3년 이상 유지 시 중도해지이율을 3.8~4.5% 수준으로 상향 조정.";      // TODO: 코드 상으로 summarize 가져와야 함.
 
     // 프론트
     private NavController navController;
