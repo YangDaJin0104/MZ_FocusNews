@@ -44,9 +44,6 @@
             android:id="@+id/action_homeFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_myPage"
-            app:destination="@id/myPage" />
-        <action
             android:id="@+id/action_homeFragment_to_contentFragment"
             app:destination="@id/contentFragment" />
     </fragment>
@@ -59,9 +56,6 @@
         <action
             android:id="@+id/action_categoryFragment_to_contentFragment"
             app:destination="@id/contentFragment">
-            <argument
-                android:name="newsItem"
-                app:argType="com.example.mz_focusnews.NewsItem" />
         </action>
     </fragment>
 
@@ -72,12 +66,12 @@
         tools:layout="@layout/fragment_content" />
 
     <fragment
-        android:id="@+id/rankingFragment2"
+        android:id="@+id/rankingFragment"
         android:name="com.example.mz_focusnews.RankingFragment"
         android:label="fragment_ranking"
         tools:layout="@layout/fragment_ranking" >
         <action
-            android:id="@+id/action_rankingFragment2_to_quizFragment"
+            android:id="@+id/action_rankingFragment_to_quizFragment"
             app:destination="@id/quizFragment" />
     </fragment>
 
@@ -85,5 +79,9 @@
         android:id="@+id/quizFragment"
         android:name="com.example.mz_focusnews.QuizFragment"
         android:label="fragment_quiz"
-        tools:layout="@layout/fragment_quiz" />
+        tools:layout="@layout/fragment_quiz" >
+        <action
+            android:id="@+id/action_quizFragment_to_rankingFragment"
+            app:destination="@id/rankingFragment" />
+    </fragment>
 </navigation>

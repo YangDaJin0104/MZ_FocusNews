@@ -118,16 +118,14 @@ public class HomeFragment extends Fragment {
                                 newsObject.getString("title"),
                                 newsObject.getString("category"),
                                 newsObject.getString("date"),
-                                newsObject.getInt("related_news1"),
-                                newsObject.getInt("related_news2")
-
+                                newsObject.optInt("related_news1", 0), // 기본값으로 0을 사용
+                                newsObject.optInt("related_news2", 0)  // 기본값으로 0을 사용
                         );
                         newsList.add(news); // 뉴스 항목을 리스트에 추가
                     }
                     interestAdapter.notifyDataSetChanged(); // 어댑터에 데이터 변경 알림
                 } else {
                     Toast.makeText(getActivity(), "Failed to fetch news", Toast.LENGTH_SHORT).show();
-//                    Log.d("HomeFragment", "Server Error Message: " + jsonResponse.getString("message")); // 서버 에러 메시지 로그 출력
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

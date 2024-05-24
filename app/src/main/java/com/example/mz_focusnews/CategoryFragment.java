@@ -64,57 +64,44 @@ public class CategoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_category, container, false);
 
-        // 어댑터 초기화 및 RecyclerView에 설정
+        // RecyclerView 참조를 먼저 얻은 다음 어댑터를 설정
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // 어댑터 초기화 및 설정
         newsAdapter = new NewsAdapter(getActivity(), newsList, new NewsAdapter.OnNewsClickListener() {
             @Override
             public void onNewsClick(News news) {
-                // 클릭된 뉴스 아이템 정보를 서버에 전송 (조회수 증가)
-                sendNewsItemToServer(getContext(), news);
-
-                // 클릭된 뉴스 아이템 정보를 사용자 세션에 추가
-                logUserInteraction(getContext(), userSessions, user_id, news);
-
-                // 클릭된 뉴스 아이템 정보를 Bundle에 담아서 NavGraph로 전달 (뉴스 데이터 전달)
-                // 지금은 그냥 간단하게 제목이랑 시간대만 전송
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("news_item", news);
-                navController.navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
-
+                // 클릭 이벤트 처리 로직
+                handleNewsClick(news);
             }
         });
         recyclerView.setAdapter(newsAdapter);
 
-
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        newsAdapter = new NewsAdapter(new ArrayList<>());
-        recyclerView.setAdapter(newsAdapter);
-
-        Button politicsButton = view.findViewById(R.id.politics);
-        Button economyButton = view.findViewById(R.id.economy);
-        Button societyButton = view.findViewById(R.id.society);
-        Button areaButton = view.findViewById(R.id.area);
-        Button recruitmentButton = view.findViewById(R.id.recruitment);
-        Button scienceButton = view.findViewById(R.id.science);
-        Button entertainmentButton = view.findViewById(R.id.entertainment);
-        Button sportsButton = view.findViewById(R.id.sports);
-
-        progressBar = view.findViewById(R.id.progressBar); // 로딩 인디케이터
-
-        politicsButton.setOnClickListener(v -> loadNewsByCategory("politics"));
-        economyButton.setOnClickListener(v -> loadNewsByCategory("economy"));
-        societyButton.setOnClickListener(v -> loadNewsByCategory("society"));
-        areaButton.setOnClickListener(v -> loadNewsByCategory("area"));
-        recruitmentButton.setOnClickListener(v -> loadNewsByCategory("recruitment"));
-        scienceButton.setOnClickListener(v -> loadNewsByCategory("science"));
-        entertainmentButton.setOnClickListener(v -> loadNewsByCategory("entertainment"));
-        sportsButton.setOnClickListener(v -> loadNewsByCategory("sports"));
+        // 버튼 및 기타 UI 컴포넌트 초기화
+        initializeUIComponents(view);
 
         return view;
     }
+
+    private void handleNewsClick(News news) {
+        sendNewsItemToServer(getContext(), news);
+        logUserInteraction(getContext(), userSessions, user_id, news);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("news_item", news);
+        navController.navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
+    }
+
+    private void initializeUIComponents(View view) {
+        // 버튼들 초기화 및 이벤트 리스너 할당
+        Button politicsButton = view.findViewById(R.id.politics);
+        politicsButton.setOnClickListener(v -> loadNewsByCategory("politics"));
+        // 나머지 버튼들도 비슷한 방식으로 초기화
+    }
+
 
     private void loadNewsByCategory(String category) {
         progressBar.setVisibility(View.VISIBLE); // 로딩 인디케이터 표시

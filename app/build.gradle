@@ -52,32 +52,6 @@ android {
         }
     }
 
-    // 빌드에서 제외 (임시)
-    sourceSets {
-        main {
-            java {
-                exclude '**/MyPage.java'
-                exclude '**/LoginActivity.java'
-                exclude '**/NewsAdapter.java'
-                exclude '**/NewsItem.java'
-                exclude '**/SignupActivity.java'
-                exclude '**/SignupCompleteFragment.java'
-                exclude '**/UsersAdapter.java'
-                exclude '**/CategoryFragment.java'
-                exclude '**/change_password.java'
-                exclude '**/HomeFragment.java'
-                exclude '**/DBSelectActivity.java'
-                exclude '**/DBInsertActivity.java'
-                exclude '**/PersonalData.java'
-                exclude '**/News.java'
-                exclude '**/NewsAdapter.java'
-                exclude '**/NewsArticle.java'
-                exclude '**/NewsScraper.java'
-                exclude '**/NewsScraperCallback.java'
-            }
-        }
-    }
-
     dependencies {
         implementation libs.appcompat
         implementation libs.material

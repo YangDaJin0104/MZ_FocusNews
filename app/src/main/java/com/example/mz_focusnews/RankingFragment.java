@@ -99,7 +99,7 @@ public class RankingFragment extends Fragment {
                     setPopupGenerateQuiz(v);        // 오늘 퀴즈를 풀지 않은 경우, 문제 생성 중이라는 팝업창 출력
                     setSolvedQuizFlag(true);
                     navController = Navigation.findNavController(view);
-                    navController.navigate(R.id.action_rankingFragment2_to_quizFragment);
+                    navController.navigate(R.id.action_rankingFragment_to_quizFragment);
                 }
             }
         });

@@ -125,8 +125,8 @@ public class NewsUtils {
                                     String title = topNews.getString("title");
                                     String category = topNews.optString("category", "Uncategorized");
                                     String date = topNews.getString("date");
-                                    int relatedNews1 = topNews.getInt("related_news1"); // 안되면 integer로 수정
-                                    int relatedNews2 = topNews.getInt("related_news2");
+                                    int relatedNews1 = topNews.optInt("related_news1", 0); // 기본값으로 0을 사용
+                                    int relatedNews2 = topNews.optInt("related_news2", 0); // 기본값으로 0을 사용
 
 
                                     News news = new News(newsId, view, link, summary, title, category, date, relatedNews1, relatedNews2);
@@ -152,6 +152,7 @@ public class NewsUtils {
                             }
                         } catch (JSONException e) {
                             Log.d("NewsUtils", "loadNews: JSON 파싱 오류, 날짜=" + date + ", 타입=" + type, e);
+                            Toast.makeText(context, "데이터 형식 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
