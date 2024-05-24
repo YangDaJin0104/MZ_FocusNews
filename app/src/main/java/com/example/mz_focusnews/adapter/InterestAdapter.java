@@ -122,4 +122,5 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
             e.printStackTrace();
             return dateString;
         }
-    }}
+    }
+}

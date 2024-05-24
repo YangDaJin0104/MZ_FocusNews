@@ -5,9 +5,6 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public class News implements Parcelable {
     private Integer newsId;
     private int view;

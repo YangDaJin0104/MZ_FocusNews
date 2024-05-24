@@ -1,5 +1,6 @@
 package com.example.mz_focusnews;
 
+
 import com.example.mz_focusnews.NewsDB.News;
 
 /**

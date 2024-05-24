@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mz_focusnews.NewsDB.News;
+
 public class ContentFragment extends Fragment {
 
     private TextView tv_title;
@@ -25,7 +27,7 @@ public class ContentFragment extends Fragment {
         // Bundle로부터 전달받은 데이터를 가져옴
         Bundle bundle = getArguments();
         if (bundle != null) {
-            NewsItem newsItem = bundle.getParcelable("news_item");
+            News newsItem = bundle.getParcelable("news_item");
             if (newsItem != null) {
                 // 뉴스 아이템 정보를 TextView에 설정
                 tv_title.setText(newsItem.getTitle());
