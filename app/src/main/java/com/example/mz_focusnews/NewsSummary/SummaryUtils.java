@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SummaryUtils {
-    private  RequestQueue queue;
+    private RequestQueue queue;
 
     public SummaryUtils(Context context) {
         queue = Volley.newRequestQueue(context);
@@ -26,14 +26,14 @@ public class SummaryUtils {
                     @Override
                     public void onResponse(String response) {
                         // 서버로부터 응답을 처리
-                        Log.d("Response", response);
+                        Log.d("Response sendSummary", response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // 에러 처리
-                        Log.e("Error.Response", error.toString());
+                        Log.e("Error.Response sendSummary", error.toString());
                     }
                 }
         ) {
@@ -48,6 +48,28 @@ public class SummaryUtils {
         };
 
         // 요청을 RequestQueue에 추가
+        queue.add(postRequest);
+    }
+
+
+    public void deleteBadData(Context context) {
+        String url = "http://43.201.173.245//newsToNull.php";
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("deleteBadData Response", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("deleteBadData Error.Response", error.toString());
+                    }
+                } // 에러 처리
+        );
+
         queue.add(postRequest);
     }
 

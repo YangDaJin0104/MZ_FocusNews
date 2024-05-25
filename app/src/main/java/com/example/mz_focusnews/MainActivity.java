@@ -9,6 +9,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.android.volley.VolleyError;
 import com.example.mz_focusnews.NewsSummary.Summary;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
     private NewsDataStore newsDataStore;
+    SummaryUtils summaryUtils;
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final AtomicBoolean isDestroyed = new AtomicBoolean(false);
 
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         fetchAllNewsIdsAndProcess();
 
         newsDataStore = new NewsDataStore();
+        summaryUtils = new SummaryUtils(this);
         NewsDataFetcher fetcher = new NewsDataFetcher(newsDataStore, this);
         fetcher.fetchAllNews(this, new FetchCompleteListener() {
             @Override
@@ -53,12 +57,13 @@ public class MainActivity extends AppCompatActivity {
                 });
 
             }
-
             @Override
             public void onFetchFailed(VolleyError error) {
                 Log.e("MainActivity", "News fetch failed", error);
             }
         });
+
+        cleanDB();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -91,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(() -> performSummaryAndUpload(newsId, content));
                     }
                 }
-
                 @Override
                 public void onError(String error) {
                     runOnUiThread(() -> Log.e("MainActivity", "Error fetching data: " + error));
@@ -110,13 +114,21 @@ public class MainActivity extends AppCompatActivity {
 
         executorService.execute(() -> {
             String summary = Summary.chatGPT_summary(content);
-
             if (summary != null && !isDestroyed.get()) {
-                SummaryUtils summaryUtils = new SummaryUtils(this);
+
                 summaryUtils.sendSummaryToServer(this, newsId, summary);
             }
         });
     }
+
+    private void cleanDB() {
+        executorService.execute(() -> {
+            summaryUtils.deleteBadData(this);
+            Log.d("cleanDB", "clean success");
+
+        });
+    }
+
 }
 
 
