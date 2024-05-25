@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mz_focusnews.NewsDB.News;
+import com.example.mz_focusnews.NewsDB.RetrofitClient;
 import com.example.mz_focusnews.adapter.InterestAdapter;
 import com.example.mz_focusnews.adapter.ViewPager2Adapter;
 import com.example.mz_focusnews.request.FetchNewsRequest;
@@ -37,6 +39,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+
 public class HomeFragment extends Fragment {
 
     private String user_id;
@@ -45,6 +50,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private InterestAdapter interestAdapter;
     private List<News> newsList;
+    private Button breakingNewsButton; // 속보 뉴스 버튼 참조를 위한 변수
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class HomeFragment extends Fragment {
         // 사용자 이름 및 현재 시간 설정
         TextView userName = view.findViewById(R.id.user_name);
         TextView nowDate = view.findViewById(R.id.current_date);
+        breakingNewsButton = view.findViewById(R.id.breakingNews); // 속보 뉴스 버튼 참조
 
         // SharedPreferences로 데이터 받아오기: 아이디 , 이름
         SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
@@ -67,10 +74,6 @@ public class HomeFragment extends Fragment {
         ViewPager2Adapter viewPager2Adapter = new ViewPager2Adapter(getActivity());
         ViewPager2 viewPager2 = view.findViewById(R.id.news_view_pager);
         viewPager2.setAdapter(viewPager2Adapter);
-
-        /**
-         * 사용자 맞춤형 뉴스 추천 파트
-         */
 
         // 리사이클러뷰 초기화
         recyclerView = view.findViewById(R.id.rv_interest_content);
@@ -88,15 +91,47 @@ public class HomeFragment extends Fragment {
                 NewsUtils.logUserInteraction(getContext(), getUserSessions(), user_id, news);
                 NavHostFragment.findNavController(HomeFragment.this)
                         .navigate(R.id.action_homeFragment_to_contentFragment);
-
             }
         });
 
         recyclerView.setAdapter(interestAdapter);
 
-        fetchNewsData();
+        fetchNewsData(); // 기존 뉴스 데이터 가져오는 메소드 호출
+        fetchBreakingNewsData(); // 속보 뉴스 데이터 가져오는 메소드 호출 추가
 
         return view;
+    }
+
+    // 속보 뉴스 데이터를 가져오는 메소드 추가
+    private void fetchBreakingNewsData() {
+        RetrofitClient.getInstance().getNewsApi().getBreakingNews(1).enqueue(new Callback<List<News>>() {
+            @Override
+            public void onResponse(Call<List<News>> call, retrofit2.Response<List<News>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    newsList.clear();
+                    newsList.addAll(response.body());
+                    interestAdapter.notifyDataSetChanged();
+
+                    if (!newsList.isEmpty()) {
+                        News breakingNews = newsList.get(0);
+                        String title = breakingNews.getTitle();
+                        if (title.length() > 30) {
+                            title = title.substring(0, 30) + "..."; // 제목이 30자를 초과할 경우 자르고 "..." 추가
+                        }
+                        breakingNewsButton.setText(title); // 속보 뉴스 제목을 버튼 텍스트로 설정
+                    } else {
+                        breakingNewsButton.setText("No breaking news available");
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Failed to fetch news", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<News>> call, Throwable t) {
+                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // 뉴스 데이터 가져오는 메소드
@@ -142,7 +177,6 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(request);
     }
-
 
     // 사용자 세션을 관리하는 Map을 가져오는 메소드
     private Map<String, UserSession> getUserSessions() {

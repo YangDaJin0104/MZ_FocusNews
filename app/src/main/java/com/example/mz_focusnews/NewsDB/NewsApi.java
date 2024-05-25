@@ -18,6 +18,9 @@ public interface NewsApi {
     @GET("/api/news/category/{category}")
     Call<List<News>> getNewsByCategory(@Path("category") String category, @Query("sort") String sort);
 
+    @GET("/api/news/breaking")
+    Call<List<News>> getBreakingNews(@Query("limit") int limit);
+
     @POST("/api/news")
     Call<News> createNews(@Body News news);
 
@@ -30,3 +33,4 @@ public interface NewsApi {
     @DELETE("/api/news/{id}")
     Call<Void> deleteNews(@Path("id") Integer id);
 }
+
