@@ -1,6 +1,9 @@
 package com.example.mz_focusnews.NewsSummary;
 
+import android.content.Context;
 import android.util.Log;
+
+import com.example.mz_focusnews.ApiKeyManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,18 +19,20 @@ import java.net.URL;
 
 public class Summary {
     private static final String TAG = "ChatGPTAPI";
-    private static final String API_KEY = "//";    // openAI API key
 
-    public static String chatGPT_summary(String article) {
+    public static String chatGPT_summary(Context context, String article) {
         String url = "https://api.openai.com/v1/chat/completions";
         String model = "gpt-3.5-turbo";
 
+        // ApiKeyManager로 ChatGPT API Key 받아오기 (해당 클래스에서 key를 이 함수에만 쓰기 때문에 지역 변수로 수정)
+        ApiKeyManager apiKeyManager = ApiKeyManager.getInstance(context);
+        String apiKey = apiKeyManager.getApiKey();
 
         try {
             URL obj = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Authorization", "Bearer " + API_KEY);
+            connection.setRequestProperty("Authorization", "Bearer " + apiKey);
             connection.setRequestProperty("Content-Type", "application/json");
 
             // prompt 생성

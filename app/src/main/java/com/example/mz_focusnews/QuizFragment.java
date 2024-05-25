@@ -52,7 +52,7 @@ public class QuizFragment extends Fragment {
     private ImageView img_correct, img_incorrect;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // 로그인할 때, SharedPreferences로 저장된 USER_ID 가져오기 (TODO: 로그인 화면부터 테스트 필요)
+        // 로그인할 때, SharedPreferences로 저장된 USER_ID 가져오기
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         USER_ID = preferences.getString("user_id", "null");
 
@@ -117,9 +117,11 @@ public class QuizFragment extends Fragment {
         Question todayQuiz = null;      // 오늘의 퀴즈 생성 결과 (JSON 형태)
         String response;                // 오늘의 퀴즈 생성 여부
 
+        Context context = getActivity();
+
         // 오늘의 퀴즈(ChatGPT 기반 퀴즈)가 제대로 만들어질 때까지 반복
         while (todayQuiz == null) {
-            response = ChatGPTAPI.chatGPT(SUMMARIZE);
+            response = ChatGPTAPI.chatGPT(context, SUMMARIZE);
             todayQuiz = QuestionGenerator.generateTodayQuiz(response);
         }
 

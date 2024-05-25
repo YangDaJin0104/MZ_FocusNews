@@ -1,5 +1,6 @@
 package com.example.mz_focusnews.RelatedNews;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -15,13 +16,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.mz_focusnews.ApiKeyManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 
 public class NewsDataStore {
-    private static final String API_KEY = "//";
     private static final String ENGINE = "text-embedding-3-small";
     private Map<Integer, NewsData> newsMap = new HashMap<>();
 
@@ -37,7 +38,7 @@ public class NewsDataStore {
         return newsMap.get(id);
     }
 
-    public void calculateAndSetRelatedArticles() throws IOException {
+    public void calculateAndSetRelatedArticles(Context context) throws IOException {
         List<String> summaries = new ArrayList<>();
         List<Integer> articleIds = new ArrayList<>(newsMap.keySet());
 
@@ -45,7 +46,7 @@ public class NewsDataStore {
             summaries.add(item.getSummary());
         }
 
-        RealMatrix embeddings = getEmbeddings(summaries);
+        RealMatrix embeddings = getEmbeddings(context, summaries);
 
         for (int i = 0; i < summaries.size(); i++) {
             int selectedArticleId = articleIds.get(i);
@@ -83,11 +84,15 @@ public class NewsDataStore {
         return indices;
     }
 
-    private RealMatrix getEmbeddings(List<String> texts) throws IOException {
+    private RealMatrix getEmbeddings(Context context, List<String> texts) throws IOException {
+        // ApiKeyManager로 ChatGPT API Key 받아오기 (해당 클래스에서 key를 이 함수에만 쓰기 때문에 지역 변수로 수정)
+        ApiKeyManager apiKeyManager = ApiKeyManager.getInstance(context);
+        String apiKey = apiKeyManager.getApiKey();
+
         URL url = new URL("https://api.openai.com/v1/embeddings");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
-        connection.setRequestProperty("Authorization", "Bearer " + API_KEY);
+        connection.setRequestProperty("Authorization", "Bearer " + apiKey);
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setDoOutput(true);
 
