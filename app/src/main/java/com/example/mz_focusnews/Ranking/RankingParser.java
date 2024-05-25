@@ -11,9 +11,8 @@ import java.util.List;
 
 public class RankingParser {
     private static final String TAG = "RankingParser";
-    private static final String USER_ID = "coddl";      // 현재 앱 사용자(테스트용 하드코딩) - 로그인 후 정보 받아옴
 
-    public static List<Ranking> parseRanking(String json) {
+    public static List<Ranking> parseRanking(String json, String user_id) {
         List<Ranking> rankings = new ArrayList<>();
 
         try {
@@ -34,7 +33,7 @@ public class RankingParser {
 
             // 사용자 랭킹 정보가 1~3등 내에 있는지 확인
             for(int i=0; i < 3; i++){
-                if(USER_ID.equals(rankings.get(i).getUserId())){
+                if(user_id.equals(rankings.get(i).getUserId())){
                     return rankings;        // 이미 1~3등 내에 있을 경우 리턴
                 }
             }
@@ -45,7 +44,7 @@ public class RankingParser {
                 String userId = jsonObject.optString("user_id");
 
                 // JSON에서 사용자 랭킹 정보를 찾은 경우 Ranking 객체 생성
-                if (USER_ID.equals(userId)) {
+                if (user_id.equals(userId)) {
                     String userName = jsonObject.optString("user_name");
                     int score = jsonObject.optInt("quiz_score");
                     int rank = jsonObject.optInt("rank");
@@ -63,7 +62,7 @@ public class RankingParser {
     }
 
     // UpdateDBQuizScore.java에서 사용하는 getScore 함수
-    public static int parseScore(String json) {
+    public static int parseScore(String json, String user_id) {
         try {
             JSONArray jsonArray = new JSONArray(json);
 
@@ -72,7 +71,7 @@ public class RankingParser {
                 JSONObject jsonObject = jsonArray.getJSONObject(j);
                 String userId = jsonObject.optString("user_id");
 
-                if (USER_ID.equals(userId)) {
+                if (user_id.equals(userId)) {
                     return  jsonObject.optInt("quiz_score");
                 }
             }

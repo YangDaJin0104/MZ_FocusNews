@@ -43,9 +43,9 @@ public class RankingFragment extends Fragment {
     private static final String TAG = "RankingFragment";
     private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";
     private static final String PREFS_NAME = "QuizPrefs";
-    private static final String USER_ID = "coddl";      // TODO: 코드 상으로 user_id 가져와야 함.
+    private String USER_ID;     // 사용자 ID
     private static final int POPUP_WIDTH = 700;
-    private int POPUP_HEIGHT = 600;
+    private static final int POPUP_HEIGHT = 600;
 
     private Button btn_quiz_start;
     private TextView score1;
@@ -59,6 +59,11 @@ public class RankingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 로그인할 때, SharedPreferences로 저장된 USER_ID 가져오기  (TODO: 로그인 화면부터 테스트 필요)
+        SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        USER_ID = preferences.getString("user_id", "null");
+
         scheduleQuizTimeReset();
     }
 
@@ -142,9 +147,9 @@ public class RankingFragment extends Fragment {
         // 매일 오전 6시(한국시간)에 퀴즈 초기화
         Calendar now = Calendar.getInstance();
         Calendar next6AM = Calendar.getInstance();
-        next6AM.set(Calendar.HOUR_OF_DAY, 16);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
-        next6AM.set(Calendar.MINUTE, 10);
-        next6AM.set(Calendar.SECOND, 10);
+        next6AM.set(Calendar.HOUR_OF_DAY, 21);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
+        next6AM.set(Calendar.MINUTE, 0);
+        next6AM.set(Calendar.SECOND, 0);
         next6AM.set(Calendar.MILLISECOND, 0);
 
         // 이미 오전 6시가 지난 경우, 내일 오전 6시에 초기화
@@ -231,7 +236,7 @@ public class RankingFragment extends Fragment {
             handler.post(() -> {
                 //UI Thread work - 백그라운드 작업 결과를 메인 스레드로 전달
                 if (response != null) {
-                    List<Ranking> rankings = RankingParser.parseRanking(response);
+                    List<Ranking> rankings = RankingParser.parseRanking(response, USER_ID);
                     setView(view, rankings); // setView 호출
                     for (int i = 0; i < rankings.size(); i++) {
                         System.out.println(rankings.get(i).getRank() + "등: " + rankings.get(i).getUserId() + " - " + rankings.get(i).getScore() + "점");

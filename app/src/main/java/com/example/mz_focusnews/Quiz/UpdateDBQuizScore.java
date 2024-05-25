@@ -94,7 +94,7 @@ public class UpdateDBQuizScore extends AsyncTask<Void, Void, Void> {
         String response = fetchDataFromServer();
 
         if (response != null) {
-            previous_score = RankingParser.parseScore(response);
+            previous_score = RankingParser.parseScore(response, userId);
             Log.d(TAG, "previous_score get: " + previous_score);
             return previous_score;
         } else {
