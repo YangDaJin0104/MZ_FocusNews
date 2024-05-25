@@ -67,7 +67,7 @@ public class SummaryUtils {
                     public void onErrorResponse(VolleyError error) {
                         Log.e("deleteBadData Error.Response", error.toString());
                     }
-                } // 에러 처리
+                }
         );
 
         queue.add(postRequest);
