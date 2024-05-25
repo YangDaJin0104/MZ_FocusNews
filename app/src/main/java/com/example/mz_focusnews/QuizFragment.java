@@ -3,6 +3,7 @@ package com.example.mz_focusnews;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ public class QuizFragment extends Fragment {
     private int SCORE = 0;      // 사용자 획득 점수
 
     // 테스트용 데이터
-    private static final String USER_ID = "user1";      // TODO: 코드 상으로 user_id 가져와야 함.
+    private String USER_ID;    // 사용자 ID
     private String USER_ANSWER;    // 사용자가 입력한 정답
     private static final String SUMMARIZE = "금융위원회가 청년도약계좌 운영현황 점검 결과 발표." +
             "123만명 가입, 평균납입잔액 469만원, 정부 기여금 평균 수령 17만원." +
@@ -51,6 +52,11 @@ public class QuizFragment extends Fragment {
     private ImageView img_correct, img_incorrect;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // 로그인할 때, SharedPreferences로 저장된 USER_ID 가져오기 (TODO: 로그인 화면부터 테스트 필요)
+        SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        USER_ID = preferences.getString("user_id", "null");
+
+        // 프론트
         View view = inflater.inflate(R.layout.fragment_quiz, container, false);
 
         text_question = view.findViewById(R.id.question);

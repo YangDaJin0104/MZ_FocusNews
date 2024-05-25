@@ -37,9 +37,5 @@
             </intent-filter>
         </activity>
 
-        <!-- 매일 오전 6시 퀴즈 초기화 -->
-        <receiver android:name=".Quiz.InitializeQuizTime"
-            android:exported="false">
-        </receiver>
     </application>
 </manifest>
