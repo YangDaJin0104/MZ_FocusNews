@@ -60,7 +60,7 @@ public class RankingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 로그인할 때, SharedPreferences로 저장된 USER_ID 가져오기  (TODO: 로그인 화면부터 테스트 필요)
+        // 로그인할 때, SharedPreferences로 저장된 USER_ID 가져오기
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         USER_ID = preferences.getString("user_id", "null");
 

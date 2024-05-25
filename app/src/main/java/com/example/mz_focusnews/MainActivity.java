@@ -1,5 +1,6 @@
 package com.example.mz_focusnews;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
         newsDataStore = new NewsDataStore();
         summaryUtils = new SummaryUtils(this);
         NewsDataFetcher fetcher = new NewsDataFetcher(newsDataStore, this);
+
+        Context context = this;
         fetcher.fetchAllNews(this, new FetchCompleteListener() {
             @Override
             public void onFetchComplete() {
                 executorService.execute(() -> {
                     try {
-                        newsDataStore.calculateAndSetRelatedArticles();
+                        newsDataStore.calculateAndSetRelatedArticles(context);
                         updateDatabaseWithRelatedNews();  // 데이터베이스 업데이트 호출
                     } catch (IOException e) {
                         Log.e("MainActivity", "Error calculating related articles", e);
@@ -111,9 +114,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void performSummaryAndUpload(int newsId, String content) {
+        Context context = this;
 
         executorService.execute(() -> {
-            String summary = Summary.chatGPT_summary(content);
+            String summary = Summary.chatGPT_summary(context, content);
             if (summary != null && !isDestroyed.get()) {
 
                 summaryUtils.sendSummaryToServer(this, newsId, summary);
