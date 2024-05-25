@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class InitializeQuizTime extends BroadcastReceiver {
     private static final String TAG = "InitializeQuizTime";
-    private static final String USER_ID = "coddl";
+    private static final String USER_ID = "coddl";      // TODO: 코드 상으로 user_id 가져와야 함.
     private static final String PREFS_NAME = "QuizPrefs";
 
     @Override
