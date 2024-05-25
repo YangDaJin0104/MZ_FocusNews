@@ -121,13 +121,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void cleanDB() {
+/*    private void cleanDB() {
         executorService.execute(() -> {
             summaryUtils.deleteBadData(this);
             Log.d("cleanDB", "clean success");
 
         });
-    }
+    }*/
 
 }
 
