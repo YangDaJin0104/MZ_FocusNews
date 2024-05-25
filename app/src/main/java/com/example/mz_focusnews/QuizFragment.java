@@ -138,6 +138,8 @@ public class QuizFragment extends Fragment {
         AnswerChecker answerChecker = new AnswerChecker(todayQuiz);
 
         final Question final_question = todayQuiz;
+
+        // TODO: '다음' 버튼 클릭 시 다음 문제로 넘어갈 수 있게 수정
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -331,19 +333,19 @@ public class QuizFragment extends Fragment {
         // 점수 설정
         switch (count) {     // count = 몇 번째 문제인지
             case 1:
-                str_score = "(1점)";
+                str_score = "(10점)";
                 break;
             case 2:
-                str_score = "(3점)";
-                break;
-            case 3:
                 str_score = "(5점)";
                 break;
+            case 3:
+                str_score = "(10점)";
+                break;
             case 4:
-                str_score = "(7점)";
+                str_score = "(15점)";
                 break;
             case 5:
-                str_score = "(10점)";
+                str_score = "(20점)";
                 break;
             default:
                 break;
