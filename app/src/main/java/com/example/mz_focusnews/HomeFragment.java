@@ -104,7 +104,8 @@ public class HomeFragment extends Fragment {
 
     // 속보 뉴스 데이터를 가져오는 메소드 추가
     private void fetchBreakingNewsData() {
-        RetrofitClient.getInstance().getNewsApi().getBreakingNews(1).enqueue(new Callback<List<News>>() {
+        String keyword = "[속보]";
+        RetrofitClient.getInstance().getNewsApi().getBreakingNewsWithKeyword(1, keyword).enqueue(new Callback<List<News>>() {
             @Override
             public void onResponse(Call<List<News>> call, retrofit2.Response<List<News>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -123,7 +124,10 @@ public class HomeFragment extends Fragment {
                         breakingNewsButton.setText("No breaking news available");
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Failed to fetch news", Toast.LENGTH_SHORT).show();
+                    int statusCode = response.code();
+                    String errorMessage = response.message();
+                    Log.e("HomeFragment", "Error: " + statusCode + ", " + errorMessage);
+                    Toast.makeText(getActivity(), "Failed to fetch news: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -133,6 +137,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 
     // 뉴스 데이터 가져오는 메소드
     private void fetchNewsData() {

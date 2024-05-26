@@ -19,7 +19,8 @@ public interface NewsApi {
     Call<List<News>> getNewsByCategory(@Path("category") String category, @Query("sort") String sort);
 
     @GET("/api/news/breaking")
-    Call<List<News>> getBreakingNews(@Query("limit") int limit);
+    Call<List<News>> getBreakingNewsWithKeyword(@Query("limit") int limit, @Query("keyword") String keyword);
+
 
     @POST("/api/news")
     Call<News> createNews(@Body News news);
