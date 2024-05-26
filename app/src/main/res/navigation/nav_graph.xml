@@ -23,12 +23,6 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment">
-            <!--            <argument-->
-            <!--                android:name="user_name"-->
-            <!--                app:argType="string" />-->
-            <!--            <argument-->
-            <!--                android:name="user_id"-->
-            <!--                app:argType="string" />-->
         </action>
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -46,6 +40,9 @@
         <action
             android:id="@+id/action_homeFragment_to_contentFragment"
             app:destination="@id/contentFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
     </fragment>
 
     <fragment
@@ -84,4 +81,9 @@
             android:id="@+id/action_quizFragment_to_rankingFragment"
             app:destination="@id/rankingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.example.mz_focusnews.MyPageFragment"
+        android:label="fragment_my_page"
+        tools:layout="@layout/fragment_my_page" />
 </navigation>
