@@ -7,6 +7,7 @@ import static com.example.mz_focusnews.NewsUtils.logUserInteraction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -173,9 +175,17 @@ public class CategoryFragment extends Fragment {
         sendNewsItemToServer(getContext(), news);
         logUserInteraction(getContext(), userSessions, user_id, news);
 
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("news_item", news);
+//        navController.navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
+        // Bundle 객체 생성 및 news_id 추가
         Bundle bundle = new Bundle();
-        bundle.putParcelable("news_item", news);
-        navController.navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
+        bundle.putInt("newsId", news.getNewsId());
+        Log.d("throw newsId from category", String.valueOf(news.getNewsId()));
+
+        // contentFragment로 이동하면서 데이터 전달
+        NavHostFragment.findNavController(CategoryFragment.this)
+                .navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
     }
 
     private void initializeUIComponents(View view) {

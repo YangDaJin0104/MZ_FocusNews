@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //cleanDB();
+        cleanDB();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -143,13 +143,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-/*    private void cleanDB() {
+    private void cleanDB() {
         executorService.execute(() -> {
             summaryUtils.deleteBadData(this);
             Log.d("cleanDB", "clean success");
 
         });
-    }*/
+    }
 
 }
 

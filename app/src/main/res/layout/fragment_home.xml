@@ -5,95 +5,105 @@
     android:layout_height="match_parent"
     android:background="@color/whiteblue">
 
-    <LinearLayout
-        android:id="@+id/main"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
 
         <LinearLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="340dp"
+                    android:layout_height="wrap_content"
+                    android:text="Hi, User Name"
+                    android:textSize="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="20dp" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/bell"/>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/user_name"
-                android:layout_width="340dp"
-                android:layout_height="wrap_content"
-                android:text="Hi, User Name"
-                android:textSize="30dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="20dp" />
-
-            <ImageButton
+                android:id="@+id/current_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/bell"/>
+                android:text="yyyy년mm월dd일"
+                android:textSize="15dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="20dp"/>
+
+            <Button
+                android:id="@+id/breakingNews"
+                android:layout_width="380dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="20dp"
+                android:drawableLeft="@drawable/siren"
+                android:textColor="@color/white"
+                android:background="@drawable/background_shape_blue"/>
+
+            <!-- 안에 담길 내용들은 fragment_daliy... 들에 있음-->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/news_view_pager"
+                android:layout_width="385dp"
+                android:layout_height="190dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:scaleType="fitXY" />
+
+            <View
+                android:layout_width="360dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="#DBDBDB" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="무슨 일이 일어나고 있나요?"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginLeft="30dp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_interest_content"
+                android:layout_width="350dp"
+                android:layout_height="370dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/current_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="yyyy년mm월dd일"
-            android:textSize="15dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="20dp"/>
-
-
-        <Button
-            android:id="@+id/breakingNews"
-            android:layout_width="380dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:paddingLeft="20dp"
-            android:drawableLeft="@drawable/siren"
-            android:textColor="@color/white"
-            android:background="@drawable/background_shape_blue"/>
-
-
-        <!-- 안에 담길 내용들은 fragment_daliy... 들에 있음-->
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/news_view_pager"
-            android:layout_width="385dp"
-            android:layout_height="190dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:scaleType="fitXY" />
-
-        <View
-            android:layout_width="360dp"
-            android:layout_height="2dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="#DBDBDB" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="무슨 일이 일어나고 있나요?"
-            android:textSize="17dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginLeft="30dp" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_interest_content"
-            android:layout_width="350dp"
-            android:layout_height="370dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal" />
-    </LinearLayout>
+    </FrameLayout>
 </ScrollView>

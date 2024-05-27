@@ -61,7 +61,7 @@ public class NewsDataAdapter {
     public void fetchNewsData(Context context, int newsId, NewsDataCallback callback) {
         String url = "http://43.201.173.245/getNewsData.php?news_id=" + newsId;
 
-        Log.d("url fetchNewsData", url);
+//        Log.d("url fetchNewsData", url);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {

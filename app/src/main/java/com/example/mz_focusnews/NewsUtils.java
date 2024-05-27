@@ -92,7 +92,7 @@ public class NewsUtils {
             logUserInteraction(fragment.getContext(), userSessions, userId, news);
 
             Bundle bundle = new Bundle();
-            bundle.putParcelable("news_item", news);
+            bundle.putInt("newsId", news.getNewsId());
 
             NavHostFragment.findNavController(fragment)
                     .navigate(R.id.action_homeFragment_to_contentFragment, bundle);
