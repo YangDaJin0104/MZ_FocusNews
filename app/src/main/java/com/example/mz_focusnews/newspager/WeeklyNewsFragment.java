@@ -60,8 +60,9 @@ public class WeeklyNewsFragment extends Fragment {
 
     private void loadWeeklyNews() {
         String startDate = getStartDateOfWeek();
-        Log.d("loadNews", "loadWeeklyNews: startDate=" + startDate); // 추가된 로그
+        String previousStartDate = NewsUtils.getPreviousDate("weekly", TimeZone.getTimeZone("Asia/Seoul"));
         NewsUtils.loadNews(getContext(), startDate, "weekly", weekly_title, weekly_content, weekly_date, userSessions, this);
+        NewsUtils.loadNews(getContext(), previousStartDate, "weekly", weekly_title, weekly_content, weekly_date, userSessions, this);
     }
 
     private String getStartDateOfWeek() {

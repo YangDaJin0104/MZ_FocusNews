@@ -63,8 +63,9 @@ public class DailyNewsFragment extends Fragment {
     // 오늘의 뉴스를 로드하는 메소드
     private void loadDailyNews() {
         String todayDate = getCurrentDate();
-        Log.d("loadNews", "loadDailyNews: todayDate=" + todayDate);
+        String previousDate = NewsUtils.getPreviousDate("daily", TimeZone.getTimeZone("Asia/Seoul"));
         NewsUtils.loadNews(getContext(), todayDate, "daily", daily_title, daily_content, daily_date, userSessions, this);
+        NewsUtils.loadNews(getContext(), previousDate, "daily", daily_title, daily_content, daily_date, userSessions, this);
     }
 
     // 현재 날짜를 가져오는 메소드
