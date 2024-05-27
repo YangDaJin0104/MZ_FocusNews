@@ -14,7 +14,7 @@
         android:title="퀴즈"
         android:icon="@drawable/menu_quiz"/>
     <item
-        android:id="@+id/myPage"
+        android:id="@+id/myPageFragmente"
         android:title="마이페이지"
         android:icon="@drawable/menu_mypage"/>
 </menu>

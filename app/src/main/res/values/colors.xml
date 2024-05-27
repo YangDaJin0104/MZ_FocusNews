@@ -8,6 +8,6 @@
     <color name="weeklyblue">#C4E1FD</color>
     <color name="monthlyblue">#DBEDFF</color>
     <color name="blue">#3D8FEF</color>
+    <color name="littlegray">#E1E1E1</color>
     <color name="gray">#8C8C8C</color>
-
 </resources>
