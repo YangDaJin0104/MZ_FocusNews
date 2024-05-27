@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.provider.Settings;
+import android.content.ContentResolver;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -79,6 +81,15 @@ public class RankingFragment extends Fragment {
         dot = view.findViewById(R.id.dot);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
+        // SharedPreferences 변수 모두 초기화용 (테스트용)
+        // TODO: 아래 삭제 필요
+        Map<String, ?> mapData = preferences.getAll();
+        for (Map.Entry<String, ?> entry : mapData.entrySet()) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(entry.getKey(), false);
+            editor.apply();
+        }
 
         showRanking(view);
 
@@ -278,6 +289,14 @@ public class RankingFragment extends Fragment {
     private void setPopupGenerateQuiz(View view) {
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_ranking, null);
+
+        // ANR 타임아웃 시간 설정 - 팝업이 오래 떠있으면 에러가 발생하기 때문. (기본 5초)
+        ContentResolver contentResolver = requireActivity().getContentResolver();
+        try {
+            Settings.Global.putInt(contentResolver, "ANR_TIMEOUT", 10000); // 10s
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
 
         // PopupWindow 생성
         final PopupWindow popupWindow = new PopupWindow(popupView, POPUP_WIDTH, POPUP_HEIGHT, true);
