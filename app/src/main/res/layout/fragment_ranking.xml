@@ -15,11 +15,11 @@
         android:gravity="center">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/backbtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center_vertical"
             android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical" />
+            android:src="@drawable/backbtn" />
 
         <LinearLayout
             android:layout_width="match_parent"
