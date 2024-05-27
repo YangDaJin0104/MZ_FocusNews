@@ -34,6 +34,7 @@
     </FrameLayout>
 
     <ImageView
+        android:id="@+id/iv_profile"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginTop="30dp"
@@ -93,9 +94,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="vertical"
-        android:layout_marginHorizontal="25dp">
+        android:layout_marginHorizontal="30dp">
 
         <Switch
+            android:id="@+id/switch_push"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="푸시 알림"
@@ -104,6 +106,7 @@
             android:switchPadding="10dp" />
 
         <Switch
+            android:id="@+id/switch_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -114,6 +117,7 @@
      </LinearLayout>
 
     <Button
+        android:id="@+id/btn_change_pw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -124,5 +128,5 @@
         android:textSize="17sp"
         android:background="@drawable/mypage_button"
         android:drawableRight="@drawable/arrow"
-        android:layout_marginHorizontal="25dp" />
+        android:layout_marginHorizontal="30dp" />
 </LinearLayout>
