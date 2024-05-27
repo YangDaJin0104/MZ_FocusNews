@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_homeFragment_to_contentFragment"
             app:destination="@id/contentFragment" />
+            <argument
+                android:name="newsId"
+                app:argType="integer" />
         <action
             android:id="@+id/action_homeFragment_to_myPageFragment"
             app:destination="@id/myPageFragment" />
@@ -53,6 +56,9 @@
         <action
             android:id="@+id/action_categoryFragment_to_contentFragment"
             app:destination="@id/contentFragment">
+            <argument
+                android:name="newsId"
+                app:argType="integer" />
         </action>
     </fragment>
 
@@ -60,7 +66,13 @@
         android:id="@+id/contentFragment"
         android:name="com.example.mz_focusnews.ContentFragment"
         android:label="fragment_content"
-        tools:layout="@layout/fragment_content" />
+        tools:layout="@layout/fragment_content">
+<!--        <action-->
+<!--            android:id="@+id/action_contentFragment_to_homeFragment"-->
+<!--            app:destination="@id/homeFragment"-->
+<!--            app:popUpTo="@id/homeFragment"-->
+<!--            app:popUpToInclusive="true" />-->
+    </fragment>
 
     <fragment
         android:id="@+id/rankingFragment"
