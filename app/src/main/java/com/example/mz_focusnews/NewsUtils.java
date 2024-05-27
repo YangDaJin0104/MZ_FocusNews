@@ -1,6 +1,7 @@
 package com.example.mz_focusnews;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -142,6 +143,11 @@ public class NewsUtils {
                                     dateView.setText(formatDateString(news.getDate()));
 
                                     titleView.setTag(news);
+
+                                    SharedPreferences sp = context.getSharedPreferences("NewsData", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString("summary", summary);
+                                    editor.apply();
 
                                     Log.d("NewsUtils", "loadNews: 뉴스 로드 성공, 뉴스 아이디=" + news.getNewsId() + ", 날짜=" + news.getDate());
                                 } else {
