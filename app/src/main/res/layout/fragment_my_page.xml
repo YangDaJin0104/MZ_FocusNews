@@ -11,140 +11,118 @@
     tools:context=".MyPageFragment">
 
     <FrameLayout
-        android:layout_width="355dp"
-        android:layout_height="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/backbtn"
-            android:layout_width="22dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/backbtn_gray" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/backbtn" />
 
         <TextView
             android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_gravity="center"
-            android:text="회원가입"
+            android:text="마이페이지"
             android:textSize="20sp"
             android:textStyle="bold" />
     </FrameLayout>
 
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/profile"/>
+
+    <TextView
+        android:id="@+id/my_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="푸바오"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="20dp">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/backbtn"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="15dp"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/background_shape_littleblue"
-            android:text="로그아웃"
+            android:text="키워드1"
             android:textColor="#6A6A6A"
-            android:textSize="14sp"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/background_shape_monthlyblue"
+            android:text="키워드2"
+            android:textColor="#6A6A6A"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:background="@drawable/background_shape_lightblue"
+            android:text="키워드3"
+            android:textColor="#6A6A6A"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
-        android:layout_marginHorizontal="20dp">
+        android:layout_marginHorizontal="25dp">
 
-        <LinearLayout
+        <Switch
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/profile"
-                    android:layout_marginRight="15dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="푸바오"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/modify"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:layout_marginLeft="10dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp">
+            android:text="푸시 알림"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:switchPadding="10dp" />
 
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="푸시 알림"
-                android:textStyle="bold"
-                android:textSize="17sp"
-                android:paddingLeft="10dp"
-                android:switchPadding="10dp" />
-
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="위치 정보 이용 동의"
-                android:textStyle="bold"
-                android:textSize="17sp"
-                android:paddingLeft="10dp"
-                android:switchPadding="10dp"
-                android:layout_marginTop="15dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Switch
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="30dp">
+            android:layout_marginTop="20dp"
+            android:text="위치 정보 이용 동의"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:switchPadding="10dp" />
+     </LinearLayout>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="비밀번호 변경"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:background="@drawable/mypage_button"
-                android:drawableRight="@drawable/arrow"
-                android:paddingVertical="15dp" />
-        </LinearLayout>
-    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="left"
+        android:gravity="center_vertical"
+        android:text="비밀번호 변경"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:background="@drawable/mypage_button"
+        android:drawableRight="@drawable/arrow"
+        android:layout_marginHorizontal="25dp" />
 </LinearLayout>
