@@ -24,9 +24,11 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class NewsUtils {
 
@@ -204,4 +206,24 @@ public class NewsUtils {
             return "반환 실패"; // 오류가 발생하면 원래 날짜 문자열 반환
         }
     }
-}
+
+    public static String getPreviousDate(String type, TimeZone timeZone) {
+        Calendar calendar = Calendar.getInstance(timeZone);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        dateFormat.setTimeZone(timeZone);
+
+        switch (type) {
+            case "daily":
+                calendar.add(Calendar.DATE, -1);
+                break;
+            case "weekly":
+                calendar.add(Calendar.WEEK_OF_YEAR, -1);
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                break;
+            case "monthly":
+                calendar.add(Calendar.MONTH, -1);
+                calendar.set(Calendar.DAY_OF_MONTH, 1);
+                break;
+        }
+        return dateFormat.format(calendar.getTime());
+    }}
