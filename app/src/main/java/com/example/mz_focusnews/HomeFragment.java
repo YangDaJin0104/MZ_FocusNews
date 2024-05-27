@@ -41,6 +41,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +61,13 @@ public class HomeFragment extends Fragment {
     private List<News> breakingNewsList; // 속보 뉴스 리스트
     private Button breakingNewsButton; // 속보 뉴스 버튼 참조를 위한 변수
     private DrawerLayout drawerLayout; // DrawerLayout 참조를 위한 변수
+
+    private NotificationHelper notificationHelper; // NotificationHelper 변수 추가
+
+    private ScheduledExecutorService scheduler; // 스케줄러 추가
+
+    private static final String PREFS_NAME = "BreakingNewsPrefs";
+    private static final String LAST_BREAKING_NEWS_TITLE = "LastBreakingNewsTitle";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -141,6 +151,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // NotificationHelper 초기화
+        notificationHelper = new NotificationHelper(getActivity());
+
+        // 주기적으로 속보 뉴스를 가져와 알림을 보내는 작업 설정
+        scheduleBreakingNewsNotification();
+
         return view;
     }
 
@@ -162,6 +178,23 @@ public class HomeFragment extends Fragment {
                             title = title.substring(0, 30) + "..."; // 제목이 30자를 초과할 경우 자르고 "..." 추가
                         }
                         breakingNewsButton.setText(title);
+
+                        // SharedPreferences에서 마지막 저장된 [속보] 제목을 가져옴
+                        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                        String lastBreakingNewsTitle = prefs.getString(LAST_BREAKING_NEWS_TITLE, "");
+
+                        // 새로운 [속보]가 생긴 경우 알림 전송 및 제목 업데이트
+                        if (!lastBreakingNewsTitle.equals(latestBreakingNews.getTitle())) {
+                            notificationHelper.sendBreakingNewsNotification(latestBreakingNews.getTitle());
+
+                            // 새로운 [속보] 제목을 SharedPreferences에 저장
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString(LAST_BREAKING_NEWS_TITLE, latestBreakingNews.getTitle());
+                            editor.apply();
+                        }
+
+                        // 로그 추가
+                        Log.d("HomeFragment", "Breaking news notification sent: " + latestBreakingNews.getTitle());
                     } else {
                         breakingNewsButton.setText("No breaking news available");
                     }
@@ -238,4 +271,16 @@ public class HomeFragment extends Fragment {
         String formattedDate = dateFormat.format(calendar.getTime());
         nowDate.setText(formattedDate);
     }
+
+    // 주기적으로 속보 뉴스를 가져와 알림을 보내는 메소드
+    private void scheduleBreakingNewsNotification() {
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                fetchBreakingNewsData();
+            }
+        }, 0, 15, TimeUnit.MINUTES); // 15분마다 실행
+    }
 }
+

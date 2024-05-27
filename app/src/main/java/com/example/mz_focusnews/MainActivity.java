@@ -10,9 +10,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.android.volley.VolleyError;
 import com.example.mz_focusnews.NewsSummary.Summary;
 import com.example.mz_focusnews.NewsSummary.SummaryUtils;
@@ -21,6 +18,7 @@ import com.example.mz_focusnews.RelatedNews.NewsDataFetcher;
 import com.example.mz_focusnews.RelatedNews.NewsDataStore;
 import com.example.mz_focusnews.RelatedNews.RelatedNewsUtils;
 import com.example.mz_focusnews.RelatedNews.NewsData;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
 import java.util.concurrent.Executors;
@@ -58,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("MainActivity", "Error calculating related articles", e);
                     }
                 });
-
             }
+
             @Override
             public void onFetchFailed(VolleyError error) {
                 Log.e("MainActivity", "News fetch failed", error);
@@ -95,10 +93,11 @@ public class MainActivity extends AppCompatActivity {
             adapter.fetchAllNewsId(this, new NewsDataCallback() {
                 @Override
                 public void onDataFetched(int newsId, String content) {
-                    if (!isDestroyed.get()){
+                    if (!isDestroyed.get()) {
                         runOnUiThread(() -> performSummaryAndUpload(newsId, content));
                     }
                 }
+
                 @Override
                 public void onError(String error) {
                     runOnUiThread(() -> Log.e("MainActivity", "Error fetching data: " + error));
@@ -119,21 +118,8 @@ public class MainActivity extends AppCompatActivity {
         executorService.execute(() -> {
             String summary = Summary.chatGPT_summary(context, content);
             if (summary != null && !isDestroyed.get()) {
-
                 summaryUtils.sendSummaryToServer(this, newsId, summary);
             }
         });
     }
-
-/*    private void cleanDB() {
-        executorService.execute(() -> {
-            summaryUtils.deleteBadData(this);
-            Log.d("cleanDB", "clean success");
-
-        });
-    }*/
-
 }
-
-
-

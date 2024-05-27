@@ -7,6 +7,8 @@
     <!--외부로의 접근을 위한 인터넷 사용 허가 설정 (MYSQL)-->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:name=".NewsApp"
         android:allowBackup="true"

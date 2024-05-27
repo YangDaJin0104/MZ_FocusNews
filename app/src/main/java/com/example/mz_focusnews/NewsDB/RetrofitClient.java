@@ -41,7 +41,6 @@ public class RetrofitClient {
         return instance;
     }
 
-    // NewsApi 인스턴스를 반환
     public NewsApi getNewsApi() {
         return newsApi;
     }

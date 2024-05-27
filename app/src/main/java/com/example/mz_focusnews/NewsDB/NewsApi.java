@@ -21,7 +21,6 @@ public interface NewsApi {
     @GET("/api/news/breaking")
     Call<List<News>> getBreakingNewsWithKeyword(@Query("limit") int limit, @Query("keyword") String keyword);
 
-
     @POST("/api/news")
     Call<News> createNews(@Body News news);
 

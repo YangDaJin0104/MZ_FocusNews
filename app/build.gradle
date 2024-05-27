@@ -109,5 +109,8 @@ android {
 
         // Apache Commons Math
         implementation 'org.apache.commons:commons-math3:3.6.1'
+
+        implementation "androidx.work:work-runtime:2.8.1" // 최신 버전으로 교체하세요
+
     }
 }
