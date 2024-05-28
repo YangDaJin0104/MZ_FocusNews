@@ -192,7 +192,7 @@ public class RegisterFragment extends Fragment {
                                 if (success) {
                                     Toast.makeText(getActivity(), "회원 등록에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                                     NavHostFragment.findNavController(RegisterFragment.this)
-                                            .navigate(R.id.action_registerFragment_to_loginFragment);
+                                            .navigate(R.id.action_registerFragment_to_action_registerFragment_to_loginFragment);
                                 } else { // 회원가입 실패시
                                     Toast.makeText(getActivity(), "회원 등록에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
                                 }

@@ -11,8 +11,8 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_registerFragment_to_action_registerFragment_to_loginFragment"
+            app:destination="@id/action_registerFragment_to_action_registerFragment_to_loginFragment" />
     </fragment>
 
     <fragment
@@ -83,5 +83,16 @@
         <action
             android:id="@+id/action_quizFragment_to_rankingFragment"
             app:destination="@id/rankingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@id/action_registerFragment_to_action_registerFragment_to_loginFragment"
+        android:name="com.example.mz_focusnews.RegisterFragment"
+        android:label="ResisterFragment"
+        tools:layout="@layout/fragment_user_key_word">
+
+        <action
+            android:id="@+id/action_action_registerFragment_to_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
