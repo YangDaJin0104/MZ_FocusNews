@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<News>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
     }
