@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +56,14 @@ public class MyPageFragment extends Fragment {
         tv_name.setText(user_name);
 
         fetchUserData(user_id);
+
+        btn_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(MyPageFragment.this)
+                        .navigate(R.id.action_myPageFragment_to_changePasswordFragment);
+            }
+        });
 
 
         return view;
