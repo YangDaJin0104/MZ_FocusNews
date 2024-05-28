@@ -11,11 +11,8 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_registerFragment_to_action_registerFragment_to_loginFragment"
-            app:destination="@id/action_registerFragment_to_action_registerFragment_to_loginFragment" />
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_registerFragment_to_keywordFragment"
+            app:destination="@id/keywordFragment" />
     </fragment>
 
     <fragment
@@ -102,4 +99,13 @@
         android:name="com.example.mz_focusnews.MyPageFragment"
         android:label="fragment_my_page"
         tools:layout="@layout/fragment_my_page" />
+    <fragment
+        android:id="@+id/keywordFragment"
+        android:name="com.example.mz_focusnews.KeyWords.KeywordFragment"
+        android:label="KeywordFragment" >
+        <action
+            android:id="@+id/action_keywordFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
 </navigation>

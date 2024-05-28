@@ -18,14 +18,13 @@ public class RegisterRequest extends StringRequest {
     private Map<String, String> map;
 
 
-    public RegisterRequest(String UserID, String UserPw, String UserName, int LocationPermission, int AlarmPermission, Response.Listener<String> listener) {
+    public RegisterRequest(String UserID, String UserPw, String UserName, int AlarmPermission, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
         map.put("user_id", UserID);
         map.put("user_pw", UserPw);
         map.put("user_name", UserName);
-        map.put("location_permission", String.valueOf(LocationPermission));
         map.put("alarm_permission", String.valueOf(AlarmPermission));
     }
 
