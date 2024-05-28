@@ -27,11 +27,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+import com.example.mz_focusnews.KeyWords.NewsFetcher;
 import com.example.mz_focusnews.NewsDB.News;
 import com.example.mz_focusnews.NewsDB.RetrofitClient;
 import com.example.mz_focusnews.adapter.NewsAdapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ public class CategoryFragment extends Fragment {
     private Button selectedButton; // 현재 선택된 버튼을 추적
     private String currentCategory = "politics"; // 현재 선택된 카테고리
     private String currentSortOption = "latest"; // 기본 정렬 옵션
+    private NewsFetcher newsFetcher; // 뉴스 페처 객체
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -62,8 +64,22 @@ public class CategoryFragment extends Fragment {
         userSessions = new HashMap<>();
 
         SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-        user_id = sp.getString("user_id", null);
+        user_id = sp.getString("user_id", null); // 기본값으로 null 설정
 
+        // 로그 추가하여 user_id 확인
+        Log.d("CategoryFragment", "User ID: " + user_id);
+
+        // 뉴스 페처 초기화
+        newsList = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            newsAdapter = new NewsAdapter(getActivity(), newsList, news -> handleNewsClick(news));
+        }
+        newsFetcher = new NewsFetcher(getActivity(), newsAdapter, newsList);
+
+        // RecyclerView 초기화
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(newsAdapter);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -77,12 +93,9 @@ public class CategoryFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // 어댑터 초기화 및 설정
-        newsAdapter = new NewsAdapter(getActivity(), newsList, new NewsAdapter.OnNewsClickListener() {
-            @Override
-            public void onNewsClick(News news) {
-                // 클릭 이벤트 처리 로직
-                handleNewsClick(news);
-            }
+        newsAdapter = new NewsAdapter(getActivity(), newsList, news -> {
+            // 클릭 이벤트 처리 로직
+            handleNewsClick(news);
         });
         recyclerView.setAdapter(newsAdapter);
 
@@ -92,7 +105,7 @@ public class CategoryFragment extends Fragment {
         Button politicsButton = view.findViewById(R.id.politics);
         Button economyButton = view.findViewById(R.id.economy);
         Button societyButton = view.findViewById(R.id.society);
-        Button areaButton = view.findViewById(R.id.area);
+        Button keywordButton = view.findViewById(R.id.area); // 키워드 버튼 수정
         Button recruitmentButton = view.findViewById(R.id.recruitment);
         Button scienceButton = view.findViewById(R.id.science);
         Button entertainmentButton = view.findViewById(R.id.entertainment);
@@ -138,10 +151,10 @@ public class CategoryFragment extends Fragment {
             loadNewsByCategory(currentCategory);
             updateSelectedButton(societyButton);
         });
-        areaButton.setOnClickListener(v -> {
-            currentCategory = "area";
-            loadNewsByCategory(currentCategory);
-            updateSelectedButton(areaButton);
+        keywordButton.setOnClickListener(v -> {
+            // 키워드 버튼 클릭 시
+            newsFetcher.fetchUserKeywordAndNews(user_id); // 유저 ID 사용
+            updateSelectedButton(keywordButton);
         });
         recruitmentButton.setOnClickListener(v -> {
             currentCategory = "recruitment";
@@ -172,18 +185,17 @@ public class CategoryFragment extends Fragment {
     }
 
     private void handleNewsClick(News news) {
+        // 로그 추가하여 user_id와 news 값을 확인
+        Log.d("handleNewsClick", "User ID: " + user_id);
+        Log.d("handleNewsClick", "News ID: " + news.getNewsId());
+
         sendNewsItemToServer(getContext(), news);
         logUserInteraction(getContext(), userSessions, user_id, news);
 
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("news_item", news);
-//        navController.navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
-        // Bundle 객체 생성 및 news_id 추가
         Bundle bundle = new Bundle();
         bundle.putInt("newsId", news.getNewsId());
         Log.d("throw newsId from category", String.valueOf(news.getNewsId()));
 
-        // contentFragment로 이동하면서 데이터 전달
         NavHostFragment.findNavController(CategoryFragment.this)
                 .navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
     }
@@ -234,4 +246,3 @@ public class CategoryFragment extends Fragment {
         selectedButton = newSelectedButton;
     }
 }
-

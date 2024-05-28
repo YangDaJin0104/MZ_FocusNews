@@ -54,7 +54,7 @@ public class NotificationService {
     private void sendNotification(String newsTitle) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.siren)
-                .setContentTitle("Breaking News")
+                .setContentTitle("[속보]")
                 .setContentText(newsTitle)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 

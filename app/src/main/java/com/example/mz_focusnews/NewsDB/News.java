@@ -30,7 +30,23 @@ public class News implements Parcelable {
         this.relatedNews2 = relatedNews2;
     }
 
-    public int getNewsId() { return newsId; }
+    public News(Integer newsId, int view, String link, String summary, String title, String category, String date, String imgUrl, Integer relatedNews1, Integer relatedNews2) {
+        this.newsId = newsId;
+        this.view = view;
+        this.link = link;
+        this.summary = summary;
+        this.title = title;
+        this.category = category;
+        this.date = date;
+        this.imgUrl = imgUrl;
+        this.relatedNews1 = relatedNews1;
+        this.relatedNews2 = relatedNews2;
+    }
+
+    public int getNewsId() {
+        return newsId;
+    }
+
     public void setNewsId(Integer newsId) {
         this.newsId = newsId;
     }
@@ -59,7 +75,9 @@ public class News implements Parcelable {
         this.summary = summary;
     }
 
-    public String getTitle() { return truncateTitle(title); }
+    public String getTitle() {
+        return truncateTitle(title);
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -104,6 +122,10 @@ public class News implements Parcelable {
             return title.substring(0, dashIndex).trim();
         }
         return title;
+    }
+
+    public News() {
+
     }
 
     protected News(Parcel in) {
@@ -174,6 +196,7 @@ public class News implements Parcelable {
             parcel.writeInt(relatedNews2);
         }
     }
+
     public String getPublish() {
         return publish;
     }
