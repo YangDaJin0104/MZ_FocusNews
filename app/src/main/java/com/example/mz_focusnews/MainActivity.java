@@ -3,10 +3,14 @@ package com.example.mz_focusnews;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
@@ -64,10 +68,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //cleanDB();
+        cleanDB();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+
+        // login. register 프래그먼트에서 네비게이션 바 숨기기
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                // 로그인과 회원가입 프래그먼트 ID에 따라 하단 네비게이션 바 표시 결정
+                if(destination.getId() == R.id.loginFragment || destination.getId() == R.id.registerFragment) {
+                    bottomNavigationView.setVisibility(View.GONE); // 네비게이션 바 숨기기
+                } else {
+                    bottomNavigationView.setVisibility(View.VISIBLE); // 네비게이션 바 표시하기
+                }
+            }
+        });
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
@@ -120,6 +140,13 @@ public class MainActivity extends AppCompatActivity {
             if (summary != null && !isDestroyed.get()) {
                 summaryUtils.sendSummaryToServer(this, newsId, summary);
             }
+        });
+    }
+    private void cleanDB() {
+        executorService.execute(() -> {
+            summaryUtils.deleteBadData(this);
+            Log.d("cleanDB", "clean success");
+
         });
     }
 }

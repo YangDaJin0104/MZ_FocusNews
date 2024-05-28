@@ -1,6 +1,7 @@
 package com.example.mz_focusnews;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -24,9 +25,11 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class NewsUtils {
 
@@ -90,7 +93,7 @@ public class NewsUtils {
             logUserInteraction(fragment.getContext(), userSessions, userId, news);
 
             Bundle bundle = new Bundle();
-            bundle.putParcelable("news_item", news);
+            bundle.putInt("newsId", news.getNewsId());
 
             NavHostFragment.findNavController(fragment)
                     .navigate(R.id.action_homeFragment_to_contentFragment, bundle);
@@ -140,6 +143,11 @@ public class NewsUtils {
                                     dateView.setText(formatDateString(news.getDate()));
 
                                     titleView.setTag(news);
+
+                                    SharedPreferences sp = context.getSharedPreferences("NewsData", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString("summary", summary);
+                                    editor.apply();
 
                                     Log.d("NewsUtils", "loadNews: 뉴스 로드 성공, 뉴스 아이디=" + news.getNewsId() + ", 날짜=" + news.getDate());
                                 } else {
@@ -204,4 +212,24 @@ public class NewsUtils {
             return "반환 실패"; // 오류가 발생하면 원래 날짜 문자열 반환
         }
     }
-}
+
+    public static String getPreviousDate(String type, TimeZone timeZone) {
+        Calendar calendar = Calendar.getInstance(timeZone);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        dateFormat.setTimeZone(timeZone);
+
+        switch (type) {
+            case "daily":
+                calendar.add(Calendar.DATE, -1);
+                break;
+            case "weekly":
+                calendar.add(Calendar.WEEK_OF_YEAR, -1);
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                break;
+            case "monthly":
+                calendar.add(Calendar.MONTH, -1);
+                calendar.set(Calendar.DAY_OF_MONTH, 1);
+                break;
+        }
+        return dateFormat.format(calendar.getTime());
+    }}

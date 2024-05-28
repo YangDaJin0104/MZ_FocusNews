@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,12 +51,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class HomeFragment extends Fragment {
-
     private String user_id;
     private String user_name;
 
     private RecyclerView recyclerView;
     private RecyclerView breakingNewsRecyclerView; // 속보 뉴스 RecyclerView
+
+    private ProgressBar progressBar;
     private InterestAdapter interestAdapter;
     private BreakingNewsAdapter breakingNewsAdapter; // 속보 뉴스 Adapter
     private List<News> newsList;
@@ -75,6 +78,7 @@ public class HomeFragment extends Fragment {
 
         // DrawerLayout 참조
         drawerLayout = view.findViewById(R.id.drawer_layout);
+
 
         // 사용자 이름 및 현재 시간 설정
         TextView userName = view.findViewById(R.id.user_name);
@@ -110,14 +114,21 @@ public class HomeFragment extends Fragment {
             public void onNewsClick(News news) {
                 // 사용자 상호작용 기록 및 관심 카테고리 업데이트
                 NewsUtils.logUserInteraction(getContext(), getUserSessions(), user_id, news);
+
+                // Bundle 객체 생성 및 news_id 추가
+                Bundle bundle = new Bundle();
+                bundle.putInt("newsId", news.getNewsId());
+                Log.d("throw newsId", String.valueOf(news.getNewsId()));
+
+                // contentFragment로 이동하면서 데이터 전달
                 NavHostFragment.findNavController(HomeFragment.this)
-                        .navigate(R.id.action_homeFragment_to_contentFragment);
+                        .navigate(R.id.action_homeFragment_to_contentFragment, bundle);
             }
         });
 
         recyclerView.setAdapter(interestAdapter);
 
-        fetchNewsData(); // 기존 뉴스 데이터 가져오는 메소드 호출
+        fetchNewsData(view); // 기존 뉴스 데이터 가져오는 메소드 호출
         fetchBreakingNewsData(); // 속보 뉴스 데이터 가져오는 메소드 호출 추가
 
         // 속보 뉴스 리사이클러뷰 초기화
@@ -208,13 +219,15 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<News>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     // 뉴스 데이터 가져오는 메소드
-    private void fetchNewsData() {
+    private void fetchNewsData(View view) {
+//        progressBar.setVisibility(view.VISIBLE); // 데이터 로딩 시작 시 프로그레스 바 표시
+
         Response.Listener<String> responseListener = response -> {
             try {
                 Log.d("HomeFragment", "Server Response: " + response); // 서버 응답 로그 출력
@@ -245,6 +258,7 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "JSON Parsing Error", Toast.LENGTH_SHORT).show();
             }
+//            progressBar.setVisibility(view.GONE); // 데이터 로딩 완료 시 프로그레스 바 숨김
         };
 
         Response.ErrorListener errorListener = error -> {

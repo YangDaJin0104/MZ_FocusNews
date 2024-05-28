@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,8 @@ public class RegisterFragment extends Fragment {
 
     private EditText register_username, register_userID, register_userPw, register_userPwCheck;
     private Button idCheckBtn, registerBtn, nameCheckBtn;
-    CheckBox full_permission, personal_permission, location_permission, alarm_permission; // 전체 동의, 개인 정보 동의, 위치 정보 동의, 속보 알림 동의
+    private ImageButton backBtn;
+    private CheckBox full_permission, personal_permission, location_permission, alarm_permission; // 전체 동의, 개인 정보 동의, 위치 정보 동의, 속보 알림 동의
     private boolean validate = false;
 
     @Nullable
@@ -48,6 +50,14 @@ public class RegisterFragment extends Fragment {
         nameCheckBtn = view.findViewById(R.id.btn_namecheck);
         idCheckBtn = view.findViewById(R.id.btn_idcheck);
         registerBtn = view.findViewById(R.id.btn_complete_register);
+
+        backBtn = view.findViewById(R.id.backbtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                onBack(); // 이전 화면으로 돌아가기
+            }
+        });
 
         // Set up full_permission checkbox listener
         full_permission.setOnCheckedChangeListener((buttonView, isChecked) -> {

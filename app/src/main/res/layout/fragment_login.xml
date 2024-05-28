@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     android:background="@color/whiteblue"
     tools:context=".LoginFragment">
@@ -11,7 +12,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
         android:orientation="vertical">
 
         <TextView
@@ -33,7 +33,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="20dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -57,7 +57,7 @@
             android:id="@+id/et_id"
             android:layout_width="335dp"
             android:layout_height="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:background="@drawable/background_shape_gray"
             android:padding="15dp"
             android:ems="10"
@@ -76,7 +76,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="20dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -102,7 +102,7 @@
             android:id="@+id/et_pw"
             android:layout_width="335dp"
             android:layout_height="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:background="@drawable/background_shape_gray"
             android:padding="15dp"
             android:ems="10"
@@ -132,17 +132,18 @@
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="240dp"
-            android:layout_height="55dp"
-            android:backgroundTint="#3585FF"
+            android:layout_width="160dp"
+            android:layout_height="45dp"
+            android:background="@drawable/background_shape_blue_register"
             android:text="로그인"
+            android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="2dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
@@ -163,5 +164,4 @@
             android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
-
 </LinearLayout>

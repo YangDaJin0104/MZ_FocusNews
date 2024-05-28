@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- res/drawable/edittext_background.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="#E1E1E1"/> <!-- 배경 색 -->
+    <solid android:color="@color/littlegray"/> <!-- 배경 색 -->
     <corners android:radius="20dp"/> <!-- 타원 형태로 만들기 위한 모서리 반지름 -->
 </shape>
 
