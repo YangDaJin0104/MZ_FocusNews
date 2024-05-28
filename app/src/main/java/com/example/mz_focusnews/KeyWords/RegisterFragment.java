@@ -78,13 +78,7 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        // 완료 버튼 클릭 리스너 설정
-//        completeRegisterButton.setOnClickListener(v -> {
-//            // HomeFragment로 이동
-//            NavHostFragment.findNavController(RegisterFragment.this)
-//                    .navigate(R.id.action_action_registerFragment_to_loginFragment_to_homeFragment);
-//        });
-//
+
         return view;
     }
 }
