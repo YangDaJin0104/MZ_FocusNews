@@ -30,6 +30,20 @@ public class News implements Parcelable {
         this.relatedNews2 = relatedNews2;
     }
 
+    public News(Integer newsId, int view, String link, String summary, String title, String category, String date, String imgUrl, Integer relatedNews1, Integer relatedNews2) {
+        this.newsId = newsId;
+        this.view = view;
+        this.link = link;
+        this.summary = summary;
+        this.title = title;
+        this.category = category;
+        this.date = date;
+        this.imgUrl = imgUrl;
+        this.relatedNews1 = relatedNews1;
+        this.relatedNews2 = relatedNews2;
+    }
+
+
     public int getNewsId() { return newsId; }
     public void setNewsId(Integer newsId) {
         this.newsId = newsId;

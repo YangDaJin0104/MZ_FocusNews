@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<News>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -171,6 +171,7 @@ public class HomeFragment extends Fragment {
                                 newsObject.getString("title"),
                                 newsObject.getString("category"),
                                 newsObject.getString("date"),
+                                newsObject.getString("img_url"),
                                 newsObject.optInt("related_news1", 0), // 기본값으로 0을 사용
                                 newsObject.optInt("related_news2", 0)  // 기본값으로 0을 사용
                         );

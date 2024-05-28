@@ -6,10 +6,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mz_focusnews.NewsDB.News;
@@ -31,6 +31,7 @@ public class MonthlyNewsFragment extends Fragment {
     private TextView monthly_title;
     private TextView monthly_content;
     private TextView monthly_date;
+    private ImageView monthly_image;
     private Map<String, UserSession> userSessions;
 
     @Override
@@ -39,6 +40,7 @@ public class MonthlyNewsFragment extends Fragment {
 
         monthly_title = view.findViewById(R.id.monthly_title);
         monthly_content = view.findViewById(R.id.monthly_content);
+        monthly_image = view.findViewById(R.id.monthly_image);
         monthly_date = view.findViewById(R.id.monthly_date);
         userSessions = new HashMap<>();
 
@@ -62,8 +64,8 @@ public class MonthlyNewsFragment extends Fragment {
     private void loadMonthlyNews() {
         String startDate = getStartDateOfMonth();
         String previousStartDate = NewsUtils.getPreviousDate("monthly", TimeZone.getTimeZone("Asia/Seoul"));
-        NewsUtils.loadNews(getContext(), startDate, "monthly", monthly_title, monthly_content, monthly_date, userSessions, this);
-        NewsUtils.loadNews(getContext(), previousStartDate, "monthly", monthly_title, monthly_content, monthly_date, userSessions, this);
+        NewsUtils.loadNews(getContext(), startDate, "monthly", monthly_title, monthly_content, monthly_date, monthly_image, userSessions, this);
+        NewsUtils.loadNews(getContext(), previousStartDate, "monthly", monthly_title, monthly_content, monthly_date, monthly_image, userSessions, this);
     }
 
     private String getStartDateOfMonth() {
