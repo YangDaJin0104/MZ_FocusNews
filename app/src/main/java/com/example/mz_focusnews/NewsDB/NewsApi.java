@@ -1,5 +1,7 @@
 package com.example.mz_focusnews.NewsDB;
 
+import android.bluetooth.BluetoothProfile;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,7 +28,6 @@ public interface NewsApi {
     @FormUrlEncoded
     @POST("/api/saveKeyword")
     Call<Void> saveKeyword(@Field("userId") String userId, @Field("keyword") String keyword);
-
 
     @POST("/api/news")
     Call<News> createNews(@Body News news);
