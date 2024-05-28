@@ -67,11 +67,11 @@
         android:name="com.example.mz_focusnews.ContentFragment"
         android:label="fragment_content"
         tools:layout="@layout/fragment_content">
-<!--        <action-->
-<!--            android:id="@+id/action_contentFragment_to_homeFragment"-->
-<!--            app:destination="@id/homeFragment"-->
-<!--            app:popUpTo="@id/homeFragment"-->
-<!--            app:popUpToInclusive="true" />-->
+        <action
+            android:id="@+id/action_contentFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
