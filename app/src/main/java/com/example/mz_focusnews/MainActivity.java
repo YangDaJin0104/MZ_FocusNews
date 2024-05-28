@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         cleanDB();
 
         // TODO: summarize가 너무 길면 에러남. 어떻게 할지 고안하기!
-        new ImageGenerator(MainActivity.this, "가운데 여야 대립 속 전세사기 특별법 개정안에 관심 집중.").execute();
+        new ImageGenerator(MainActivity.this).execute();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
