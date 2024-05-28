@@ -54,7 +54,7 @@ public class QuizFragment extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         USER_ID = preferences.getString("user_id", "null");
 
-        // SharedPreferences로 저장된 SUMMARY 가져오기 (TODO: 테스트 필요 (현재 null로만 출력됨)
+        // SharedPreferences로 저장된 SUMMARY 가져오기
         preferences = getActivity().getSharedPreferences("NewsData", Context.MODE_PRIVATE);
         SUMMARY = preferences.getString("summary", "null");
         Log.d(TAG, "Summary = " + SUMMARY);
