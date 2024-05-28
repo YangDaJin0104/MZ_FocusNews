@@ -14,10 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.mz_focusnews.KeyWords.UserKeyWord;
 import com.example.mz_focusnews.R;
+import com.example.mz_focusnews.RegisterFragment;
 
-public class RegisterFragment extends Fragment {
+public class KeywordFragment extends Fragment {
 
     private EditText keyword1EditText;
     private Button keyword1Button;
@@ -35,7 +35,7 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_key_word, container, false);
+        View view = inflater.inflate(R.layout.fragment_keyword, container, false);
 
         // UI 요소 초기화
         keyword1EditText = view.findViewById(R.id.keyword1);
@@ -79,12 +79,13 @@ public class RegisterFragment extends Fragment {
         });
 
         // 완료 버튼 클릭 리스너 설정
-//        completeRegisterButton.setOnClickListener(v -> {
-//            // HomeFragment로 이동
-//            NavHostFragment.findNavController(RegisterFragment.this)
-//                    .navigate(R.id.action_action_registerFragment_to_loginFragment_to_homeFragment);
-//        });
-//
+        completeRegisterButton.setOnClickListener(v -> {
+            // HomeFragment로 이동
+            NavHostFragment.findNavController(KeywordFragment.this)
+                    .navigate(R.id.action_keywordFragment_to_homeFragment);
+
+        });
+
         return view;
     }
 }
