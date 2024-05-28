@@ -326,7 +326,7 @@
                         android:textStyle="bold" />
 
                     <ImageView
-                        android:id="@+id/img_add_info1"
+                        android:id="@+id/personal_info"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_gravity="center_vertical"
@@ -334,54 +334,17 @@
                         android:src="@drawable/register_invert_triangle_icon" />
                 </LinearLayout>
 
-                <!--위치정보-->
+                <!-- 개인정보 이용 약관 -->
                 <TextView
-                    android:layout_width="272dp"
+                    android:id="@+id/tv_personal"
+                    android:visibility="gone"
+                    android:layout_width="290dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="37dp"
+                    android:layout_marginTop="5dp"
                     android:layout_gravity="left"
                     android:text="@string/personal"
                     android:textSize="10dp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="12dp"
-                    android:orientation="horizontal">
-
-                    <CheckBox
-                        android:id="@+id/location_permission"
-                        android:layout_width="27dp"
-                        android:layout_height="17dp"
-                        android:buttonTint="@color/gray" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="[선택]"
-                        android:textColor="#3565C3"
-                        android:textSize="13dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="7dp"
-                        android:text="위치기반 서비스 이용약관"
-                        android:textSize="13dp"
-                        android:textStyle="bold" />
-
-
-                    <ImageView
-                        android:id="@+id/img_add_info2"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="86dp"
-                        android:src="@drawable/register_invert_triangle_icon" />
-                </LinearLayout>
 
                 <!--알림 설정-->
                 <LinearLayout
@@ -415,15 +378,28 @@
                         android:textStyle="bold" />
 
                     <ImageView
-                        android:id="@+id/img_add_info3"
+                        android:id="@+id/alarm_info"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="119dp"
                         android:src="@drawable/register_invert_triangle_icon" />
                 </LinearLayout>
+
+                <!-- 알림 수신 이용 약관 -->
+                <TextView
+                    android:id="@+id/tv_alarm"
+                    android:visibility="gone"
+                    android:layout_width="290dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="37dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="left"
+                    android:text="@string/alarm"
+                    android:textSize="10dp" />
             </LinearLayout>
         </LinearLayout>
+
         <Button
             android:id="@+id/btn_complete_register"
             android:layout_width="160dp"
@@ -433,5 +409,6 @@
             android:text="회원가입"
             android:background="@drawable/background_shape_blue_register"
             android:textStyle="bold" />
+
     </LinearLayout>
 </ScrollView>

@@ -226,4 +226,5 @@ public class NewsUtils {
                 break;
         }
         return dateFormat.format(calendar.getTime());
-    }}
+    }
+}
