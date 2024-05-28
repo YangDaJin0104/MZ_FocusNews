@@ -55,9 +55,9 @@ public class ImageGenerator extends AsyncTask<Void, Void, Void> {
         final String url = "https://api.openai.com/v1/images/generations";
         final String model = "dall-e-3";
 
-        // SUMMARY가 null일 경우, 그냥 '뉴스' 사진을 생성하도록 함.
+        // SUMMARY가 null일 경우, 넘어감. (이미지 X)
         if (summary.equals("null")) {
-            summary = "뉴스";
+            return null;
         }
 
         try {
@@ -71,8 +71,10 @@ public class ImageGenerator extends AsyncTask<Void, Void, Void> {
             connection.setRequestProperty("Authorization", "Bearer " + apiKey);
             connection.setRequestProperty("Content-Type", "application/json");
 
+            String firstSentence = extractFirstSentence(summary);      // summary에서 첫 번째 문장만 추출. (긴 프롬프트를 보낼 경우 에러가 발생하기 때문에)
+
             // request body (SUMMARY = prompt)
-            String body = "{\"model\": \"" + model + "\", \"prompt\": \"" + summary + "\", \"n\": 1, \"size\": \"1024x1024\"}";
+            String body = "{\"model\": \"" + model + "\", \"prompt\": \"" + firstSentence + "\", \"n\": 1, \"size\": \"1024x1024\"}";
             connection.setDoOutput(true);
             OutputStream outputStream = connection.getOutputStream();
             outputStream.write(body.getBytes());
@@ -90,7 +92,8 @@ public class ImageGenerator extends AsyncTask<Void, Void, Void> {
             br.close();
 
             String imgUrl = getImageUrl(response.toString());   // 결과에서 url만 추출하기
-            Log.d(TAG, "userId = " + newsId + " / summary = " + summary + " / imgUrl = " + imgUrl);
+            Log.d(TAG, "2. chatGPTImageGenerator() - userId = " + newsId + " / summary = " + firstSentence + " / imgUrl = " + imgUrl);
+
             updateDBNewsImage(newsId, imgUrl);     // DB 업데이트 (null 값인 img_url을 새로 생성한 이미지 url로 업데이트)
 
             return response.toString();
@@ -100,6 +103,19 @@ public class ImageGenerator extends AsyncTask<Void, Void, Void> {
             return null;
         }
     }
+
+    private String extractFirstSentence(String summary) {       // summary에서 첫 번째 문장만 추출
+        // summary를 마침표를 기준으로 나누어 배열로 변환
+        String[] sentences = summary.split("\\. ");
+
+        // 첫 번째 문장이 있는지 확인하고 반환
+        if (sentences.length > 0) {
+            return sentences[0] + ".";
+        } else {
+            return "";
+        }
+    }
+
 
     // ChatGPT response에서 url만 추출
     private String getImageUrl(String response) {
@@ -133,9 +149,10 @@ public class ImageGenerator extends AsyncTask<Void, Void, Void> {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
             // POST 데이터 설정
-            String postData = "news_id=" + newsId + "&img_url=" + URLEncoder.encode(imgUrl, "UTF-8");
+            String postData = "newsId=" + newsId + "&imgUrl=" + URLEncoder.encode(imgUrl, "UTF-8");
 
             // 데이터 전송
             try (OutputStream os = connection.getOutputStream()) {
@@ -146,9 +163,9 @@ public class ImageGenerator extends AsyncTask<Void, Void, Void> {
             // 응답 코드 확인 (TODO: 여기서 ResponseCode가 500이 출력되는 중)
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                Log.d(TAG, "News image URL updated successfully");
+                Log.d(TAG, "3. updateDBNewsImage() - News image URL updated successfully");
             } else {
-                Log.e(TAG, "Error updating news image URL. Response code: " + responseCode);
+                Log.e(TAG, "3. updateDBNewsImage() - Error updating news image URL. Response code: " + responseCode);
             }
 
             // 연결 종료
@@ -182,6 +199,7 @@ public class ImageGenerator extends AsyncTask<Void, Void, Void> {
                 int newsId = jsonObject.getInt("news_id");
                 String summary = jsonObject.getString("summary");
 
+                Log.d(TAG, "1. getNewsData() - newsId = " + newsId + " / summary = " + summary);
                 newsData.put(newsId, summary);
             }
 
@@ -193,23 +211,3 @@ public class ImageGenerator extends AsyncTask<Void, Void, Void> {
         return newsData;
     }
 }
-
-
-/*
-
-curl https://api.openai.com/v1/images/generations \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
-  -d '{
-    "model": "dall-e-3",
-    "prompt": "a white siamese cat",
-    "n": 1,
-    "size": "1024x1024"
-  }'
-
-ChatGPT 결과 예시
-{  "created": 1716878479,  "data": [    {      "revised_prompt": "Focus on a controversial amendment to a special law on lease fraud amidst a partisan standoff.",
-"url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-6gpHzIMepZUB8E6NthUcOpZv/user-b7ySFavkZ9dkdchyOVRnHZTd/img-mwdR8chvIrQPWnCW4uRRLnoo.png?st=2024-05-28T05%3A41%3A19Z&se=2024-05-28T07%3A41%3A19Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2024-05-27T19%3A14%3A50Z&ske=2024-05-28T19%3A14%3A50Z&sks=b&skv=2021-08-06&sig=IuGkn4I87iykim3fBDyzVddrP/cHbugwdBAcK43Gfjg%3D"    }  ]}
-
- */
-
