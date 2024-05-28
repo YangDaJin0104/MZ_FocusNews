@@ -5,10 +5,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  <!-- 외부로의 접근을 위한 인터넷 사용 허가 설정 (MYSQL) -->
-
-    <!--외부로의 접근을 위한 인터넷 사용 허가 설정 (MYSQL)-->
+    <!-- 외부로의 접근을 위한 인터넷 사용 허가 설정 (MYSQL) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- 알람 권한 - 매일 오전 12시에 퀴즈 초기화 -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:name=".NewsApp"
@@ -36,6 +38,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <service
+            android:name=".Quiz.QuizTimeReset"
+            android:enabled="true"
+            android:exported="false" />
 
     </application>
 </manifest>

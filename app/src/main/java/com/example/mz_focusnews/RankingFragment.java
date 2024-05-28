@@ -1,7 +1,10 @@
 package com.example.mz_focusnews;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.BroadcastReceiver;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,9 +23,11 @@ import android.provider.Settings;
 import android.content.ContentResolver;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.mz_focusnews.Quiz.QuizTimeReset;
 import com.example.mz_focusnews.Ranking.PopupManager;
 import com.example.mz_focusnews.Ranking.Ranking;
 import com.example.mz_focusnews.Ranking.RankingParser;
@@ -66,7 +71,11 @@ public class RankingFragment extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         USER_ID = preferences.getString("user_id", "null");
 
-        scheduleQuizTimeReset();
+        Intent serviceIntent = new Intent(getActivity(), QuizTimeReset.class);
+        getActivity().startService(serviceIntent);
+
+
+        //scheduleQuizTimeReset();
     }
 
     @Override
@@ -82,14 +91,7 @@ public class RankingFragment extends Fragment {
 
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
-        // SharedPreferences 변수 모두 초기화용 (테스트용)
-        // TODO: 아래 삭제 필요
-        Map<String, ?> mapData = preferences.getAll();
-        for (Map.Entry<String, ?> entry : mapData.entrySet()) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(entry.getKey(), false);
-            editor.apply();
-        }
+        //setAllSolvedQuizFlagToFalse();      // SharedPreferences 변수 모두 초기화용 (테스트)
 
         showRanking(view);
 
@@ -120,17 +122,19 @@ public class RankingFragment extends Fragment {
         Map<String, ?> mapData = preferences.getAll();
         boolean found = false;      // USER_ID가 있는지 여부
 
+        int index = 0;    // Log 출력을 위한 카운터 변수
         for (Map.Entry<String, ?> entry : mapData.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
-            Log.d(TAG, "MAP - key = " + key + "/ value = " + value);
+            Log.d(TAG, "isSolvedQuiz() - " + index + ". key = " + key + "/ value = " + value);
 
             if (key.equals(USER_ID) && value instanceof Boolean) {
-                Log.d(TAG, "FIND - USER_ID: " + USER_ID + " value: " + value);
                 isSolvedQuiz = (boolean) value;
                 found = true; // USER_ID를 찾았음을 표시
                 break;
             }
+
+            index++;
         }
 
         if (!found) {
@@ -144,7 +148,7 @@ public class RankingFragment extends Fragment {
         return isSolvedQuiz;
     }
 
-    // TODO: 한국 시간 오전 6시 이후 유저 정보 초기화 됐는지 확인
+    // TODO: 한국 시간 오전 12시 이후 유저 정보 초기화 됐는지 확인 -> 앱이 실행 중이 아닐 때는 초기화가 되지 않음.
     private void scheduleQuizTimeReset() {
         Handler handler = new Handler(Looper.getMainLooper());
         Runnable resetQuizFlagTask = new Runnable() {
@@ -155,20 +159,20 @@ public class RankingFragment extends Fragment {
             }
         };
 
-        // 매일 오전 6시(한국시간)에 퀴즈 초기화
+        // 매일 오전 12시(한국시간)에 퀴즈 초기화 - 뉴스 업데이트 시간에 맞춤
         Calendar now = Calendar.getInstance();
-        Calendar next6AM = Calendar.getInstance();
-        next6AM.set(Calendar.HOUR_OF_DAY, 21);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 21
-        next6AM.set(Calendar.MINUTE, 0);
-        next6AM.set(Calendar.SECOND, 0);
-        next6AM.set(Calendar.MILLISECOND, 0);
+        Calendar next12AM = Calendar.getInstance();
+        next12AM.set(Calendar.HOUR_OF_DAY, 15);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 15h
+        next12AM.set(Calendar.MINUTE, 0);
+        next12AM.set(Calendar.SECOND, 0);
+        next12AM.set(Calendar.MILLISECOND, 0);
 
-        // 이미 오전 6시가 지난 경우, 내일 오전 6시에 초기화
-        if (now.after(next6AM)) {
-            next6AM.add(Calendar.DAY_OF_MONTH, 1);
+        // 이미 오전 12시가 지난 경우, 내일 오전 12시에 초기화
+        if (now.after(next12AM)) {
+            next12AM.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        long initialDelay = next6AM.getTimeInMillis() - now.getTimeInMillis();
+        long initialDelay = next12AM.getTimeInMillis() - now.getTimeInMillis();
         handler.postDelayed(resetQuizFlagTask, initialDelay);
     }
 
@@ -183,8 +187,29 @@ public class RankingFragment extends Fragment {
         return isSolved;
     }
 
+    // QuizTimeReset에서 특정 시간이 됐을 때 broadcast 하면 받아와서 변수 초기화 함수 실행
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("ACTION_SET_QUIZ_FLAG".equals(intent.getAction())) {
+                setAllSolvedQuizFlagToFalse();
+            }
+        }
+    };
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter("ACTION_SET_QUIZ_FLAG"));
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver);
+    }
+
+    
     // 모든 SharedPreferences 변수 값 false로 저장 - 모든 유저에 대한 퀴즈 푼 여부를 false로 바꿈
-    private void setAllSolvedQuizFlagToFalse() {
+    public void setAllSolvedQuizFlagToFalse() {
         SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
@@ -194,11 +219,11 @@ public class RankingFragment extends Fragment {
             String key = entry.getKey();
             Object value = entry.getValue();
 
-            Log.d(TAG, "모든 MAP - key = " + key + "/ value = " + value);
-
             if (value instanceof Boolean) {
                 editor.putBoolean(key, false);
             }
+
+            Log.d(TAG, "모든 SharedPreferences 값 - key = " + key + " / value = " + value);
         }
 
         editor.apply();
