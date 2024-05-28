@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mz_focusnews.R;
-import com.example.mz_focusnews.RegisterFragment;
 
 public class KeywordFragment extends Fragment {
 
@@ -58,7 +57,7 @@ public class KeywordFragment extends Fragment {
             String keyword = keyword1EditText.getText().toString().trim();
             if (!keyword.isEmpty()) {
                 // UserKeyWord 클래스를 사용하여 키워드를 서버에 저장
-                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword, 1);
+                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword);
             }
         });
 
@@ -66,7 +65,7 @@ public class KeywordFragment extends Fragment {
         keyword2Button.setOnClickListener(v -> {
             String keyword = keyword2EditText.getText().toString().trim();
             if (!keyword.isEmpty()) {
-                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword, 2);
+                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword);
             }
         });
 
@@ -74,7 +73,7 @@ public class KeywordFragment extends Fragment {
         keyword3Button.setOnClickListener(v -> {
             String keyword = keyword3EditText.getText().toString().trim();
             if (!keyword.isEmpty()) {
-                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword, 3);
+                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword);
             }
         });
 
@@ -83,7 +82,6 @@ public class KeywordFragment extends Fragment {
             // HomeFragment로 이동
             NavHostFragment.findNavController(KeywordFragment.this)
                     .navigate(R.id.action_keywordFragment_to_homeFragment);
-
         });
 
         return view;

@@ -24,14 +24,15 @@ public interface UserApi {
     @POST("/api/users")
     Call<User> createUser(@Body User user);
 
+    @FormUrlEncoded
+    @POST("/api/users/saveKeyword")
+    Call<Void> saveKeyword(@Field("userId") String userId, @Field("keyword") String keyword);
+
     @PUT("/api/users/{userId}")
     Call<User> updateUser(@Path("userId") String userId, @Body User userDetails);
 
     @DELETE("/api/users/{userId}")
     Call<Void> deleteUser(@Path("userId") String userId);
 
-    @FormUrlEncoded
-    @POST("/api/users/saveKeyword")
-    Call<Void> saveKeyword(@Field("userId") String userId, @Field("keyword") String keyword, @Field("keywordIndex") int keywordIndex);
 }
 
