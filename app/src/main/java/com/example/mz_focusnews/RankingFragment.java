@@ -296,6 +296,7 @@ public class RankingFragment extends Fragment {
             Settings.Global.putInt(contentResolver, "ANR_TIMEOUT", 10000); // 10s
         } catch (SecurityException e) {
             e.printStackTrace();
+            Log.e(TAG, "ANR_TIMEOUT");
         }
 
         // PopupWindow 생성

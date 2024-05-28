@@ -14,6 +14,7 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.mz_focusnews.NewsDB.ImageGenerator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.android.volley.VolleyError;
 import com.example.mz_focusnews.NewsSummary.Summary;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         cleanDB();
+
+        new ImageGenerator(MainActivity.this).execute();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
