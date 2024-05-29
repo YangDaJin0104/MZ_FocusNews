@@ -12,6 +12,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+
+import com.example.mz_focusnews.NewsDB.ImageGenerator;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.android.volley.VolleyError;
 import com.example.mz_focusnews.NewsSummary.Summary;
 import com.example.mz_focusnews.NewsSummary.SummaryUtils;
@@ -41,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         // 속보 푸시 알림 초기화
         notificationService = new NotificationService(this);
@@ -74,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         cleanDB();
+
+        new ImageGenerator(MainActivity.this).execute();
+
+        setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);

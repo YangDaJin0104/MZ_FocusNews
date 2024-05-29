@@ -41,9 +41,7 @@ public class QuizFragment extends Fragment {
     // 테스트용 데이터
     private String USER_ID;    // 사용자 ID
     private String USER_ANSWER = "NONE";    // 사용자가 입력한 정답
-    private static final String SUMMARIZE = "금융위원회가 청년도약계좌 운영현황 점검 결과 발표." +
-            "123만명 가입, 평균납입잔액 469만원, 정부 기여금 평균 수령 17만원." +
-            "은행들이 3년 이상 유지 시 중도해지이율을 3.8~4.5% 수준으로 상향 조정.";      // TODO: 코드 상으로 summarize 가져와야 함.
+    private static String SUMMARY;
 
     // 프론트
     private NavController navController;
@@ -55,6 +53,11 @@ public class QuizFragment extends Fragment {
         // 로그인할 때, SharedPreferences로 저장된 USER_ID 가져오기
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         USER_ID = preferences.getString("user_id", "null");
+
+        // SharedPreferences로 저장된 SUMMARY 가져오기
+        preferences = getActivity().getSharedPreferences("NewsData", Context.MODE_PRIVATE);
+        SUMMARY = preferences.getString("summary", "null");
+        Log.d(TAG, "Summary = " + SUMMARY);
 
         // 프론트
         View view = inflater.inflate(R.layout.fragment_quiz, container, false);
@@ -102,9 +105,8 @@ public class QuizFragment extends Fragment {
             CSVFileWriter csvFileWriter = new CSVFileWriter();
             Context context = requireContext();         // 컨텍스트 가져오기
 
-            // TODO: 실제 배포 시 아래 주석처리
             // quiz_solved.csv 파일 초기화 (테스트용)
-            csvFileWriter.clearQuizSolvedCSVFile(context, QUIZ_SOLVED_FILE_NAME);
+            //csvFileWriter.clearQuizSolvedCSVFile(context, QUIZ_SOLVED_FILE_NAME);
 
             // 2~5번째 퀴즈 출제: 문제은행 퀴즈 - quiz.csv 파일에 저장된 퀴즈 리스트 중 4문제
             List<Question> quizQuestions = QuestionGenerator.generateQuestions(context, USER_ID);
@@ -121,7 +123,7 @@ public class QuizFragment extends Fragment {
 
         // 오늘의 퀴즈(ChatGPT 기반 퀴즈)가 제대로 만들어질 때까지 반복
         while (todayQuiz == null) {
-            response = ChatGPTAPI.chatGPT(context, SUMMARIZE);
+            response = ChatGPTAPI.chatGPT(context, SUMMARY);
             todayQuiz = QuestionGenerator.generateTodayQuiz(response);
         }
 
@@ -139,7 +141,6 @@ public class QuizFragment extends Fragment {
 
         final Question final_question = todayQuiz;
 
-        // TODO: '다음' 버튼 클릭 시 다음 문제로 넘어갈 수 있게 수정
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
