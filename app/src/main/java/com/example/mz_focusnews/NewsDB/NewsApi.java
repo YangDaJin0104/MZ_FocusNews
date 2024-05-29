@@ -29,6 +29,8 @@ public interface NewsApi {
     @POST("/api/saveKeyword")
     Call<Void> saveKeyword(@Field("userId") String userId, @Field("keyword") String keyword);
 
+    @GET("/api/news/searchByKeywords")
+    Call<List<News>> getNewsByKeywords(@Query("userId") String userId);
     @POST("/api/news")
     Call<News> createNews(@Body News news);
 

@@ -20,8 +20,8 @@ import java.util.List;
 
 public class NewsFetcher {
 
-    private static final String USER_KEYWORD_URL = "http://10.0.2.2:8081/api/users/";
-    private static final String NEWS_BY_KEYWORDS_URL = "http://10.0.2.2:8081/api/news/searchByKeywords";
+    private static final String USER_KEYWORD_URL = "http://43.201.173.245:8081/api/users/";
+    private static final String NEWS_BY_KEYWORDS_URL = "http://43.201.173.245:8081/api/news/searchByKeywords";
     private static final String TAG = "NewsFetcher";
 
     private RequestQueue requestQueue;
@@ -50,7 +50,7 @@ public class NewsFetcher {
                             Log.e(TAG, "JSON parsing error", e);
                         }
                     }
-                    fetchNewsByKeywords(keywords);
+                    fetchNewsByKeywords(userId); // userId를 사용하여 fetchNewsByKeywords 호출
                 },
                 error -> {
                     Log.e(TAG, "Error fetching keywords", error);
@@ -60,13 +60,8 @@ public class NewsFetcher {
         requestQueue.add(jsonArrayRequest);
     }
 
-    private void fetchNewsByKeywords(List<String> keywords) {
-        if (keywords.isEmpty()) {
-            Log.d(TAG, "No keywords found for user.");
-            return;
-        }
-
-        String url = buildNewsByKeywordsUrl(keywords);
+    private void fetchNewsByKeywords(String userId) {
+        String url = NEWS_BY_KEYWORDS_URL + "?userId=" + userId;
         Log.d(TAG, "Fetching news with URL: " + url);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -95,19 +90,5 @@ public class NewsFetcher {
                 }
         );
         requestQueue.add(jsonArrayRequest);
-    }
-
-    private String buildNewsByKeywordsUrl(List<String> keywords) {
-        StringBuilder urlBuilder = new StringBuilder(NEWS_BY_KEYWORDS_URL);
-        urlBuilder.append("?");
-
-        for (int i = 0; i < keywords.size(); i++) {
-            urlBuilder.append("keyword").append(i + 1).append("=").append(keywords.get(i));
-            if (i < keywords.size() - 1) {
-                urlBuilder.append("&");
-            }
-        }
-
-        return urlBuilder.toString();
     }
 }

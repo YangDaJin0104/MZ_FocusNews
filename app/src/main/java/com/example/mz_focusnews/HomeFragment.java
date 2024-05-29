@@ -27,9 +27,10 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mz_focusnews.NewsDB.News;
 import com.example.mz_focusnews.NewsDB.RetrofitClient;
+import com.example.mz_focusnews.adapter.BreakingNewsAdapter;
 import com.example.mz_focusnews.adapter.InterestAdapter;
 import com.example.mz_focusnews.adapter.ViewPager2Adapter;
-import com.example.mz_focusnews.adapter.BreakingNewsAdapter;
+
 import com.example.mz_focusnews.request.FetchNewsRequest;
 
 import org.json.JSONArray;

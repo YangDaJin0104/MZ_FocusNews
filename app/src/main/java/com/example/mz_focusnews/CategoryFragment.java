@@ -143,6 +143,7 @@ public class CategoryFragment extends Fragment {
             updateSelectedButton(societyButton);
         });
         keywordButton.setOnClickListener(v -> {
+            Log.d("CategoryFragment", "Keyword button clicked");
             newsFetcher.fetchUserKeywordsAndNews(user_id);
             updateSelectedButton(keywordButton);
         });
