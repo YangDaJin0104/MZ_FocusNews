@@ -2,6 +2,10 @@ package com.example.mz_focusnews;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +14,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,7 +37,9 @@ public class RegisterFragment extends Fragment {
     private EditText register_username, register_userID, register_userPw, register_userPwCheck;
     private Button idCheckBtn, registerBtn, nameCheckBtn;
     private ImageButton backBtn;
-    private CheckBox full_permission, personal_permission, alarm_permission; // 전체 동의, 개인 정보 동의, 위치 정보 동의, 속보 알림 동의
+    private ImageView iv_personal, iv_alarm;
+    private TextView tv_personal, tv_alarm;
+    private CheckBox full_permission, personal_permission, location_permission, alarm_permission; // 전체 동의, 개인 정보 동의, 위치 정보 동의, 속보 알림 동의
     private boolean validate = false;
 
     @Nullable
@@ -47,6 +55,11 @@ public class RegisterFragment extends Fragment {
         full_permission = view.findViewById(R.id.full_permission);
         personal_permission = view.findViewById(R.id.personal_permission);
         alarm_permission = view.findViewById(R.id.alarm_permission);
+
+        iv_personal = view.findViewById(R.id.personal_info);
+        iv_alarm = view.findViewById(R.id.alarm_info);
+        tv_personal = view.findViewById(R.id.tv_personal);
+        tv_alarm = view.findViewById(R.id.tv_alarm);
 
         nameCheckBtn = view.findViewById(R.id.btn_namecheck);
         idCheckBtn = view.findViewById(R.id.btn_idcheck);
@@ -64,6 +77,30 @@ public class RegisterFragment extends Fragment {
         full_permission.setOnCheckedChangeListener((buttonView, isChecked) -> {
             personal_permission.setChecked(isChecked);
             alarm_permission.setChecked(isChecked);
+        });
+
+        iv_personal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int visibility = tv_personal.getVisibility();
+                if (visibility == GONE) {
+                    tv_personal.setVisibility(VISIBLE);
+                } else {
+                    tv_personal.setVisibility(GONE);
+                }
+            }
+        });
+
+        iv_alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int visibility = tv_alarm.getVisibility();
+                if (visibility == GONE) {
+                    tv_alarm.setVisibility(VISIBLE);
+                } else {
+                    tv_alarm.setVisibility(GONE);
+                }
+            }
         });
 
         // 이름 중복 확인 버튼 클릭 이벤트

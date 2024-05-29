@@ -234,7 +234,7 @@ public class HomeFragment extends Fragment {
                                 newsObject.getString("title"),
                                 newsObject.getString("category"),
                                 newsObject.getString("date"),
-                                newsObject.getString("imgUrl"),
+                                newsObject.getString("img_url"),
                                 newsObject.optInt("related_news1", 0), // 기본값으로 0을 사용
                                 newsObject.optInt("related_news2", 0)  // 기본값으로 0을 사용
                         );

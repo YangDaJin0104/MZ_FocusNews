@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.mz_focusnews.NewsDB.News;
 import com.example.mz_focusnews.request.NewsRequest;
 import com.example.mz_focusnews.request.NewsViewCountRequest;
@@ -105,7 +107,7 @@ public class NewsUtils {
     }
 
     // 뉴스 데이터를 로드하는 공통 메서드
-    public static void loadNews(Context context, String date, String type, TextView titleView, TextView contentView, TextView dateView, Map<String, UserSession> userSessions, Fragment fragment) {
+    public static void loadNews(Context context, String date, String type, TextView titleView, TextView contentView, TextView dateView, ImageView imageView, Map<String, UserSession> userSessions, Fragment fragment) {
         Log.d("NewsUtils", "loadNews: 뉴스 로드 요청, 날짜=" + date + ", 타입=" + type);
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -113,6 +115,7 @@ public class NewsUtils {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("NewsResponse", "Response: " + response);
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
@@ -128,13 +131,21 @@ public class NewsUtils {
                                     String title = topNews.getString("title");
                                     String category = topNews.optString("category", "Uncategorized");
                                     String date = topNews.getString("date");
+                                    String image = topNews.getString("img_url");
                                     int relatedNews1 = topNews.optInt("related_news1", 0); // 기본값으로 0을 사용
                                     int relatedNews2 = topNews.optInt("related_news2", 0); // 기본값으로 0을 사용
 
 
-                                    News news = new News(newsId, view, link, summary, title, category, date, relatedNews1, relatedNews2);
+                                    News news = new News(newsId, view, link, summary, title, category, date, image, relatedNews1, relatedNews2);
 
                                     titleView.setText(news.getTitle());
+
+                                    // ImageView 업데이트
+                                    Glide.with(context)
+                                            .load(news.getImgUrl())
+                                            .placeholder(R.drawable.ic_launcher_foreground)
+                                            .fallback(R.drawable.character)
+                                            .into(imageView);
 
                                     String truncatedSummary = truncateSummary(news.getSummary(), 30);
                                     contentView.setText(truncatedSummary);
@@ -232,4 +243,5 @@ public class NewsUtils {
                 break;
         }
         return dateFormat.format(calendar.getTime());
-    }}
+    }
+}

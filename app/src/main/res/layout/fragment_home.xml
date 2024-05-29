@@ -85,6 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
                 android:text="무슨 일이 일어나고 있나요?"
                 android:textSize="17dp"
                 android:textStyle="bold"
@@ -95,8 +96,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_interest_content"
                 android:layout_width="350dp"
-                android:layout_height="370dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="360dp"
+                android:layout_marginTop="5dp"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal" />
         </LinearLayout>

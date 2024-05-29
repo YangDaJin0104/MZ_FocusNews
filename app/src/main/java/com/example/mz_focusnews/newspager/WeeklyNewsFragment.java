@@ -6,10 +6,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mz_focusnews.NewsDB.News;
@@ -30,6 +30,7 @@ public class WeeklyNewsFragment extends Fragment {
     private TextView weekly_title;
     private TextView weekly_content;
     private TextView weekly_date;
+    private ImageView weekly_image;
     private Map<String, UserSession> userSessions;
 
     @Override
@@ -38,6 +39,7 @@ public class WeeklyNewsFragment extends Fragment {
 
         weekly_title = view.findViewById(R.id.weekly_title);
         weekly_content = view.findViewById(R.id.weekly_content);
+        weekly_image = view.findViewById(R.id.weekly_Image);
         weekly_date = view.findViewById(R.id.weekly_date);
         userSessions = new HashMap<>();
 
@@ -61,8 +63,8 @@ public class WeeklyNewsFragment extends Fragment {
     private void loadWeeklyNews() {
         String startDate = getStartDateOfWeek();
         String previousStartDate = NewsUtils.getPreviousDate("weekly", TimeZone.getTimeZone("Asia/Seoul"));
-        NewsUtils.loadNews(getContext(), startDate, "weekly", weekly_title, weekly_content, weekly_date, userSessions, this);
-        NewsUtils.loadNews(getContext(), previousStartDate, "weekly", weekly_title, weekly_content, weekly_date, userSessions, this);
+        NewsUtils.loadNews(getContext(), startDate, "weekly", weekly_title, weekly_content, weekly_date, weekly_image, userSessions, this);
+        NewsUtils.loadNews(getContext(), previousStartDate, "weekly", weekly_title, weekly_content, weekly_date, weekly_image, userSessions, this);
     }
 
     private String getStartDateOfWeek() {

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mz_focusnews.NewsDB.News;
@@ -31,6 +32,7 @@ public class DailyNewsFragment extends Fragment {
     private TextView daily_title;
     private TextView daily_content;
     private TextView daily_date;
+    private ImageView daily_image;
     private Map<String, UserSession> userSessions;
 
     @Override
@@ -40,6 +42,7 @@ public class DailyNewsFragment extends Fragment {
 
         daily_title = view.findViewById(R.id.daily_title);
         daily_content = view.findViewById(R.id.daily_content);
+        daily_image = view.findViewById(R.id.daily_image);
         daily_date = view.findViewById(R.id.daily_date);
         userSessions = new HashMap<>();
 
@@ -64,8 +67,8 @@ public class DailyNewsFragment extends Fragment {
     private void loadDailyNews() {
         String todayDate = getCurrentDate();
         String previousDate = NewsUtils.getPreviousDate("daily", TimeZone.getTimeZone("Asia/Seoul"));
-        NewsUtils.loadNews(getContext(), todayDate, "daily", daily_title, daily_content, daily_date, userSessions, this);
-        NewsUtils.loadNews(getContext(), previousDate, "daily", daily_title, daily_content, daily_date, userSessions, this);
+        NewsUtils.loadNews(getContext(), todayDate, "daily", daily_title, daily_content, daily_date, daily_image, userSessions, this);
+        NewsUtils.loadNews(getContext(), previousDate, "daily", daily_title, daily_content, daily_date, daily_image, userSessions, this);
     }
 
     // 현재 날짜를 가져오는 메소드
