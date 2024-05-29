@@ -106,6 +106,8 @@ public class CategoryFragment extends Fragment {
 
         Spinner sortSpinner = view.findViewById(R.id.sortSpinner);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            // 카테고리 정렬 최신순, 기본순, 조회수순
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -127,6 +129,8 @@ public class CategoryFragment extends Fragment {
             }
         });
 
+
+        // 카테고리 버튼 클릭리스너
         politicsButton.setOnClickListener(v -> {
             currentCategory = "politics";
             loadNewsByCategory(currentCategory);
@@ -174,6 +178,7 @@ public class CategoryFragment extends Fragment {
         return view;
     }
 
+    // 키워드 클릭 확인
     private void handleNewsClick(News news) {
         Log.d("handleNewsClick", "User ID: " + user_id);
         Log.d("handleNewsClick", "News ID: " + news.getNewsId());
@@ -189,12 +194,14 @@ public class CategoryFragment extends Fragment {
                 .navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
     }
 
+    // 처음화면 정치로 초기화
     private void initializeUIComponents(View view) {
         Button politicsButton = view.findViewById(R.id.politics);
         politicsButton.setOnClickListener(v -> loadNewsByCategory("politics"));
-        // 나머지 버튼들도 비슷한 방식으로 초기화
     }
 
+
+    // NewsAPI에서 뉴스 정보 가져공
     private void loadNewsByCategory(String category) {
         progressBar.setVisibility(View.VISIBLE);
 
