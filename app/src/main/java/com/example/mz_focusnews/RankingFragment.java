@@ -1,10 +1,7 @@
 package com.example.mz_focusnews;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.BroadcastReceiver;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,34 +20,40 @@ import android.provider.Settings;
 import android.content.ContentResolver;
 
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.mz_focusnews.Quiz.QuizTimeReset;
 import com.example.mz_focusnews.Ranking.PopupManager;
 import com.example.mz_focusnews.Ranking.Ranking;
 import com.example.mz_focusnews.Ranking.RankingParser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.util.Calendar;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class RankingFragment extends Fragment {
     private NavController navController;
     private static final String TAG = "RankingFragment";
-    private static final String URL = "http://43.201.173.245/getQuizScoreJson.php";
-    private static final String PREFS_NAME = "QuizPrefs";
+    private static final String GET_QUIZ_SCORE_URL = "http://43.201.173.245/getQuizScore.php";
+    private static final String GET_QUIZ_COMPLETED_URL = "http://43.201.173.245/getQuizCompleted.php";
+    private static final String UPDATE_QUIZ_COMPLETED_URL = "http://43.201.173.245/updateQuizCompleted.php";
     private String USER_ID;     // 사용자 ID
+    private int quiz_completed;      // 사용자가 퀴즈 푼 여부 (DB 상으로 TINYINT로 저장되어서 int 타입)
     private static final int POPUP_WIDTH = 700;
     private static final int POPUP_HEIGHT = 600;
 
@@ -70,12 +73,6 @@ public class RankingFragment extends Fragment {
         // 로그인할 때, SharedPreferences로 저장된 USER_ID 가져오기
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         USER_ID = preferences.getString("user_id", "null");
-
-        Intent serviceIntent = new Intent(getActivity(), QuizTimeReset.class);
-        getActivity().startService(serviceIntent);
-
-
-        //scheduleQuizTimeReset();
     }
 
     @Override
@@ -89,10 +86,7 @@ public class RankingFragment extends Fragment {
         rank_user = view.findViewById(R.id.rank_user);
         dot = view.findViewById(R.id.dot);
 
-        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-
-        //setAllSolvedQuizFlagToFalse();      // SharedPreferences 변수 모두 초기화용 (테스트)
-
+        // 퀴즈 랭킹 보여주기
         showRanking(view);
 
         btn_quiz_start = view.findViewById(R.id.quizStart);
@@ -101,15 +95,24 @@ public class RankingFragment extends Fragment {
         btn_quiz_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isSolvedQuiz(preferences)) {
-                    Log.d(TAG, "System: 이미 오늘의 퀴즈를 풀었습니다! 내일 다시 도전하세요.");
-                    setPopupAlreadySolvedQuiz(v);   // 이미 오늘 퀴즈를 푼 경우, 팝업창 출력
-                } else {
+                if (isSolvedQuiz(quiz_completed)) {        // quiz_completed == 0 (오늘 퀴즈를 풀지 않은 경우)
                     Log.d(TAG, "System: 초기화 됐습니다. 문제 출제 중!");
-                    setPopupGenerateQuiz(v);        // 오늘 퀴즈를 풀지 않은 경우, 문제 생성 중이라는 팝업창 출력
-                    setSolvedQuizFlag(true);
+
+                    setPopupGenerateQuiz(v);    // 문제 생성 중이라는 팝업창 출력
+                    quiz_completed = 1;
+
+                    ExecutorService executor = Executors.newSingleThreadExecutor();     // 백그라운드 실행을 위함
+
+                    executor.execute(() -> {
+                        updateQuizCompleted();
+                    });
+
                     navController = Navigation.findNavController(view);
                     navController.navigate(R.id.action_rankingFragment_to_quizFragment);
+                } else {        // quiz_completed == 1 (이미 오늘 퀴즈를 푼 경우)
+                    Log.d(TAG, "System: 이미 오늘의 퀴즈를 풀었습니다! 내일 다시 도전하세요.");
+
+                    setPopupAlreadySolvedQuiz(v);   // 이미 풀었다는 팝업창 출력
                 }
             }
         });
@@ -117,116 +120,80 @@ public class RankingFragment extends Fragment {
         return view;
     }
 
-    private Boolean isSolvedQuiz(SharedPreferences preferences) {
-        boolean isSolvedQuiz = false;
-        Map<String, ?> mapData = preferences.getAll();
-        boolean found = false;      // USER_ID가 있는지 여부
+    private Boolean isSolvedQuiz(int quiz_completed) {
+        if(quiz_completed == 0){
+            return true;
+        } else{
+            return false;
+        }
+    }
 
-        int index = 0;    // Log 출력을 위한 카운터 변수
-        for (Map.Entry<String, ?> entry : mapData.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            Log.d(TAG, "isSolvedQuiz() - " + index + ". key = " + key + "/ value = " + value);
+    private String getQuizCompleted() {        // users 테이블의 quiz_completed(TINYINT)를 가져옴 (Boolean)
+        try {
+            URL url = new URL(GET_QUIZ_COMPLETED_URL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
 
-            if (key.equals(USER_ID) && value instanceof Boolean) {
-                isSolvedQuiz = (boolean) value;
-                found = true; // USER_ID를 찾았음을 표시
-                break;
+            // POST 데이터 작성
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+            writer.write("user_id=" + USER_ID);
+            writer.flush();
+            writer.close();
+
+            // 응답 읽기
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            // users 테이블의 quiz_completed 가져오기 (0 또는 1)
+            try {
+                JSONObject jsonObject = new JSONObject(response.toString());
+                quiz_completed = jsonObject.getInt("quiz_completed");
+                Log.d(TAG, "quiz_completed: " + quiz_completed);
+            } catch (JSONException e) {
+                Log.e(TAG, "getQuizCompleted() Error: ", e);
             }
 
-            index++;
+            return response.toString();
+        } catch (Exception e) {
+            Log.e(TAG, "getQuizCompleted() Error: ", e);
+            return null;
         }
-
-        if (!found) {
-            // USER_ID를 찾지 못했을 경우 기본값으로 false인 데이터를 넣어줍니다.
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(USER_ID, false);
-            editor.apply();
-            isSolvedQuiz = false;
-        }
-
-        return isSolvedQuiz;
     }
 
-    // TODO: 한국 시간 오전 12시 이후 유저 정보 초기화 됐는지 확인 -> 앱이 실행 중이 아닐 때는 초기화가 되지 않음.
-    private void scheduleQuizTimeReset() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        Runnable resetQuizFlagTask = new Runnable() {
-            @Override
-            public void run() {
-                setAllSolvedQuizFlagToFalse();
-                handler.postDelayed(this, TimeUnit.DAYS.toMillis(1));   // 하루 뒤 같은 작업 예약
-            }
-        };
+    private String updateQuizCompleted() {        // users 테이블의 quiz_completed(TINYINT) 값을 1로 업데이트 (false)
+        try {
+            // 요청을 보낼 URL 설정
+            URL url = new URL(UPDATE_QUIZ_COMPLETED_URL);
 
-        // 매일 오전 12시(한국시간)에 퀴즈 초기화 - 뉴스 업데이트 시간에 맞춤
-        Calendar now = Calendar.getInstance();
-        Calendar next12AM = Calendar.getInstance();
-        next12AM.set(Calendar.HOUR_OF_DAY, 15);      // 기본적으로 UTC이기 때문에, 한국 시간에 맞춰 -9h -> 15h
-        next12AM.set(Calendar.MINUTE, 0);
-        next12AM.set(Calendar.SECOND, 0);
-        next12AM.set(Calendar.MILLISECOND, 0);
+            // 연결 설정
+            HttpURLConnection connect = (HttpURLConnection) url.openConnection();
+            connect.setRequestMethod("POST");
+            connect.setDoOutput(true);
 
-        // 이미 오전 12시가 지난 경우, 내일 오전 12시에 초기화
-        if (now.after(next12AM)) {
-            next12AM.add(Calendar.DAY_OF_MONTH, 1);
-        }
+            // POST 데이터 설정
+            String postData = "userId=" + URLEncoder.encode(USER_ID, "UTF-8");
 
-        long initialDelay = next12AM.getTimeInMillis() - now.getTimeInMillis();
-        handler.postDelayed(resetQuizFlagTask, initialDelay);
-    }
-
-    // SharedPreferences 변수 값 true/false(파라메터)로 저장
-    private boolean setSolvedQuizFlag(boolean isSolved) {
-        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.putBoolean(USER_ID, isSolved);
-        editor.apply();
-
-        return isSolved;
-    }
-
-    // QuizTimeReset에서 특정 시간이 됐을 때 broadcast 하면 받아와서 변수 초기화 함수 실행
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if ("ACTION_SET_QUIZ_FLAG".equals(intent.getAction())) {
-                setAllSolvedQuizFlagToFalse();
-            }
-        }
-    };
-    @Override
-    public void onResume() {
-        super.onResume();
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver, new IntentFilter("ACTION_SET_QUIZ_FLAG"));
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver);
-    }
-
-    
-    // 모든 SharedPreferences 변수 값 false로 저장 - 모든 유저에 대한 퀴즈 푼 여부를 false로 바꿈
-    public void setAllSolvedQuizFlagToFalse() {
-        SharedPreferences preferences = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        Map<String, ?> mapData = preferences.getAll();
-
-        for (Map.Entry<String, ?> entry : mapData.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-
-            if (value instanceof Boolean) {
-                editor.putBoolean(key, false);
+            // USER_ID 데이터 전송
+            try (OutputStream os = connect.getOutputStream()) {
+                byte[] input = postData.getBytes("utf-8");
+                os.write(input, 0, input.length);
             }
 
-            Log.d(TAG, "모든 SharedPreferences 값 - key = " + key + " / value = " + value);
+            // 연결 종료
+            connect.disconnect();
+
+        } catch (IOException e) {
+            Log.e(TAG, "Exception occurred: " + e.getMessage());
         }
 
-        editor.apply();
+        return null;
     }
 
     private void setView(View view, List<Ranking> rankingList) {
@@ -268,6 +235,10 @@ public class RankingFragment extends Fragment {
         executor.execute(() -> {
             //Background work - DB 관련 함수이기 때문에 백그라운드 스레드에서 네트워크 요청 수행
             String response = fetchDataFromServer();
+            
+            // quiz_completed 값 가져오기
+            getQuizCompleted();
+            //updateQuizCompleted();
 
             handler.post(() -> {
                 //UI Thread work - 백그라운드 작업 결과를 메인 스레드로 전달
@@ -286,7 +257,7 @@ public class RankingFragment extends Fragment {
 
     private String fetchDataFromServer() {
         try {
-            URL obj = new URL(URL);
+            URL obj = new URL(GET_QUIZ_SCORE_URL);
 
             // 웹 서버와 연결
             HttpURLConnection connect = (HttpURLConnection) obj.openConnection();
