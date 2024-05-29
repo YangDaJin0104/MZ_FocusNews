@@ -160,7 +160,7 @@ public class ImageGenerator extends AsyncTask<Void, Void, Void> {
                 os.write(input, 0, input.length);
             }
 
-            // 응답 코드 확인 (TODO: 여기서 ResponseCode가 500이 출력되는 중)
+            // 응답 코드 확인
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 Log.d(TAG, "3. updateDBNewsImage() - News image URL updated successfully");

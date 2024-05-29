@@ -54,7 +54,7 @@ public class QuizFragment extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         USER_ID = preferences.getString("user_id", "null");
 
-        // SharedPreferences로 저장된 SUMMARY 가져오기 (TODO: 테스트 필요 (현재 null로만 출력됨)
+        // SharedPreferences로 저장된 SUMMARY 가져오기
         preferences = getActivity().getSharedPreferences("NewsData", Context.MODE_PRIVATE);
         SUMMARY = preferences.getString("summary", "null");
         Log.d(TAG, "Summary = " + SUMMARY);
@@ -105,9 +105,8 @@ public class QuizFragment extends Fragment {
             CSVFileWriter csvFileWriter = new CSVFileWriter();
             Context context = requireContext();         // 컨텍스트 가져오기
 
-            // TODO: 실제 배포 시 아래 주석처리
             // quiz_solved.csv 파일 초기화 (테스트용)
-            csvFileWriter.clearQuizSolvedCSVFile(context, QUIZ_SOLVED_FILE_NAME);
+            //csvFileWriter.clearQuizSolvedCSVFile(context, QUIZ_SOLVED_FILE_NAME);
 
             // 2~5번째 퀴즈 출제: 문제은행 퀴즈 - quiz.csv 파일에 저장된 퀴즈 리스트 중 4문제
             List<Question> quizQuestions = QuestionGenerator.generateQuestions(context, USER_ID);
