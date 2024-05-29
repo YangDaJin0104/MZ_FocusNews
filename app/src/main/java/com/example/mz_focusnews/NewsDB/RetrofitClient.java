@@ -27,7 +27,7 @@ public class RetrofitClient {
 
         // Retrofit 설정
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://43.201.173.245:8081") // 에뮬레이터에서 호스트 머신의 IP 주소
+                .baseUrl("http://10.0.2.2:8081") // 에뮬레이터에서 호스트 머신의 IP 주소
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

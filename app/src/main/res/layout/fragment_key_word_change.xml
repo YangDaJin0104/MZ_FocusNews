@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -27,8 +26,8 @@
             android:id="@+id/KeyWord_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:text="선호 단어(KeyWord) 입력창"
+            android:layout_marginLeft="50dp"
+            android:text="선호 단어(KeyWord) 재설정"
             android:textStyle="bold"
             android:textSize="20sp" />
     </LinearLayout>
@@ -39,8 +38,8 @@
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="35dp"
-        android:text="원하는 단어를 입력하면 그에 관련된 뉴스를 제공합니다.
-        서비스를 원하지않는다면 앱 시작하기를 바로 눌러주세요!" />
+        android:text="기존에 설정한 단어 변경을 원하거나
+                                                    새로운 단어 추가를 하는 곳입니다." />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -61,6 +60,7 @@
                 android:src="@drawable/name" />
 
             <TextView
+                android:id="@+id/user_keyword1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -74,7 +74,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/keyword1"
+                android:id="@+id/change_keyword1"
                 android:layout_width="355dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="5dp"
@@ -82,21 +82,21 @@
                 android:padding="15dp"
                 android:ems="10"
                 android:inputType="text"
-                android:hint="이 단어가 들어간 뉴스가 보고싶어요"
+                android:hint="이 단어가 들어간 뉴스로 변경/추가하고 싶어요"
                 android:textColor="#6A6A6A"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <Button
-                android:id="@+id/btn_keyword1"
+                android:id="@+id/btn_change_keyword1"
                 android:layout_width="63dp"
-                android:layout_height="27dp"
+                android:layout_height="35dp"
                 android:layout_gravity="right|center"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/background_shape_littleblue"
-                android:text="입력"
+                android:text="수정"
                 android:textSize="10dp" />
         </FrameLayout>
 
@@ -127,6 +127,7 @@
                 android:src="@drawable/name" />
 
             <TextView
+                android:id="@+id/user_keyword2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -140,7 +141,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/keyword2"
+                android:id="@+id/change_keyword2"
                 android:layout_width="355dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="5dp"
@@ -148,12 +149,12 @@
                 android:padding="15dp"
                 android:ems="10"
                 android:inputType="text"
-                android:hint="이 단어가 들어간 뉴스가 보고싶어요"
+                android:hint="이 단어가 들어간 뉴스로 변경/추가하고 싶어요"
                 android:textColor="#6A6A6A"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <Button
-                android:id="@+id/btn_keyword2"
+                android:id="@+id/btn_change_keyword2"
                 android:layout_width="63dp"
                 android:layout_height="35dp"
                 android:layout_gravity="right|center"
@@ -162,7 +163,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/background_shape_littleblue"
-                android:text="입력"
+                android:text="수정"
                 android:textSize="10dp" />
         </FrameLayout>
 
@@ -193,6 +194,7 @@
                 android:src="@drawable/name" />
 
             <TextView
+                android:id="@+id/user_keyword3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -206,7 +208,7 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/keyword3"
+                android:id="@+id/change_keyword3"
                 android:layout_width="355dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="5dp"
@@ -214,12 +216,12 @@
                 android:padding="15dp"
                 android:ems="10"
                 android:inputType="text"
-                android:hint="이 단어가 들어간 뉴스가 보고싶어요"
+                android:hint="이 단어가 들어간 뉴스로 변경/추가하고 싶어요"
                 android:textColor="#6A6A6A"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <Button
-                android:id="@+id/btn_keyword3"
+                android:id="@+id/btn_change_keyword3"
                 android:layout_width="63dp"
                 android:layout_height="35dp"
                 android:layout_gravity="right|center"
@@ -228,7 +230,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/background_shape_littleblue"
-                android:text="입력"
+                android:text="수정"
                 android:textSize="10dp" />
         </FrameLayout>
 
@@ -253,8 +255,9 @@
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:background="@drawable/background_shape_blue"
-            android:text="앱 시작하기"
+            android:text="완료"
             android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
+
