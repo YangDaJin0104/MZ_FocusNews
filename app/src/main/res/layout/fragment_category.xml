@@ -65,7 +65,7 @@
                             android:textStyle="bold"
                             android:background="@android:color/transparent"/>
                         <Button
-                            android:id="@+id/area"
+                            android:id="@+id/user_keyword"
                             android:layout_width="70sp"
                             android:layout_height="wrap_content"
                             android:text="키워드"

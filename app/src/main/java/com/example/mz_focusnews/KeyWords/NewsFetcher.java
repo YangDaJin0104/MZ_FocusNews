@@ -7,20 +7,21 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mz_focusnews.NewsDB.News;
 import com.example.mz_focusnews.adapter.NewsAdapter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewsFetcher {
 
     private static final String USER_KEYWORD_URL = "http://10.0.2.2:8081/api/users/";
-    private static final String NEWS_BY_KEYWORD_URL = "http://10.0.2.2:8081/api/news/search?keyword=";
+    private static final String NEWS_BY_KEYWORDS_URL = "http://10.0.2.2:8081/api/news/searchByKeywords";
     private static final String TAG = "NewsFetcher";
 
     private RequestQueue requestQueue;
@@ -33,23 +34,44 @@ public class NewsFetcher {
         this.newsList = newsList;
     }
 
-    public void fetchUserKeywordAndNews(String userId) {
-        String url = USER_KEYWORD_URL + userId + "/keyword";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    Log.d(TAG, "Keyword: " + response);
-                    fetchNewsByKeyword(response);
-                },
-                error -> Log.e(TAG, "Error fetching keyword", error)
-        );
-        requestQueue.add(stringRequest);
-    }
-
-    private void fetchNewsByKeyword(String keyword) {
-        String url = NEWS_BY_KEYWORD_URL + keyword;
+    public void fetchUserKeywordsAndNews(String userId) {
+        String url = USER_KEYWORD_URL + userId + "/keywords";
+        Log.d(TAG, "Fetching keywords from URL: " + url);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
-                    newsList.clear();
+                    List<String> keywords = new ArrayList<>();
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            String keyword = response.getString(i);
+                            if (keyword != null && !keyword.isEmpty()) {
+                                keywords.add(keyword);
+                            }
+                        } catch (JSONException e) {
+                            Log.e(TAG, "JSON parsing error", e);
+                        }
+                    }
+                    fetchNewsByKeywords(keywords);
+                },
+                error -> {
+                    Log.e(TAG, "Error fetching keywords", error);
+                    error.printStackTrace();
+                }
+        );
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void fetchNewsByKeywords(List<String> keywords) {
+        if (keywords.isEmpty()) {
+            Log.d(TAG, "No keywords found for user.");
+            return;
+        }
+
+        String url = buildNewsByKeywordsUrl(keywords);
+        Log.d(TAG, "Fetching news with URL: " + url);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                response -> {
+                    newsList.clear(); // Clear the old news
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject newsObject = response.getJSONObject(i);
@@ -67,8 +89,25 @@ public class NewsFetcher {
                         newsAdapter.updateNews(newsList);
                     }
                 },
-                error -> Log.e(TAG, "Error fetching news by keyword", error)
+                error -> {
+                    Log.e(TAG, "Error fetching news by keyword", error);
+                    error.printStackTrace();
+                }
         );
         requestQueue.add(jsonArrayRequest);
+    }
+
+    private String buildNewsByKeywordsUrl(List<String> keywords) {
+        StringBuilder urlBuilder = new StringBuilder(NEWS_BY_KEYWORDS_URL);
+        urlBuilder.append("?");
+
+        for (int i = 0; i < keywords.size(); i++) {
+            urlBuilder.append("keyword").append(i + 1).append("=").append(keywords.get(i));
+            if (i < keywords.size() - 1) {
+                urlBuilder.append("&");
+            }
+        }
+
+        return urlBuilder.toString();
     }
 }
