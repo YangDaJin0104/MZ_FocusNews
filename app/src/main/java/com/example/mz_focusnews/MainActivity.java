@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cleanDB();
+//        cleanDB();   php코드상에서 1시간마다 한번씩 DB 정리하도록 설정해놔서 더이상 클라이언트에서 실행할 필요x (아직 테스트 필요...)
 
         setContentView(R.layout.activity_main);
 
