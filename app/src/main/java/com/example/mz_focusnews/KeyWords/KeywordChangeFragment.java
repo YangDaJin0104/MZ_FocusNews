@@ -26,7 +26,7 @@ import com.example.mz_focusnews.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class KeyWordChange extends Fragment {
+public class KeywordChangeFragment extends Fragment {
 
     private EditText keyword1EditText;
     private EditText keyword2EditText;
@@ -40,7 +40,7 @@ public class KeyWordChange extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_key_word_change, container, false);
+        View view = inflater.inflate(R.layout.fragment_keyword_change, container, false);
 
         keyword1EditText = view.findViewById(R.id.change_keyword1);
         keyword2EditText = view.findViewById(R.id.change_keyword2);
@@ -65,9 +65,6 @@ public class KeyWordChange extends Fragment {
         Button changeKeyword3Button = view.findViewById(R.id.btn_change_keyword3);
         changeKeyword3Button.setOnClickListener(v -> updateKeyword(keyword3EditText.getText().toString(), 3));
 
-        ImageView backBtn = view.findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(v -> getActivity().onBackPressed());
-
         return view;
     }
 
@@ -75,13 +72,13 @@ public class KeyWordChange extends Fragment {
         String url = "http://10.0.2.2:8081/api/users/" + userId + "/keywords";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
-                    String keyword1 = response.optString("keyword1", "Add Keyword");
-                    String keyword2 = response.optString("keyword2", "Add Keyword");
-                    String keyword3 = response.optString("keyword3", "Add Keyword");
+                    String keyword1 = response.optString("keyword1", "");
+                    String keyword2 = response.optString("keyword2", "");
+                    String keyword3 = response.optString("keyword3", "");
 
-                    keyword1TextView.setText(keyword1.isEmpty() ? "Add Keyword" : keyword1);
-                    keyword2TextView.setText(keyword2.isEmpty() ? "Add Keyword" : keyword2);
-                    keyword3TextView.setText(keyword3.isEmpty() ? "Add Keyword" : keyword3);
+                    keyword1TextView.setText(keyword1);
+                    keyword2TextView.setText(keyword2);
+                    keyword3TextView.setText(keyword3);
                 },
                 error -> Toast.makeText(getContext(), "Failed to load keywords", Toast.LENGTH_SHORT).show()
         );
@@ -99,7 +96,7 @@ public class KeyWordChange extends Fragment {
         JSONObject postData = new JSONObject();
         try {
             postData.put("userId", userId);
-            postData.put("keyword", keyword);
+            postData.put("keyword", keyword.isEmpty() ? JSONObject.NULL : keyword);
             postData.put("keywordPosition", keywordPosition);
         } catch (JSONException e) {
             e.printStackTrace();

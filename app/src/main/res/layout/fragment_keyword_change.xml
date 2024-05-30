@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/whiteblue"
     android:orientation="vertical"
-    tools:context=".RegisterFragment">
+    tools:context=".KeyWords.KeyWordChangeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -260,4 +260,3 @@
     </LinearLayout>
 
 </LinearLayout>
-
