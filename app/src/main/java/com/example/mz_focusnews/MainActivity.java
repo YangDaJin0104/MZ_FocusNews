@@ -13,7 +13,6 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.mz_focusnews.NewsDB.ImageGenerator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.android.volley.VolleyError;
@@ -52,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         fetchAllNewsIdsAndProcess();
 
+        // img_url 값이 null인 뉴스 이미지 생성 (title 기반)
+
         newsDataStore = new NewsDataStore();
         summaryUtils = new SummaryUtils(this);
         NewsDataFetcher fetcher = new NewsDataFetcher(newsDataStore, this);
@@ -77,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        cleanDB();   php코드상에서 1시간마다 한번씩 DB 정리하도록 설정해놔서 더이상 클라이언트에서 실행할 필요x (아직 테스트 필요...)
-
-        new ImageGenerator(MainActivity.this).execute();
 
         setContentView(R.layout.activity_main);
 
