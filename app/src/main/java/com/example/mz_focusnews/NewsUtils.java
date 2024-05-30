@@ -155,9 +155,11 @@ public class NewsUtils {
 
                                     titleView.setTag(news);
 
+                                    // 퀴즈 - 오늘의 퀴즈에서 사용할 데이터
                                     SharedPreferences sp = context.getSharedPreferences("NewsData", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sp.edit();
                                     editor.putString("summary", summary);
+                                    editor.putInt("newsId", newsId);
                                     editor.apply();
 
                                     Log.d("NewsUtils", "loadNews: 뉴스 로드 성공, 뉴스 아이디=" + news.getNewsId() + ", 날짜=" + news.getDate());

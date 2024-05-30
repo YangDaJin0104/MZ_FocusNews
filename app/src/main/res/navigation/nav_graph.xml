@@ -92,6 +92,9 @@
         <action
             android:id="@+id/action_quizFragment_to_rankingFragment"
             app:destination="@id/rankingFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_contentFragment"
+            app:destination="@id/contentFragment" />
     </fragment>
 
     <fragment

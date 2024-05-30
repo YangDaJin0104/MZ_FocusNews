@@ -24,7 +24,7 @@
             android:layout_gravity="center_vertical" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
@@ -40,6 +40,7 @@
                 android:textSize="22sp" />
 
             <ImageView
+                android:id="@+id/character"
                 android:layout_width="86dp"
                 android:layout_height="91dp"
                 android:src="@drawable/character"
@@ -55,15 +56,17 @@
                 android:layout_marginBottom="20dp"/>
 
 
+            <!-- 문제는 70자 내로 출제해야 함. -->
             <TextView
                 android:id="@+id/question"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Q. 푸바오의 정체는 무엇일까요무엇일까요무엇일까요무엇일까요무엇일까요무엇일까요무엇일까요무엇일까요무엇일까요?"
+                android:text="Q. 순서가 있는 리스트에서 데이터의 삽입(Push), 삭제(Pop)가 한 쪽 끝에서 일어나며 LIFO의 특징을 가지는 자료구조는?"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:gravity="center"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -100,7 +103,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_button"
                     android:backgroundTint="#1876E3"
-                    android:text="개미핥기"
+                    android:text="Option 1"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:gravity="start|center_vertical"
@@ -133,7 +136,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_button"
                     android:backgroundTint="#1876E3"
-                    android:text="원숭이"
+                    android:text="Option 2"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:gravity="start|center_vertical"
@@ -166,7 +169,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_button"
                     android:backgroundTint="#1876E3"
-                    android:text="고양이"
+                    android:text="Option 3"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:gravity="start|center_vertical"
@@ -198,7 +201,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_button"
                     android:backgroundTint="#1876E3"
-                    android:text="판다"
+                    android:text="Option 4"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:gravity="start|center_vertical"
@@ -281,5 +284,36 @@
         android:src="@drawable/quiz_incorrect"
         android:layout_gravity="center"
         android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/today_quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top|center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="160dp"
+        android:layout_marginLeft="115dp"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/click"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/click"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘의 뉴스 보러가기"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginLeft="5dp"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:textStyle="bold">
+        </TextView>
+    </LinearLayout>
 
 </FrameLayout>
