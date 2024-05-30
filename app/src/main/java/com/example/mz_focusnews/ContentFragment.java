@@ -1,9 +1,12 @@
 package com.example.mz_focusnews;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -220,6 +223,9 @@ public class ContentFragment extends Fragment {
         relatedNews2.setTag(related2);  // relatedNews2 뷰에 related2의 ID를 태그로 저장
         String img_url = newsItem.getString("img_url");
 
+        // 뉴스 원문 URL - link를 가져옴에 따라 getSummary.php 파일도 수정했습니다. (coddl)
+        String news_url = newsItem.getString("link");
+
         NewsData item = new NewsData(id, title, summary, related1, related2);
 
         String[] summaries = summary.split("\\. ");
@@ -241,6 +247,17 @@ public class ContentFragment extends Fragment {
         Glide.with(this)
                 .load(img_url)
                 .into(image);
+
+        // 뉴스 이미지를 클릭할 경우, 뉴스 원문 웹 브라우저로 이동
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri browserUri = Uri.parse(news_url);
+                Intent browser = new Intent(Intent.ACTION_VIEW, browserUri);
+
+                startActivity(browser);
+            }
+        });
 
         updateRelatedSummaries(getActivity(), item);
     }
