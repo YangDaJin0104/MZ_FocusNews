@@ -57,7 +57,7 @@ public class KeywordFragment extends Fragment {
             String keyword = keyword1EditText.getText().toString().trim();
             if (!keyword.isEmpty()) {
                 // UserKeyWord 클래스를 사용하여 키워드를 서버에 저장
-                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword);
+                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword, 1);
             }
         });
 
@@ -65,7 +65,7 @@ public class KeywordFragment extends Fragment {
         keyword2Button.setOnClickListener(v -> {
             String keyword = keyword2EditText.getText().toString().trim();
             if (!keyword.isEmpty()) {
-                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword);
+                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword, 2);
             }
         });
 
@@ -73,7 +73,7 @@ public class KeywordFragment extends Fragment {
         keyword3Button.setOnClickListener(v -> {
             String keyword = keyword3EditText.getText().toString().trim();
             if (!keyword.isEmpty()) {
-                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword);
+                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword, 3);
             }
         });
 

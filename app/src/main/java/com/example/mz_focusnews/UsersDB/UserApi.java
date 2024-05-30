@@ -26,7 +26,7 @@ public interface UserApi {
 
     @FormUrlEncoded
     @POST("/api/users/saveKeyword")
-    Call<Void> saveKeyword(@Field("userId") String userId, @Field("keyword") String keyword);
+    Call<Void> saveKeyword(@Field("userId") String userId, @Field("keyword") String keyword, @Field("keywordPosition") int keywordPosition);
 
     @GET("/api/users/{userId}/keywords")
     Call<List<String>> getUserKeywords(@Path("userId") String userId);
@@ -36,6 +36,4 @@ public interface UserApi {
 
     @DELETE("/api/users/{userId}")
     Call<Void> deleteUser(@Path("userId") String userId);
-
 }
-

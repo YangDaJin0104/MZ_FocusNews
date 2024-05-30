@@ -102,6 +102,18 @@
         <action
             android:id="@+id/action_myPageFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_keywordChangeFragment"
+            app:destination="@id/keywordChangeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/keywordChangeFragment"
+        android:name="com.example.mz_focusnews.KeyWords.KeywordChangeFragment"
+        android:label="KeywordChangeFragment"
+        tools:layout="@layout/fragment_keyword_change" >
+        <action
+            android:id="@+id/action_keywordChangeFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
     </fragment>
 
 
@@ -119,4 +131,6 @@
         android:name="com.example.mz_focusnews.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
+
+
 </navigation>

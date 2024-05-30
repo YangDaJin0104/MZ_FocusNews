@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 public class MyPageFragment extends Fragment {
 
+    private Button changeKeywordButton; // 키워드 버튼 설정변수
+
     private TextView tv_name, tv_keyword1, tv_keyword2, tv_keyword3;
     private ImageView iv_edit;
     private Button btn_change;
@@ -36,6 +38,9 @@ public class MyPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_page, container, false);
+
+        // 키워드 변경 버튼 설정
+        changeKeywordButton = view.findViewById(R.id.change_keyword_btn);
 
         tv_name = view.findViewById(R.id.my_name);
 
@@ -63,6 +68,12 @@ public class MyPageFragment extends Fragment {
                 NavHostFragment.findNavController(MyPageFragment.this)
                         .navigate(R.id.action_myPageFragment_to_changePasswordFragment);
             }
+        });
+
+        // 키워드 변경 버튼 리스너
+        changeKeywordButton.setOnClickListener(v -> {
+            NavHostFragment.findNavController(MyPageFragment.this)
+                    .navigate(R.id.action_myPageFragment_to_keywordChangeFragment);
         });
 
 

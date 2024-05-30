@@ -96,7 +96,7 @@ public class KeywordChangeFragment extends Fragment {
         keyword1Button.setOnClickListener(v -> {
             String keyword = keyword1EditText.getText().toString().trim();
             if (!keyword.isEmpty()) {
-                saveKeyword(keyword);
+                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword, 1);
             }
         });
 
@@ -104,7 +104,7 @@ public class KeywordChangeFragment extends Fragment {
         keyword2Button.setOnClickListener(v -> {
             String keyword = keyword2EditText.getText().toString().trim();
             if (!keyword.isEmpty()) {
-                saveKeyword(keyword);
+                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword, 2);
             }
         });
 
@@ -112,37 +112,16 @@ public class KeywordChangeFragment extends Fragment {
         keyword3Button.setOnClickListener(v -> {
             String keyword = keyword3EditText.getText().toString().trim();
             if (!keyword.isEmpty()) {
-                saveKeyword(keyword);
+                UserKeyWord.saveKeywordToServer(getContext(), userId, keyword, 3);
             }
         });
 
         // 완료 버튼 클릭 리스너 설정
         completeRegisterButton.setOnClickListener(v -> {
-            // HomeFragment로 이동
             NavHostFragment.findNavController(KeywordChangeFragment.this)
-                    .navigate(R.id.action_keywordFragment_to_homeFragment);
+                    .navigate(R.id.action_keywordChangeFragment_to_myPageFragment);
         });
 
         return view;
-    }
-
-    private void saveKeyword(String keyword) {
-        userApi.saveKeyword(userId, keyword).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    // 성공 처리
-                    Toast.makeText(getActivity(), "키워드가 변겅/추가 되었습니다.", Toast.LENGTH_SHORT).show();
-                } else {
-                    // 실패 처리
-                    Toast.makeText(getActivity(), "키워드 변경/추가에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                // 실패 처리
-            }
-        });
     }
 }
