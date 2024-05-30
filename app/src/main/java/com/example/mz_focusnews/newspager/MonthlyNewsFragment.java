@@ -63,9 +63,7 @@ public class MonthlyNewsFragment extends Fragment {
 
     private void loadMonthlyNews() {
         String startDate = getStartDateOfMonth();
-        String previousStartDate = NewsUtils.getPreviousDate("monthly", TimeZone.getTimeZone("Asia/Seoul"));
         NewsUtils.loadNews(getContext(), startDate, "monthly", monthly_title, monthly_content, monthly_date, monthly_image, userSessions, this);
-        NewsUtils.loadNews(getContext(), previousStartDate, "monthly", monthly_title, monthly_content, monthly_date, monthly_image, userSessions, this);
     }
 
     private String getStartDateOfMonth() {
