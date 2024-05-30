@@ -28,6 +28,9 @@ public interface UserApi {
     @POST("/api/users/saveKeyword")
     Call<Void> saveKeyword(@Field("userId") String userId, @Field("keyword") String keyword);
 
+    @GET("/api/users/{userId}/keywords")
+    Call<List<String>> getUserKeywords(@Path("userId") String userId);
+
     @PUT("/api/users/{userId}")
     Call<User> updateUser(@Path("userId") String userId, @Body User userDetails);
 

@@ -31,6 +31,7 @@ public interface NewsApi {
 
     @GET("/api/news/searchByKeywords")
     Call<List<News>> getNewsByKeywords(@Query("userId") String userId);
+
     @POST("/api/news")
     Call<News> createNews(@Body News news);
 

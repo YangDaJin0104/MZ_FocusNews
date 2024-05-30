@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/whiteblue"
     android:orientation="vertical"
-    tools:context=".KeyWords.KeyWordChangeFragment">
+    tools:context=".KeyWords.KeywordChangeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,11 +60,19 @@
                 android:src="@drawable/name" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="현재 저장되어 있는 단어 : "
+                android:textStyle="bold"
+                android:textColor="#6A6A6A" />
+
+            <TextView
                 android:id="@+id/user_keyword1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="KeyWord 1"
+                android:text=""
                 android:textStyle="bold"
                 android:textColor="#6A6A6A" />
         </LinearLayout>
@@ -127,11 +135,19 @@
                 android:src="@drawable/name" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="현재 저장되어 있는 단어 : "
+                android:textStyle="bold"
+                android:textColor="#6A6A6A" />
+
+            <TextView
                 android:id="@+id/user_keyword2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="KeyWord 2"
+                android:text=""
                 android:textStyle="bold"
                 android:textColor="#6A6A6A" />
         </LinearLayout>
@@ -194,11 +210,19 @@
                 android:src="@drawable/name" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="현재 저장되어 있는 단어 : "
+                android:textStyle="bold"
+                android:textColor="#6A6A6A" />
+
+            <TextView
                 android:id="@+id/user_keyword3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="KeyWord 3"
+                android:text=""
                 android:textStyle="bold"
                 android:textColor="#6A6A6A" />
         </LinearLayout>
