@@ -43,12 +43,13 @@
     <TextView
         android:id="@+id/my_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="푸바오"
-        android:textSize="20sp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="user"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginTop="15dp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,76 +58,90 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
+            android:id="@+id/tv_keyword1"
             android:layout_width="80dp"
-            android:layout_height="35dp"
+            android:layout_height="33dp"
             android:layout_marginRight="20dp"
+            android:gravity="center"
             android:background="@drawable/background_shape_littleblue"
             android:text="키워드1"
             android:textColor="#6A6A6A"
             android:textSize="13sp"
             android:textStyle="bold" />
 
-        <Button
+        <TextView
+            android:id="@+id/tv_keyword2"
             android:layout_width="80dp"
-            android:layout_height="35dp"
+            android:layout_height="33dp"
             android:layout_marginRight="20dp"
+            android:gravity="center"
             android:background="@drawable/background_shape_monthlyblue"
             android:text="키워드2"
             android:textColor="#6A6A6A"
             android:textSize="13sp"
             android:textStyle="bold" />
 
-        <Button
+        <TextView
+            android:id="@+id/tv_keyword3"
             android:layout_width="80dp"
-            android:layout_height="35dp"
+            android:layout_height="33dp"
+            android:gravity="center"
             android:background="@drawable/background_shape_lightblue"
             android:text="키워드3"
             android:textColor="#6A6A6A"
             android:textSize="13sp"
             android:textStyle="bold" />
-
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="30dp">
-
-        <Switch
-            android:id="@+id/switch_push"
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="푸시 알림"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:switchPadding="10dp" />
+            android:layout_height="25dp"
+            android:layout_marginTop="28dp"
+            android:layout_gravity="left"
+            android:layout_marginHorizontal="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="키워드 변경"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/edit_keyword"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="90dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/modify"/>
+        </FrameLayout>
 
         <Switch
-            android:id="@+id/switch_location"
+            android:id="@+id/switch_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="위치 정보 이용 동의"
+            android:layout_marginHorizontal="25dp"
+            android:layout_gravity="left"
+            android:text="속보 알림 수신"
             android:textStyle="bold"
             android:textSize="17sp"
             android:switchPadding="10dp" />
-     </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_change_pw"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="left"
+        android:layout_height="35dp"
+        android:layout_marginTop="15dp"
         android:gravity="center_vertical"
         android:text="비밀번호 변경"
         android:textStyle="bold"
         android:textSize="17sp"
         android:background="@drawable/mypage_button"
         android:drawableRight="@drawable/arrow"
-        android:layout_marginHorizontal="30dp" />
+        android:layout_marginHorizontal="25dp" />
 </LinearLayout>

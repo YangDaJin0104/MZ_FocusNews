@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="220dp"
-    android:layout_height="300dp"
+    android:layout_height="290dp"
     android:orientation="vertical"
     android:layout_marginRight="20dp"
     android:background="@color/whiteblue">
@@ -23,31 +23,28 @@
             android:scaleType="centerCrop"
             android:src="@drawable/img_sample_panda" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="90dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/interest_title"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:text="래로래로래로래로래로래로래로래로래로래로래로래로래로래로래로래로래로래로"
-                android:textStyle="bold"
-                android:textSize="13.5dp" />
-
-            <TextView
-                android:id="@+id/interest_description"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="@string/sample_content_57"
-                android:textSize="10dp" />
-
-
-        </LinearLayout>
         <TextView
+            android:id="@+id/interest_title"
+            android:layout_width="180dp"
+            android:layout_height="78dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/sample_title_28"
+            android:textSize="13.5dp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="26dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/logo" />
+
+            <TextView
             android:id="@+id/interest_category"
             android:layout_width="65dp"
             android:layout_height="20dp"
@@ -56,7 +53,7 @@
             android:minWidth="65dp"
             android:layout_gravity="right"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginBottom="1dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:gravity="center"
@@ -72,12 +69,13 @@
             android:maxWidth="80dp"
             android:minWidth="65dp"
             android:layout_gravity="right"
-            android:layout_marginRight="5dp"
+            android:layout_marginTop="26dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:gravity="right|center_vertical"
             android:text="Just now"
             android:textColor="@color/blue"
             android:textSize="10dp" />
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>

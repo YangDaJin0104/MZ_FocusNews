@@ -6,29 +6,28 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/whiteblue"
+    android:background="@color/white"
     tools:context=".LoginFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:src="@drawable/logo" />
 
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:fontFamily="sans-serif-black"
-            android:text="MZ Focus News"
-            android:textSize="34sp" />
-    </LinearLayout>
+<!--    <TextView-->
+<!--        android:id="@+id/text_title"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:fontFamily="sans-serif-black"-->
+<!--        android:text="MZ Focus News"-->
+<!--        android:textSize="34sp" />-->
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -132,8 +131,8 @@
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="160dp"
-            android:layout_height="45dp"
+            android:layout_width="190dp"
+            android:layout_height="46dp"
             android:background="@drawable/background_shape_blue_register"
             android:text="로그인"
             android:textSize="16sp"
@@ -143,7 +142,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 

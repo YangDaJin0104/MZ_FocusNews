@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mz_focusnews.NewsDB.News;
 import com.example.mz_focusnews.R;
 
@@ -47,12 +48,18 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         News news = newsList.get(position);
         holder.tv_title.setText(news.getTitle());
-        holder.tv_description.setText(news.getSummary());
         holder.tv_category.setText(news.getCategory());
 
         // 날짜를 상대 시간으로 변환하여 설정
         String relativeTime = getRelativeTime(news.getDate());
         holder.tv_date.setText(relativeTime);
+
+        // 이미지 로딩
+        Glide.with(context)
+                .load(news.getImgUrl()) // News 클래스에서 이미지 URL을 가져오는 메소드
+                .placeholder(R.drawable.ic_launcher_foreground) // 이미지 로딩 중 표시할 기본 이미지
+                .error(R.drawable.character) // 이미지 로드 실패 시 표시할 이미지
+                .into(holder.iv_image);
 
         // 디버깅 로그 추가
         Log.d("InterestAdapter", "Original date string: " + news.getDate());
@@ -81,17 +88,16 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_image;
         TextView tv_title;
-        TextView tv_description;
         TextView tv_date;
         TextView tv_category;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            iv_image = itemView.findViewById(R.id.interest_image);
             tv_title = itemView.findViewById(R.id.interest_title);
-            tv_description = itemView.findViewById(R.id.interest_description);
             tv_date = itemView.findViewById(R.id.interest_time);
             tv_category = itemView.findViewById(R.id.interest_category);
+            iv_image = itemView.findViewById(R.id.interest_image);
         }
     }
 
