@@ -184,6 +184,16 @@ public class RankingFragment extends Fragment {
             try (OutputStream os = connect.getOutputStream()) {
                 byte[] input = postData.getBytes("utf-8");
                 os.write(input, 0, input.length);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // 응답 코드 확인
+            int responseCode = connect.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                Log.d(TAG, "Record updated successfully");
+            } else {
+                Log.e(TAG, "Error updating record. Response code: " + responseCode);
             }
 
             // 연결 종료
@@ -292,7 +302,7 @@ public class RankingFragment extends Fragment {
             Settings.Global.putInt(contentResolver, "ANR_TIMEOUT", 10000); // 10s
         } catch (SecurityException e) {
             e.printStackTrace();
-            Log.e(TAG, "ANR_TIMEOUT");
+            Log.w(TAG, "ANR_TIMEOUT");
         }
 
         // PopupWindow 생성
