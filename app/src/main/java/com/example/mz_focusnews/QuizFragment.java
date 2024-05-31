@@ -1,11 +1,14 @@
 package com.example.mz_focusnews;
 
+import static android.content.Context.WINDOW_SERVICE;
+
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,15 +18,17 @@ import androidx.navigation.Navigation;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.mz_focusnews.Quiz.AnswerChecker;
-import com.example.mz_focusnews.Quiz.CSVFileReader;
 import com.example.mz_focusnews.Quiz.CSVFileWriter;
 import com.example.mz_focusnews.Quiz.ChatGPTAPI;
 import com.example.mz_focusnews.Quiz.Question;
@@ -118,12 +123,11 @@ public class QuizFragment extends Fragment {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            CSVFileReader csvFileReader = new CSVFileReader();
-            CSVFileWriter csvFileWriter = new CSVFileWriter();
             Context context = requireContext();         // 컨텍스트 가져오기
 
             // quiz_solved.csv 파일 초기화 (테스트용)
-            //csvFileWriter.clearQuizSolvedCSVFile(context, QUIZ_SOLVED_FILE_NAME);
+            CSVFileWriter csvFileWriter = new CSVFileWriter();
+            csvFileWriter.clearQuizSolvedCSVFile(context, "quiz_solved.csv");
 
             // 2~5번째 퀴즈 출제: 문제은행 퀴즈 - quiz.csv 파일에 저장된 퀴즈 리스트 중 4문제
             List<Question> quizQuestions = QuestionGenerator.generateQuestions(context, USER_ID);
@@ -301,11 +305,13 @@ public class QuizFragment extends Fragment {
                     if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                         SCORE += 15;
                         setResultView(view, true, current_quiz);
-                        csvQuiz4(view, quizList);   // 정답일 경우 다음 문제로 넘어감
+                        showPopup(view, quizList);
                     } else {
                         Log.d(TAG, "틀렸습니다!");
                         setResultView(view, false, current_quiz);
                         setIncorrectView(current_quiz);
+                        showPopup(view, quizList);
+
                         updateDBQuizScore();
 
                         btn_complete.setOnClickListener(new View.OnClickListener() {
@@ -343,6 +349,7 @@ public class QuizFragment extends Fragment {
                     setResultView(view, true, current_quiz);
                     setCompleteView(view);      // 퀴즈 종료 시 설정 (마지막 문제이기 때문)
                 } else {
+                    SCORE -= 10;        // 마지막 문제는 틀릴 경우 -10점 (24.05.31 룰 수정)
                     Log.d(TAG, "틀렸습니다!");
                     setResultView(view, false, current_quiz);
                     setIncorrectView(current_quiz);
@@ -570,5 +577,29 @@ public class QuizFragment extends Fragment {
     private void updateDBQuizScore(){
         UpdateDBQuizScore updateQuizScore = new UpdateDBQuizScore(USER_ID, SCORE);
         updateQuizScore.execute();
+    }
+
+    // 마지막 문제 전, 나타나는 팝업 창 설정 (4번째 문제에서 넘어갈 때만 나타나는 팝업창)
+    private void showPopup(View view, List<Question> quizList) {
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_quiz, null);
+
+        // PopupWindow 생성
+        final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 1100, true);
+
+        // 팝업 창의 배경을 설정
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // CLOSE 버튼
+        Button closeButton = popupView.findViewById(R.id.popup_close);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                csvQuiz4(view, quizList);   // CLOSE 버튼을 클릭할 경우, 마지막 문제 출력
+            }
+        });
+
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 200);
     }
 }
