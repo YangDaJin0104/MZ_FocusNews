@@ -15,12 +15,12 @@ public class UserKeyWord {
 
     private static final String TAG = "UserKeyWord";
 
-    public static void saveKeywordToServer(Context context, String userId, String keyword) {
+    public static void saveKeywordToServer(Context context, String userId, String keyword, int keywordPosition) {
         // Retrofit 인스턴스 가져오기
         UserApi userApi = RetrofitClient.getInstance().getUserApi();
 
         // 서버에 키워드를 저장하는 API 호출
-        Call<Void> call = userApi.saveKeyword(userId, keyword);
+        Call<Void> call = userApi.saveKeyword(userId, keyword, keywordPosition);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -29,7 +29,7 @@ public class UserKeyWord {
                     Toast.makeText(context, "키워드가 저장되었습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     // 저장 실패한 경우
-                    Log.e("keyword", "키워드 저장 실패: " + response.code());
+                    Log.e(TAG, "키워드 저장 실패: " + response.code());
                     Toast.makeText(context, "키워드 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
