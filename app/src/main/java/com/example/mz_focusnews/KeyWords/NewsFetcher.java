@@ -20,8 +20,8 @@ import java.util.List;
 
 public class NewsFetcher {
 
-    private static final String USER_KEYWORD_URL = "http://10.0.2.2:8081/api/users/";
-    private static final String NEWS_BY_KEYWORDS_URL = "http://10.0.2.2:8081/api/news/searchByKeywords";
+    private static final String USER_KEYWORD_URL = "http://43.201.173.245:8081/api/users/";
+    private static final String NEWS_BY_KEYWORDS_URL = "http://43.201.173.245:8081/api/news/searchByKeywords";
     private static final String TAG = "NewsFetcher";
 
     private RequestQueue requestQueue;
