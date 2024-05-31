@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class FindPasswordFragment extends Fragment {
 
     private EditText et_id, et_name;
     private Button btn_find_pw;
+    private ImageButton btn_back;
     private TextView tv1, tv_pw, tv_goToLogin;
     private LinearLayout linear_find;
 
@@ -38,10 +40,19 @@ public class FindPasswordFragment extends Fragment {
         btn_find_pw = view.findViewById(R.id.btn_find_pw);
 
         tv1 = view.findViewById(R.id.tv1);
-        tv_pw = view.findViewById(R.id.tv_pw);
+        tv_pw = view.findViewById(R.id.tv_2);
         tv_goToLogin = view.findViewById(R.id.tv_goToLogin);
 
         linear_find = view.findViewById(R.id.linear_find);
+
+        // 뒤로가기
+        btn_back = view.findViewById(R.id.backbtn);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(FindPasswordFragment.this).navigateUp();
+            }
+        });
 
         tv_goToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,9 +79,6 @@ public class FindPasswordFragment extends Fragment {
                                 String userPw = jsonResponse.getString("user_pw");
 
                                 linear_find.setVisibility(View.VISIBLE);
-                                tv1.setVisibility(View.VISIBLE);
-                                tv_pw.setVisibility(View.VISIBLE);
-                                tv_goToLogin.setVisibility(View.VISIBLE);
 
                                 tv1.setText(userName + "님의 비밀번호는");
                                 tv_pw.setText(userPw + "입니다");

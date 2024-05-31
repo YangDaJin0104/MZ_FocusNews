@@ -5,12 +5,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -26,7 +28,7 @@ public class ChangePasswordFragment extends Fragment {
     private EditText et_now_pw, et_new_pw, et_pw_check;
 
     private Button btn_change_pw;
-
+    private ImageButton btn_back;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +41,15 @@ public class ChangePasswordFragment extends Fragment {
 
         SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         final String userId = sp.getString("user_id", "");
+
+        // 뒤로가기
+        btn_back = view.findViewById(R.id.backbtn);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(ChangePasswordFragment.this).navigateUp();
+            }
+        });
 
         btn_change_pw.setOnClickListener(new View.OnClickListener() {
             @Override

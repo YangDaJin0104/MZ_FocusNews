@@ -6,129 +6,121 @@
     android:background="@color/whiteblue"
     tools:context=".CategoryFragment">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/backbtn" />
-
-                <HorizontalScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/category_part"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="4.5dp"
-                        android:orientation="horizontal"
-                        android:background="@drawable/background_shape_lightblue">
-
-                        <Button
-                            android:id="@+id/politics"
-                            android:layout_width="70sp"
-                            android:layout_height="wrap_content"
-                            android:text="정치"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:background="@android:color/transparent"/>
-                        <Button
-                            android:id="@+id/economy"
-                            android:layout_width="70sp"
-                            android:layout_height="wrap_content"
-                            android:text="경제"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:background="@android:color/transparent"/>
-                        <Button
-                            android:id="@+id/society"
-                            android:layout_width="70sp"
-                            android:layout_height="wrap_content"
-                            android:text="사회"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:background="@android:color/transparent"/>
-                        <Button
-                            android:id="@+id/user_keyword"
-                            android:layout_width="70sp"
-                            android:layout_height="wrap_content"
-                            android:text="키워드"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:background="@android:color/transparent"/>
-                        <Button
-                            android:id="@+id/recruitment"
-                            android:layout_width="97sp"
-                            android:layout_height="wrap_content"
-                            android:text="생활/문화"
-                            android:textSize="15.5sp"
-                            android:textStyle="bold"
-                            android:background="@android:color/transparent"/>
-                        <Button
-                            android:id="@+id/science"
-                            android:layout_width="97sp"
-                            android:layout_height="wrap_content"
-                            android:text="IT/과학"
-                            android:textSize="16.5sp"
-                            android:textStyle="bold"
-                            android:background="@android:color/transparent"/>
-                        <Button
-                            android:id="@+id/entertainment"
-                            android:layout_width="70sp"
-                            android:layout_height="wrap_content"
-                            android:text="연예"
-                            android:textSize="16.5sp"
-                            android:textStyle="bold"
-                            android:background="@android:color/transparent"/>
-                        <Button
-                            android:id="@+id/sports"
-                            android:layout_width="76sp"
-                            android:layout_height="wrap_content"
-                            android:text="스포츠"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:background="@android:color/transparent"/>
-                    </LinearLayout>
-                </HorizontalScrollView>
-            </LinearLayout>
-
-            <!-- 정렬 옵션 스피너 추가 -->
-            <Spinner
-                android:id="@+id/sortSpinner"
+            <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:entries="@array/sort_options"
-                android:padding="8dp"
-                android:layout_margin="8dp"/>
+                android:layout_marginStart="10dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                <LinearLayout
+                    android:id="@+id/category_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4.5dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/background_shape_lightblue">
+
+                    <Button
+                        android:id="@+id/politics"
+                        android:layout_width="65sp"
+                        android:layout_height="wrap_content"
+                        android:text="정치"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:background="@android:color/transparent"/>
+
+                    <Button
+                        android:id="@+id/economy"
+                        android:layout_width="65sp"
+                        android:layout_height="wrap_content"
+                        android:text="경제"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:background="@android:color/transparent"/>
+
+                    <Button
+                        android:id="@+id/society"
+                        android:layout_width="65sp"
+                        android:layout_height="wrap_content"
+                        android:text="사회"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:background="@android:color/transparent"/>
+
+                    <Button
+                        android:id="@+id/user_keyword"
+                        android:layout_width="65sp"
+                        android:layout_height="wrap_content"
+                        android:text="키워드"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:background="@android:color/transparent"/>
+
+                    <Button
+                        android:id="@+id/recruitment"
+                        android:layout_width="90sp"
+                        android:layout_height="wrap_content"
+                        android:text="생활/문화"
+                        android:textSize="15.5sp"
+                        android:textStyle="bold"
+                        android:background="@android:color/transparent"/>
+
+                    <Button
+                        android:id="@+id/science"
+                        android:layout_width="90sp"
+                        android:layout_height="wrap_content"
+                        android:text="IT/과학"
+                        android:textSize="16.5sp"
+                        android:textStyle="bold"
+                        android:background="@android:color/transparent"/>
+
+                    <Button
+                        android:id="@+id/entertainment"
+                        android:layout_width="65sp"
+                        android:layout_height="wrap_content"
+                        android:text="연예"
+                        android:textSize="16.5sp"
+                        android:textStyle="bold"
+                        android:background="@android:color/transparent"/>
+
+                    <Button
+                        android:id="@+id/sports"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:text="스포츠"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:background="@android:color/transparent"/>
+                </LinearLayout>
+            </HorizontalScrollView>
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
+        <!-- 정렬 옵션 스피너 추가 -->
+        <Spinner
+            android:id="@+id/sortSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-    </FrameLayout>
+            android:layout_gravity="end"
+            android:entries="@array/sort_options"
+            android:padding="5dp"
+            android:layout_margin="10dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 </ScrollView>

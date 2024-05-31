@@ -102,8 +102,6 @@ public class CategoryFragment extends Fragment {
         Button entertainmentButton = view.findViewById(R.id.entertainment);
         Button sportsButton = view.findViewById(R.id.sports);
 
-        progressBar = view.findViewById(R.id.progressBar);
-
         Spinner sortSpinner = view.findViewById(R.id.sortSpinner);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 

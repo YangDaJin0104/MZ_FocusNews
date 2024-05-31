@@ -3,6 +3,7 @@ package com.example.mz_focusnews;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         // 3초동안 뜨게 한다
-        Handler hd = new Handler();
+        Handler hd = new Handler(Looper.getMainLooper());
         hd.postDelayed(new splashHandler(), 2000);
 
     }
@@ -27,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
     private class splashHandler implements Runnable {
         @Override
         public void run() {
-            startActivity(new Intent(getApplication(), MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
             SplashActivity.this.finish();
         }
     }

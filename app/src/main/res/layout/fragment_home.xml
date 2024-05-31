@@ -115,9 +115,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="Breaking News List"
             android:textSize="20dp"
-            android:padding="16dp"/>
+            android:textStyle="bold"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_breaking_news"
