@@ -1,4 +1,6 @@
 <?php
+    // 가상서버 - /var/www/html/getNullImgNewsData.php
+
     // MySQL 서버 연결 정보 설정
     $servername = "43.201.173.245";  // MySQL 서버 주소
     $username = "coddl";             // MySQL 사용자 이름
@@ -14,7 +16,7 @@
     }
 
     // img_url에 null이 저장된 news_id, summary를 구하는 쿼리
-    $sql = "SELECT news_id, title FROM news WHERE img_url IS NULL";
+    $sql = "SELECT news_id, summary FROM news WHERE img_url IS NULL AND summary IS NOT NULL";
     $result = $conn->query($sql);
 
     // 결과를 담을 배열 초기화

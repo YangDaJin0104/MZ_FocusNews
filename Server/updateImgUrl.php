@@ -6,7 +6,7 @@
     $password = '1234';     // MySQL 계정 패스워드
     $dbname = 'news';     // DATABASE 이름
 
-    // POST 요청에서 사용자 ID와 새로운 퀴즈 점수 가져오기
+    // POST 요청에서 사용자 ID와 새로운 이미지 URL 가져오기
     $newsId = $_POST['newsId'];
     $imgUrl = $_POST['imgUrl'];
 
@@ -19,7 +19,7 @@
     }
 
     // 준비된 문장을 사용하여 데이터 업데이트
-    $stmt = $conn->prepare("UPDATE news SET img_url = ? WHERE news_id = ?");        // SQL Injection 방지
+    $stmt = $conn->prepare("UPDATE news SET img_url = ? WHERE news_id = ?");
     $stmt->bind_param("si", $imgUrl, $newsId);
 
     if ($stmt->execute() === TRUE) {

@@ -1,6 +1,7 @@
 package com.example.mz_focusnews;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -111,7 +112,6 @@ public class NewsUtils {
         NewsRequest newsRequest = new NewsRequest(date, type, response -> {
 
             Log.d("NewsResponse", "Response: " + response);
-
             try {
                 JSONObject jsonResponse = new JSONObject(response);
                 boolean success = jsonResponse.getBoolean("success");
@@ -119,7 +119,7 @@ public class NewsUtils {
                     JSONArray newsArray = jsonResponse.getJSONArray("news");
                     if (newsArray.length() > 0) {
                         JSONObject topNews = newsArray.getJSONObject(0);
-                        updateUIWithNewsData(context, topNews, titleView, contentView, dateView, imageView);
+                        updateUIWithNewsData(context, topNews, type, titleView, contentView, dateView, imageView);
                     } else {
                         handleNoNewsForDay(context, date, type, titleView, contentView, dateView, imageView, userSessions, fragment);
                     }
@@ -140,16 +140,28 @@ public class NewsUtils {
         queue.add(newsRequest);
     }
 
-    private static void updateUIWithNewsData(Context context, JSONObject newsData, TextView titleView, TextView contentView, TextView dateView, ImageView imageView) throws JSONException {
+    private static void updateUIWithNewsData(Context context, JSONObject newsData, String type, TextView titleView, TextView contentView, TextView dateView, ImageView imageView) throws JSONException {
         News news = News.parseNewsFromJSON(newsData);
         titleView.setText(news.getTitle());
         Glide.with(context).load(news.getImgUrl()).placeholder(R.drawable.ic_launcher_foreground).fallback(R.drawable.character).into(imageView);
         contentView.setText(truncateSummary(news.getSummary(), 30));
+
         dateView.setText(formatDateString(news.getDate()));
         titleView.setTag(news);
 
         Log.d("NewsUtils", "뉴스 업데이트 정보: 날짜=" + news.getDate() + ", 조회수=" + news.getView());
 
+        // coddl: 머지하면서 SharedPreferences 없어져서 다시 추가했습니당
+        // 퀴즈 - 오늘의 퀴즈에서 사용할 데이터 (오늘의 뉴스에 대한 데이터만 저장)
+        if(type.equals("daily")){
+            SharedPreferences sp = context.getSharedPreferences("NewsData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("summary", news.getSummary());
+            editor.putInt("newsId", news.getNewsId());
+            editor.apply();
+
+            Log.d("NewsUtils", "공유변수 저장\nsummary = "+news.getSummary()+"\nnewsId = "+news.getNewsId());
+        }
     }
 
     private static void handleNoNewsForDay(Context context, String date, String type, TextView titleView, TextView contentView, TextView dateView, ImageView imageView, Map<String, UserSession> userSessions, Fragment fragment) {

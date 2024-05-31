@@ -1,4 +1,6 @@
 <?php
+    // 가상서버 - /var/www/html/getQuizScore.php
+
     // MySQL 서버 연결 정보 설정
     $servername = "43.201.173.245";     // MySQL 서버 주소
     $username = "coddl";                // MySQL 사용자 이름

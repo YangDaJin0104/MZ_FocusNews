@@ -28,7 +28,7 @@ public class ChatGPTAPI {
             connection.setRequestProperty("Content-Type", "application/json");
 
             // prompt 생성
-            String prompt = summarize + "위 내용을 바탕으로 객관식 문제를 새로 만들어줘. 문제 내용, 정답, 선택지1, 선택지2, 선택지3, 선택지4를 question, answer, option1, option2, option3, option4 Json 형태로 보내줘(answer==option1||2||3||4)";
+            String prompt = summarize + "위 내용을 바탕으로 객관식 문제를 새로 만들어줘. 문제 내용, 정답, 선택지1, 선택지2, 선택지3, 선택지4를 question, answer, option1, option2, option3, option4 Json 형태로 보내줘(answer==option1||2||3||4). question 길이는 50자 내로 만들어야해.";
 
             // request body
             String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";
