@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class News implements Parcelable {
     private Integer newsId;
     private int view;
@@ -42,88 +45,6 @@ public class News implements Parcelable {
         this.relatedNews1 = relatedNews1;
         this.relatedNews2 = relatedNews2;
     }
-
-    public int getNewsId() {
-        return newsId;
-    }
-
-    public void setNewsId(Integer newsId) {
-        this.newsId = newsId;
-    }
-
-    public int getView() {
-        return view;
-    }
-
-    public void setView(int view) {
-        this.view = view;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public String getTitle() {
-        return truncateTitle(title);
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Integer getRelatedNews1() {
-        return relatedNews1;
-    }
-
-    public void setRelatedNews1(Integer relatedNews1) {
-        this.relatedNews1 = relatedNews1;
-    }
-
-    public Integer getRelatedNews2() {
-        return relatedNews2;
-    }
-
-    public void setRelatedNews2(Integer relatedNews2) {
-        this.relatedNews2 = relatedNews2;
-    }
-
-    private String truncateTitle(String title) {
-        int dashIndex = title.indexOf('-');
-        if (dashIndex != -1) {
-            // "-" 문자 앞의 문자열만 사용(출판사 제거)
-            return title.substring(0, dashIndex).trim();
-        }
-        return title;
-    }
-
     public News() {
 
     }
@@ -195,6 +116,102 @@ public class News implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(relatedNews2);
         }
+    }
+
+    private String truncateTitle(String title) {
+        int dashIndex = title.indexOf('-');
+        if (dashIndex != -1) {
+            // "-" 문자 앞의 문자열만 사용(출판사 제거)
+            return title.substring(0, dashIndex).trim();
+        }
+        return title;
+    }
+
+    public static News parseNewsFromJSON(JSONObject newsData) throws JSONException {
+        int newsId = newsData.getInt("news_id");
+        int view = newsData.getInt("view");
+        String link = newsData.getString("link");
+        String summary = newsData.optString("summary", "No summary available");
+        String title = newsData.getString("title");
+        String category = newsData.optString("category", "Uncategorized");
+        String date = newsData.getString("date");
+        String image = newsData.getString("img_url");
+        int relatedNews1 = newsData.optInt("related_news1", 0);
+        int relatedNews2 = newsData.optInt("related_news2", 0);
+
+        return new News(newsId, view, link, summary, title, category, date, image, relatedNews1, relatedNews2);
+    }
+
+    public Integer getNewsId() {
+        return newsId;
+    }
+
+    public void setNewsId(Integer newsId) {
+        this.newsId = newsId;
+    }
+
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getTitle() {
+        return truncateTitle(title);
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Integer getRelatedNews1() {
+        return relatedNews1;
+    }
+
+    public void setRelatedNews1(Integer relatedNews1) {
+        this.relatedNews1 = relatedNews1;
+    }
+
+    public Integer getRelatedNews2() {
+        return relatedNews2;
+    }
+
+    public void setRelatedNews2(Integer relatedNews2) {
+        this.relatedNews2 = relatedNews2;
     }
 
     public String getPublish() {
