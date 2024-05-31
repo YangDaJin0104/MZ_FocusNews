@@ -56,9 +56,6 @@ public class ContentFragment extends Fragment {
         summary2 = view.findViewById(R.id.news_content2);
         summary3 = view.findViewById(R.id.news_content3);
         image = view.findViewById(R.id.news_img);
-
-//        newsTitle = view.findViewById(R.id.interest_title);
-
         relatedNews1 = view.findViewById(R.id.news_related1);
         relatedNews2 = view.findViewById(R.id.news_related2);
 

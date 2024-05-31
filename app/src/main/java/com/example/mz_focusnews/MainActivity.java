@@ -18,8 +18,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.mz_focusnews.NewsDB.News;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.android.volley.VolleyError;
-import com.example.mz_focusnews.NewsSummary.Summary;
-import com.example.mz_focusnews.NewsSummary.SummaryUtils;
 import com.example.mz_focusnews.RelatedNews.FetchCompleteListener;
 import com.example.mz_focusnews.RelatedNews.NewsDataFetcher;
 import com.example.mz_focusnews.RelatedNews.NewsDataStore;
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
     private NewsDataStore newsDataStore;
-    SummaryUtils summaryUtils;
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final AtomicBoolean isDestroyed = new AtomicBoolean(false);
 
@@ -47,15 +44,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Summary 관련 파일들 삭제함에 따라 관련 메소드들도 삭제했습니당 (ming)
+
         // 속보 푸시 알림 초기화
         notificationService = new NotificationService(this);
         startNotificationPolling();
 
-        fetchAllNewsIdsAndProcess();
-
         // img_url 값이 null인 뉴스 이미지 생성 (title 기반)
         newsDataStore = new NewsDataStore();
-        summaryUtils = new SummaryUtils(this);
         NewsDataFetcher fetcher = new NewsDataFetcher(newsDataStore, this);
 
         Context context = this;
@@ -128,48 +124,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void fetchAllNewsIdsAndProcess() {
-        executorService.execute(() -> {
-            NewsDataAdapter adapter = new NewsDataAdapter(this);
-            adapter.fetchAllNewsId(this, new NewsDataCallback() {
-                @Override
-                public void onDataFetched(int newsId, String content) {
-                    if (!isDestroyed.get()) {
-                        runOnUiThread(() -> performSummaryAndUpload(newsId, content));
-                    }
-                }
-
-                @Override
-                public void onError(String error) {
-                    runOnUiThread(() -> Log.e("MainActivity", "Error fetching data: " + error));
-                }
-            });
-        });
-    }
-
     private void updateDatabaseWithRelatedNews() {
         for (NewsData item : newsDataStore.getAllNewsItems()) {
             RelatedNewsUtils.updateRelatedNews(this, item.getId(), item.getRelated1(), item.getRelated2());
         }
     }
 
-    private void performSummaryAndUpload(int newsId, String content) {
-        Context context = this;
-
-        executorService.execute(() -> {
-            String summary = Summary.chatGPT_summary(context, content);
-            if (summary != null && !isDestroyed.get()) {
-                summaryUtils.sendSummaryToServer(this, newsId, summary);
-            }
-        });
-    }
-
-    private void cleanDB() {
-        executorService.execute(() -> {
-            summaryUtils.deleteBadData(this);
-            Log.d("cleanDB", "clean success");
-        });
-    }
 
     private void handleFilteredNews(List<News> filteredNewsList) {
         // 필터링된 뉴스 리스트를 사용하여 필요한 작업을 수행
