@@ -38,7 +38,7 @@
             android:layout_gravity="right|bottom"
             android:layout_margin="7dp"
             android:padding="6dp"
-            android:background="@drawable/background_radius"
+            android:background="@drawable/white_radius"
             android:src="@drawable/modify"/>
     </FrameLayout>
 

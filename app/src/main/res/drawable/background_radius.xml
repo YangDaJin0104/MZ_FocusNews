@@ -1,4 +1,0 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/white"/> <!-- 배경의 색상 -->
-    <corners android:radius="250dp"/> <!-- 모서리의 둥글기 -->
-</shape>
