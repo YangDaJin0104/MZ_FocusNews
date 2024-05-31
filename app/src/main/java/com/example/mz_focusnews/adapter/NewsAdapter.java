@@ -61,7 +61,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         Glide.with(holder.itemView.getContext())
                 .load(news.getImgUrl())
                 .placeholder(R.drawable.ic_launcher_foreground)
-                .fallback(R.drawable.character)
+                .fallback(R.drawable.logo2)
                 .into(holder.imageView);
 
         // 클릭 이벤트 처리
