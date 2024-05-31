@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.example.mz_focusnews.NewsDB.News;
 import com.example.mz_focusnews.RelatedNews.NewsData;
 
 import java.util.Arrays;
+import com.bumptech.glide.Glide;
 
 public class ContentFragment extends Fragment {
 
@@ -36,6 +38,7 @@ public class ContentFragment extends Fragment {
     private TextView tv_time;
     private TextView summary1, summary2, summary3;
     private TextView relatedNews1, relatedNews2;
+    private ImageView image;
     private RequestQueue requestQueue;
 
     @Override
@@ -48,6 +51,7 @@ public class ContentFragment extends Fragment {
         summary1 = view.findViewById(R.id.news_content1);
         summary2 = view.findViewById(R.id.news_content2);
         summary3 = view.findViewById(R.id.news_content3);
+        image = view.findViewById(R.id.news_img);
 
 //        newsTitle = view.findViewById(R.id.interest_title);
 
@@ -214,6 +218,7 @@ public class ContentFragment extends Fragment {
         relatedNews1.setTag(related1);  // relatedNews1 뷰에 related1의 ID를 태그로 저장
         int related2 = newsItem.optInt("related_news2", 0);
         relatedNews2.setTag(related2);  // relatedNews2 뷰에 related2의 ID를 태그로 저장
+        String img_url = newsItem.getString("img_url");
 
         NewsData item = new NewsData(id, title, summary, related1, related2);
 
@@ -231,6 +236,11 @@ public class ContentFragment extends Fragment {
 
         tv_title.setText(title);
         tv_time.setText(date);
+
+        //img_url로 이미지 불러와서 띄우기
+        Glide.with(this)
+                .load(img_url)
+                .into(image);
 
         updateRelatedSummaries(getActivity(), item);
     }

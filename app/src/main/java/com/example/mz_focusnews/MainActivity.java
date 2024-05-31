@@ -2,19 +2,20 @@ package com.example.mz_focusnews;
 
 import android.content.Context;
 import android.os.Bundle;
-
+import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.mz_focusnews.NewsDB.ImageGenerator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.android.volley.VolleyError;
 import com.example.mz_focusnews.NewsSummary.Summary;
 import com.example.mz_focusnews.NewsSummary.SummaryUtils;
@@ -23,7 +24,7 @@ import com.example.mz_focusnews.RelatedNews.NewsDataFetcher;
 import com.example.mz_focusnews.RelatedNews.NewsDataStore;
 import com.example.mz_focusnews.RelatedNews.RelatedNewsUtils;
 import com.example.mz_focusnews.RelatedNews.NewsData;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -37,10 +38,17 @@ public class MainActivity extends AppCompatActivity {
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final AtomicBoolean isDestroyed = new AtomicBoolean(false);
 
+    private NotificationService notificationService; // 속보 알림 기능
+    private Handler handler = new Handler();
+    private final int POLLING_INTERVAL = 30000; // 30 seconds
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        // 속보 푸시 알림 초기화
+        notificationService = new NotificationService(this);
+        startNotificationPolling();
 
         fetchAllNewsIdsAndProcess();
 
@@ -60,28 +68,31 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("MainActivity", "Error calculating related articles", e);
                     }
                 });
-
             }
+
             @Override
             public void onFetchFailed(VolleyError error) {
                 Log.e("MainActivity", "News fetch failed", error);
             }
         });
 
-        cleanDB();
+//        cleanDB();   php코드상에서 1시간마다 한번씩 DB 정리하도록 설정해놔서 더이상 클라이언트에서 실행할 필요x (아직 테스트 필요...)
+
+        new ImageGenerator(MainActivity.this).execute();
+
+        setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-
-        // login. register 프래그먼트에서 네비게이션 바 숨기기
+        // 특정 프래그먼트에서 네비게이션 바 숨기기
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                // 로그인과 회원가입 프래그먼트 ID에 따라 하단 네비게이션 바 표시 결정
-                if(destination.getId() == R.id.loginFragment || destination.getId() == R.id.registerFragment) {
+                // 프래그먼트 ID에 따라 하단 네비게이션 바 표시 결정
+                if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.registerFragment || destination.getId() == R.id.keywordFragment) {
                     bottomNavigationView.setVisibility(View.GONE); // 네비게이션 바 숨기기
                 } else {
                     bottomNavigationView.setVisibility(View.VISIBLE); // 네비게이션 바 표시하기
@@ -92,11 +103,22 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
 
+    private void startNotificationPolling() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                notificationService.fetchNotifications();
+                handler.postDelayed(this, POLLING_INTERVAL);
+            }
+        }, POLLING_INTERVAL);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         isDestroyed.set(true);
         executorService.shutdownNow(); // 앱 종료 시 스레드 풀 종료
+        handler.removeCallbacksAndMessages(null); // 핸들러의 모든 콜백 및 메시지 제거
     }
 
     @Override
@@ -113,10 +135,11 @@ public class MainActivity extends AppCompatActivity {
             adapter.fetchAllNewsId(this, new NewsDataCallback() {
                 @Override
                 public void onDataFetched(int newsId, String content) {
-                    if (!isDestroyed.get()){
+                    if (!isDestroyed.get()) {
                         runOnUiThread(() -> performSummaryAndUpload(newsId, content));
                     }
                 }
+
                 @Override
                 public void onError(String error) {
                     runOnUiThread(() -> Log.e("MainActivity", "Error fetching data: " + error));
@@ -137,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
         executorService.execute(() -> {
             String summary = Summary.chatGPT_summary(context, content);
             if (summary != null && !isDestroyed.get()) {
-
                 summaryUtils.sendSummaryToServer(this, newsId, summary);
             }
         });
@@ -147,11 +169,6 @@ public class MainActivity extends AppCompatActivity {
         executorService.execute(() -> {
             summaryUtils.deleteBadData(this);
             Log.d("cleanDB", "clean success");
-
         });
     }
-
 }
-
-
-

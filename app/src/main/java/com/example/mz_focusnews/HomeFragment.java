@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,8 +27,10 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.mz_focusnews.NewsDB.News;
 import com.example.mz_focusnews.NewsDB.RetrofitClient;
+import com.example.mz_focusnews.adapter.BreakingNewsAdapter;
 import com.example.mz_focusnews.adapter.InterestAdapter;
 import com.example.mz_focusnews.adapter.ViewPager2Adapter;
+
 import com.example.mz_focusnews.request.FetchNewsRequest;
 
 import org.json.JSONArray;
@@ -39,6 +44,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,23 +56,32 @@ public class HomeFragment extends Fragment {
     private String user_name;
 
     private RecyclerView recyclerView;
+    private RecyclerView breakingNewsRecyclerView; // 속보 뉴스 RecyclerView
 
     private ProgressBar progressBar;
     private InterestAdapter interestAdapter;
+    private BreakingNewsAdapter breakingNewsAdapter; // 속보 뉴스 Adapter
     private List<News> newsList;
+    private List<News> breakingNewsList; // 속보 뉴스 리스트
     private Button breakingNewsButton; // 속보 뉴스 버튼 참조를 위한 변수
+    private DrawerLayout drawerLayout; // DrawerLayout 참조를 위한 변수
+
+    private static final String PREFS_NAME = "BreakingNewsPrefs";
+    private static final String LAST_BREAKING_NEWS_TITLE = "LastBreakingNewsTitle";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // 프로그레스 바 (로딩 표시)
-        progressBar = view.findViewById(R.id.loading);
+        // DrawerLayout 참조
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+
 
         // 사용자 이름 및 현재 시간 설정
         TextView userName = view.findViewById(R.id.user_name);
         TextView nowDate = view.findViewById(R.id.current_date);
         breakingNewsButton = view.findViewById(R.id.breakingNews); // 속보 뉴스 버튼 참조
+        ImageButton breakingNewsListButton = view.findViewById(R.id.breaking_news_list); // 드로어 열기 버튼 참조
 
         // SharedPreferences로 데이터 받아오기: 아이디 , 이름
         SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
@@ -110,27 +127,74 @@ public class HomeFragment extends Fragment {
 
         fetchNewsData(view); // 기존 뉴스 데이터 가져오는 메소드 호출
         fetchBreakingNewsData(); // 속보 뉴스 데이터 가져오는 메소드 호출 추가
+
+        // 속보 뉴스 리사이클러뷰 초기화
+        breakingNewsRecyclerView = view.findViewById(R.id.rv_breaking_news);
+        breakingNewsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+        // 속보 뉴스 리스트 초기화
+        breakingNewsList = new ArrayList<>();
+
+        // 어댑터 설정
+        breakingNewsAdapter = new BreakingNewsAdapter(getActivity(), breakingNewsList, new BreakingNewsAdapter.OnNewsClickListener() {
+            @Override
+            public void onNewsClick(News news) {
+                NavHostFragment.findNavController(HomeFragment.this)
+                        .navigate(R.id.action_homeFragment_to_contentFragment);
+            }
+        });
+
+        breakingNewsRecyclerView.setAdapter(breakingNewsAdapter);
+
+        // 드로어 열기 버튼 클릭 리스너 설정
+        breakingNewsListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawerLayout.isDrawerOpen(view.findViewById(R.id.right_drawer))) {
+                    drawerLayout.closeDrawer(view.findViewById(R.id.right_drawer));
+                } else {
+                    fetchBreakingNewsData(); // 드로어가 열릴 때 속보 뉴스 데이터를 가져옴
+                    drawerLayout.openDrawer(view.findViewById(R.id.right_drawer));
+                }
+            }
+        });
+
         return view;
     }
 
     // 속보 뉴스 데이터를 가져오는 메소드 추가
     private void fetchBreakingNewsData() {
-        String keyword = "[속보]";
-        RetrofitClient.getInstance().getNewsApi().getBreakingNewsWithKeyword(1, keyword).enqueue(new Callback<List<News>>() {
+        RetrofitClient.getInstance().getNewsApi().getBreakingNewsWithKeyword(10, "[속보]").enqueue(new Callback<List<News>>() {
             @Override
             public void onResponse(Call<List<News>> call, retrofit2.Response<List<News>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    newsList.clear();
-                    newsList.addAll(response.body());
-                    interestAdapter.notifyDataSetChanged();
+                    breakingNewsList.clear();
+                    breakingNewsList.addAll(response.body());
+                    breakingNewsAdapter.notifyDataSetChanged();
 
-                    if (!newsList.isEmpty()) {
-                        News breakingNews = newsList.get(0);
-                        String title = breakingNews.getTitle();
+                    // 버튼에 최신 뉴스 하나 표시
+                    if (!breakingNewsList.isEmpty()) {
+                        News latestBreakingNews = breakingNewsList.get(0);
+                        String title = latestBreakingNews.getTitle();
                         if (title.length() > 30) {
                             title = title.substring(0, 30) + "..."; // 제목이 30자를 초과할 경우 자르고 "..." 추가
                         }
-                        breakingNewsButton.setText(title); // 속보 뉴스 제목을 버튼 텍스트로 설정
+                        breakingNewsButton.setText(title);
+
+                        // SharedPreferences에서 마지막 저장된 [속보] 제목을 가져옴
+                        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                        String lastBreakingNewsTitle = prefs.getString(LAST_BREAKING_NEWS_TITLE, "");
+
+                        // 새로운 [속보] 제목을 SharedPreferences에 저장
+                        if (!lastBreakingNewsTitle.equals(latestBreakingNews.getTitle())) {
+                            // 새로운 [속보] 제목을 SharedPreferences에 저장
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString(LAST_BREAKING_NEWS_TITLE, latestBreakingNews.getTitle());
+                            editor.apply();
+                        }
+
+                        // 로그 추가
+                        Log.d("HomeFragment", "Breaking news notification sent: " + latestBreakingNews.getTitle());
                     } else {
                         breakingNewsButton.setText("No breaking news available");
                     }
@@ -138,7 +202,7 @@ public class HomeFragment extends Fragment {
                     int statusCode = response.code();
                     String errorMessage = response.message();
                     Log.e("HomeFragment", "Error: " + statusCode + ", " + errorMessage);
-                    Toast.makeText(getActivity(), "Failed to fetch news: " + statusCode, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed to fetch breaking news: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -149,10 +213,9 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
     // 뉴스 데이터 가져오는 메소드
     private void fetchNewsData(View view) {
-        progressBar.setVisibility(view.VISIBLE); // 데이터 로딩 시작 시 프로그레스 바 표시
+//        progressBar.setVisibility(view.VISIBLE); // 데이터 로딩 시작 시 프로그레스 바 표시
 
         Response.Listener<String> responseListener = response -> {
             try {
@@ -185,7 +248,7 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "JSON Parsing Error", Toast.LENGTH_SHORT).show();
             }
-            progressBar.setVisibility(view.GONE); // 데이터 로딩 완료 시 프로그레스 바 숨김
+//            progressBar.setVisibility(view.GONE); // 데이터 로딩 완료 시 프로그레스 바 숨김
         };
 
         Response.ErrorListener errorListener = error -> {
@@ -213,3 +276,4 @@ public class HomeFragment extends Fragment {
         nowDate.setText(formattedDate);
     }
 }
+

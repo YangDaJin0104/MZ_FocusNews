@@ -17,7 +17,7 @@ import java.util.Map;
 public class UpdateDBQuizScore extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "UpdateDBQuizScore";
     private static final String UPDATE_URL = "http://43.201.173.245/updateQuizScore.php";
-    private static final String GET_URL = "http://43.201.173.245/getQuizScoreJson.php";
+    private static final String GET_URL = "http://43.201.173.245/getQuizScore.php";
 
     private String userId;
     private int newScore;

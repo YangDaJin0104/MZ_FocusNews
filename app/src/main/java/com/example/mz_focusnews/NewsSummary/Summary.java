@@ -37,7 +37,7 @@ public class Summary {
             connection.setRequestProperty("Content-Type", "application/json");
 
             // prompt 생성
-            String prompt = article + " 이 뉴스기사를 3문장으로 요약해줘. 각 문장은 공백 포함 70글자 내외로 써주고 -다. 형식으로 끝나게 해줘.";
+            String prompt = article + " 이 뉴스 기사의 핵심 내용을 3문장으로 요약해. 각 문장은 다.로 끝나도록 하고 공백 포함 70글자 내외로 써줘. 문장번호나 글자수는 쓰지 마.";
 
             // request body
             String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";
@@ -64,6 +64,7 @@ public class Summary {
                     JSONObject message = firstChoice.getJSONObject("message");
                     if (message.has("content")) {
                         String content = message.getString("content");
+                        Log.d("summary success", content);
                         return content;  // 여기서 content만 반환
                     } else {
                         Log.e(TAG, "No 'content' in message");

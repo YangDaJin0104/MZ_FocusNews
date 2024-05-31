@@ -34,6 +34,7 @@
     </FrameLayout>
 
     <ImageView
+        android:id="@+id/iv_profile"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginTop="30dp"
@@ -93,6 +94,7 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="25dp"
@@ -133,7 +135,7 @@
     <Button
         android:id="@+id/btn_change_pw"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:layout_marginTop="15dp"
         android:gravity="center_vertical"
         android:text="비밀번호 변경"

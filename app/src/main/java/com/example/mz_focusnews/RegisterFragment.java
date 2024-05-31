@@ -1,5 +1,8 @@
 package com.example.mz_focusnews;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -73,7 +76,6 @@ public class RegisterFragment extends Fragment {
         // Set up full_permission checkbox listener
         full_permission.setOnCheckedChangeListener((buttonView, isChecked) -> {
             personal_permission.setChecked(isChecked);
-            location_permission.setChecked(isChecked);
             alarm_permission.setChecked(isChecked);
         });
 
@@ -153,11 +155,8 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-                // 아이디 형식 체크
-                if (!user_id.matches("[a-zA-Z0-9]{6,12}")) {
-                    Toast.makeText(getActivity(), "아이디는 6~12자 이내의 영문/숫자 조합이어야 합니다.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                //                // 테스트 후 주석 제거
+//                // 아이디 형식 체크ㅁ
 
 
                 // 서버로부터의 응답 처리
@@ -196,7 +195,6 @@ public class RegisterFragment extends Fragment {
                 final String user_pw = register_userPw.getText().toString();
                 final String user_pwcheck = register_userPwCheck.getText().toString();
                 final String user_name = register_username.getText().toString();
-                final int location_perm = location_permission.isChecked() ? 1 : 0;
                 final int alarm_perm = alarm_permission.isChecked() ? 1 : 0;
 
 
@@ -212,11 +210,13 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-                // 비밀번호 형식 체크
-                if (!user_pw.matches("(?=.*[0-9])(?=.*[a-zA-Z]).{8,}")) {
-                    Toast.makeText(getActivity(), "비밀번호는 8자 이상의 영문/숫자 조합이어야 합니다.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+
+//                // 테스트 후 주석 제거
+//                // 비밀번호 형식 체크
+//                if (!user_pw.matches("(?=.*[0-9])(?=.*[a-zA-Z]).{8,}")) {
+//                    Toast.makeText(getActivity(), "비밀번호는 8자 이상의 영문/숫자 조합이어야 합니다.", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
 
                 // 개인 정보 동의 체크 여부 확인
                 if (!personal_permission.isChecked()) {
@@ -236,8 +236,15 @@ public class RegisterFragment extends Fragment {
                             if (user_pw.equals(user_pwcheck)) {
                                 if (success) {
                                     Toast.makeText(getActivity(), "회원 등록에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
+
+                                    SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sp.edit();
+                                    editor.putString("user_id", user_id);
+                                    editor.putString("user_name", user_name);
+                                    editor.apply();
+
                                     NavHostFragment.findNavController(RegisterFragment.this)
-                                            .navigate(R.id.action_registerFragment_to_loginFragment);
+                                            .navigate(R.id.action_registerFragment_to_keywordFragment);
                                 } else { // 회원가입 실패시
                                     Toast.makeText(getActivity(), "회원 등록에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
                                 }
@@ -253,7 +260,7 @@ public class RegisterFragment extends Fragment {
                 };
 
                 // 서버로 Volley를 이용해서 요청
-                RegisterRequest registerRequest = new RegisterRequest(user_id, user_pw, user_name, location_perm, alarm_perm, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(user_id, user_pw, user_name, alarm_perm, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 queue.add(registerRequest);
             }

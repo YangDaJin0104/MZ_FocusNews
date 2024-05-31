@@ -1,5 +1,7 @@
 package com.example.mz_focusnews.NewsDB;
 
+import com.example.mz_focusnews.UsersDB.UserApi;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -10,7 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static RetrofitClient instance = null;
-    private NewsApi newsApi;
+    private NewsApi newsApi; // News
+    private UserApi userApi; // User
 
     private RetrofitClient() {
         // 로그 인터셉터 설정
@@ -31,6 +34,9 @@ public class RetrofitClient {
 
         // NewsApi 인스턴스 생성
         newsApi = retrofit.create(NewsApi.class);
+        // UsersApi 인스턴스 생성
+        userApi = retrofit.create(UserApi.class);
+
     }
 
     // RetrofitClient의 싱글톤 인스턴스를 반환
@@ -41,8 +47,10 @@ public class RetrofitClient {
         return instance;
     }
 
-    // NewsApi 인스턴스를 반환
     public NewsApi getNewsApi() {
         return newsApi;
+    }
+    public UserApi getUserApi() {
+        return userApi;
     }
 }

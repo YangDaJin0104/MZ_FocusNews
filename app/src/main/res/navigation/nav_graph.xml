@@ -11,8 +11,8 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_registerFragment_to_keywordFragment"
+            app:destination="@id/keywordFragment" />
     </fragment>
 
     <fragment
@@ -70,11 +70,11 @@
         android:name="com.example.mz_focusnews.ContentFragment"
         android:label="fragment_content"
         tools:layout="@layout/fragment_content">
-<!--        <action-->
-<!--            android:id="@+id/action_contentFragment_to_homeFragment"-->
-<!--            app:destination="@id/homeFragment"-->
-<!--            app:popUpTo="@id/homeFragment"-->
-<!--            app:popUpToInclusive="true" />-->
+        <action
+            android:id="@+id/action_contentFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -96,15 +96,27 @@
             android:id="@+id/action_quizFragment_to_rankingFragment"
             app:destination="@id/rankingFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.example.mz_focusnews.MyPageFragment"
         android:label="fragment_my_page"
-        tools:layout="@layout/fragment_my_page" >
+        tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/action_myPageFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/keywordFragment"
+        android:name="com.example.mz_focusnews.KeyWords.KeywordFragment"
+        android:label="KeywordFragment" >
+        <action
+            android:id="@+id/action_keywordFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="com.example.mz_focusnews.ChangePasswordFragment"

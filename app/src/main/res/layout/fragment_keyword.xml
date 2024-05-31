@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteblue"
+    android:orientation="vertical"
+    tools:context=".RegisterFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="22dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/backbtn_gray">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/KeyWord_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90dp"
+            android:text="선호 단어 입력창"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="35dp"
+        android:text="원하는 단어를 입력하면 그에 관련된 뉴스를 제공합니다.
+        서비스를 원하지않는다면 앱 시작하기를 바로 눌러주세요!" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="KeyWord 1"
+                android:textStyle="bold"
+                android:textColor="#6A6A6A" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/keyword1"
+                android:layout_width="355dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_shape_gray"
+                android:padding="15dp"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="이 단어가 들어간 뉴스가 보고싶어요"
+                android:textColor="#6A6A6A"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_keyword1"
+                android:layout_width="63dp"
+                android:layout_height="27dp"
+                android:layout_gravity="right|center"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/background_shape_littleblue"
+                android:text="입력"
+                android:textSize="10dp" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:text="    *최대 10글자까지 가능합니다."
+            android:textSize="11dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="KeyWord 2"
+                android:textStyle="bold"
+                android:textColor="#6A6A6A" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/keyword2"
+                android:layout_width="355dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_shape_gray"
+                android:padding="15dp"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="이 단어가 들어간 뉴스가 보고싶어요"
+                android:textColor="#6A6A6A"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_keyword2"
+                android:layout_width="63dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right|center"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/background_shape_littleblue"
+                android:text="입력"
+                android:textSize="10dp" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:text="    *최대 10글자까지 가능합니다."
+            android:textSize="11dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="KeyWord 3"
+                android:textStyle="bold"
+                android:textColor="#6A6A6A" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/keyword3"
+                android:layout_width="355dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_shape_gray"
+                android:padding="15dp"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="이 단어가 들어간 뉴스가 보고싶어요"
+                android:textColor="#6A6A6A"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_keyword3"
+                android:layout_width="63dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right|center"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/background_shape_littleblue"
+                android:text="입력"
+                android:textSize="10dp" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:text="    *최대 10글자까지 가능합니다."
+            android:textSize="11dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_complete_register"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@drawable/background_shape_blue"
+            android:text="앱 시작하기"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</LinearLayout>

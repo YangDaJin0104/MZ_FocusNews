@@ -77,6 +77,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         });
     }
 
+    // 카테고리 제목 길이 수정
     private String getModifiedTitle(String originalTitle) {
         if (originalTitle == null || originalTitle.isEmpty()) {
             return originalTitle;
@@ -97,6 +98,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         return modifiedTitle;
     }
 
+    // 카테고리 날짜 수정
     private String formatDate(String dateString) {
         if (dateString == null || dateString.isEmpty()) {
             return dateString;

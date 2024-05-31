@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/whiteblue">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone" />
+        android:layout_height="match_parent"
+        android:background="@color/whiteblue">
 
         <LinearLayout
             android:id="@+id/main"
@@ -37,6 +31,7 @@
                     android:layout_marginLeft="20dp" />
 
                 <ImageButton
+                    android:id="@+id/breaking_news_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -106,5 +101,29 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal" />
         </LinearLayout>
-    </FrameLayout>
-</ScrollView>
+    </ScrollView>
+
+    <!-- 오른쪽에서 나오는 Drawer 화면 -->
+    <LinearLayout
+        android:id="@+id/right_drawer"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Breaking News List"
+            android:textSize="20dp"
+            android:padding="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_breaking_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
