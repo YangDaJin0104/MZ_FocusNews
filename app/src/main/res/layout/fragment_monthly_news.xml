@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:layout_marginBottom="2dp"
-                    android:text=" 래로래로래로래로래로"
+                    android:text=" 뉴스 불러오는 중. . ."
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -71,7 +71,7 @@
                     android:layout_height="12dp"
                     android:layout_gravity="bottom"
                     android:layout_marginTop="5dp"
-                    android:text="2024년 03월 22일"
+                    android:text="YYYY년 MM월 DD일"
                     android:gravity="right|bottom"
                     android:textSize="9sp" />
             </LinearLayout>

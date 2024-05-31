@@ -37,8 +37,8 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="35dp"
         android:text="원하는 단어를 입력하면 그에 관련된 뉴스를 제공합니다.
         서비스를 원하지않는다면 앱 시작하기를 바로 눌러주세요!" />
 
