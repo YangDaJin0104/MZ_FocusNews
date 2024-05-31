@@ -35,7 +35,6 @@ import java.util.List;
 
 public class QuizFragment extends Fragment {
     private static final String TAG = "QuizActivity";
-    private static final String QUIZ_SOLVED_FILE_NAME = "quiz_solved.csv";      // 절대 수정 금지 (내부 저장소 파일)
     private int SCORE = 0;      // 사용자 획득 점수
 
     // 테스트용 데이터
@@ -47,7 +46,7 @@ public class QuizFragment extends Fragment {
     private NavController navController;
     private TextView text_question, text_score, text_progress;
     private Button btn_option1, btn_option2, btn_option3, btn_option4, btn_stop, btn_next, btn_complete;
-    private ImageView img_correct, img_incorrect;
+    private ImageView img_correct, img_incorrect, img_character_default, img_character_today_quiz;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // 로그인할 때, SharedPreferences로 저장된 USER_ID 가져오기
@@ -75,6 +74,8 @@ public class QuizFragment extends Fragment {
 
         img_correct = view.findViewById(R.id.quiz_correct);
         img_incorrect = view.findViewById(R.id.quiz_incorrect);
+        img_character_default = view.findViewById(R.id.character_default);
+        img_character_today_quiz = view.findViewById(R.id.character_today_quiz);
 
         // 이전 문제를 맞춘 상태이고, '그만' 버튼을 클릭할 경우
         btn_stop.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +86,22 @@ public class QuizFragment extends Fragment {
                 navController.navigate(R.id.action_quizFragment_to_rankingFragment);
             }
         });
+
+        // 상단의 퀴즈 캐릭터 클릭 시, 오늘의 뉴스 화면으로 넘어감
+        img_character_default.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = getActivity().getSharedPreferences("NewsData", Context.MODE_PRIVATE);
+                int newsId = preferences.getInt("newsId", 0);
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("newsId", newsId);
+
+                Navigation.findNavController(view).navigate(R.id.action_quizFragment_to_contentFragment, bundle);
+            }
+        });
+
+
 
         showQuiz(view);
         return view;
@@ -149,7 +166,13 @@ public class QuizFragment extends Fragment {
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, final_question)) {
                     SCORE += 10;
+
+                    // character 이미지 바꿈. (오늘의 퀴즈 보러가기 사라짐)
+                    img_character_today_quiz.setVisibility(View.GONE);
+                    img_character_default.setVisibility(View.VISIBLE);
+
                     setResultView(view, true, final_question);
+
                     csvQuiz1(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                 } else {
                     Log.d(TAG, "틀렸습니다!");
