@@ -106,7 +106,6 @@ public class NewsUtils {
         }
     }
 
-    // 뉴스 데이터를 로드하는 공통 메서드
     public static void loadNews(Context context, String date, String type, TextView titleView, TextView contentView, TextView dateView, ImageView imageView, Map<String, UserSession> userSessions, Fragment fragment) {
         Log.d("NewsUtils", "loadNews: 뉴스 로드 요청, 날짜=" + date + ", 타입=" + type);
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -132,25 +131,18 @@ public class NewsUtils {
                                     String category = topNews.optString("category", "Uncategorized");
                                     String date = topNews.getString("date");
                                     String image = topNews.getString("img_url");
-                                    int relatedNews1 = topNews.optInt("related_news1", 0); // 기본값으로 0을 사용
-                                    int relatedNews2 = topNews.optInt("related_news2", 0); // 기본값으로 0을 사용
-
+                                    int relatedNews1 = topNews.optInt("related_news1", 0);
+                                    int relatedNews2 = topNews.optInt("related_news2", 0);
 
                                     News news = new News(newsId, view, link, summary, title, category, date, image, relatedNews1, relatedNews2);
 
                                     titleView.setText(news.getTitle());
-
-                                    // ImageView 업데이트
                                     Glide.with(context)
                                             .load(news.getImgUrl())
                                             .placeholder(R.drawable.ic_launcher_foreground)
                                             .fallback(R.drawable.character)
                                             .into(imageView);
-
-                                    String truncatedSummary = truncateSummary(news.getSummary(), 30);
-                                    contentView.setText(truncatedSummary);
-
-                                    // 날짜 형식을 yyyy-MM-dd로 포맷팅
+                                    contentView.setText(truncateSummary(news.getSummary(), 30));
                                     dateView.setText(formatDateString(news.getDate()));
 
                                     titleView.setTag(news);
@@ -160,10 +152,15 @@ public class NewsUtils {
                                     editor.putString("summary", summary);
                                     editor.apply();
 
-                                    Log.d("NewsUtils", "loadNews: 뉴스 로드 성공, 뉴스 아이디=" + news.getNewsId() + ", 날짜=" + news.getDate());
+                                    Log.d("NewsUtils", "loadNews: 뉴스 로드 성공, 뉴스 아이디=" + news.getNewsId() + ", 날짜=" + news.getDate() + ", 조회수=" + news.getView());
                                 } else {
-                                    Log.d("NewsUtils", "loadNews: 뉴스 데이터가 없습니다.");
-                                    Toast.makeText(context, "뉴스 데이터를 가져올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "오늘의 뉴스가 없습니다, 어제의 뉴스를 띄웁니다.", Toast.LENGTH_SHORT).show();
+                                    String previousDate = getPreviousDate(date, type, TimeZone.getTimeZone("Asia/Seoul"));
+                                    if (!previousDate.equals(date)) {
+                                        loadNews(context, previousDate, type, titleView, contentView, dateView, imageView, userSessions, fragment);
+                                    } else {
+                                        Toast.makeText(context, "최근 뉴스가 없습니다.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             } else {
                                 Toast.makeText(context, "뉴스를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
@@ -175,11 +172,9 @@ public class NewsUtils {
                         }
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("NewsUtils", "loadNews: 뉴스 로드 오류, 날짜=" + date + ", 타입=" + type, error);
-                    }
+                error -> {
+                    Log.e("NewsUtils", "Error retrieving news: " + error.getMessage());
+                    Toast.makeText(context, "Error retrieving news.", Toast.LENGTH_SHORT).show();
                 });
 
         queue.add(newsRequest);
@@ -224,24 +219,33 @@ public class NewsUtils {
         }
     }
 
-    public static String getPreviousDate(String type, TimeZone timeZone) {
+    public static String getPreviousDate(String current, String type, TimeZone timeZone) {
         Calendar calendar = Calendar.getInstance(timeZone);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        dateFormat.setTimeZone(timeZone);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        format.setTimeZone(timeZone);
 
+        try {
+            Date currentDate = format.parse(current);
+            calendar.setTime(currentDate);
+        } catch (ParseException e) {
+            Log.e("NewsUtils", "Error parsing date: " + current, e);
+            return null; // 파싱 실패 시 null 반환
+        }
+
+        // 타입에 따른 날짜 감소
         switch (type) {
             case "daily":
                 calendar.add(Calendar.DATE, -1);
                 break;
             case "weekly":
+                // 주간 뉴스의 경우 이전 주의 같은 요일로 이동
                 calendar.add(Calendar.WEEK_OF_YEAR, -1);
-                calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
                 break;
             case "monthly":
+                // 월간 뉴스의 경우 한 달 전 같은 일로 이동
                 calendar.add(Calendar.MONTH, -1);
-                calendar.set(Calendar.DAY_OF_MONTH, 1);
                 break;
         }
-        return dateFormat.format(calendar.getTime());
+        return format.format(calendar.getTime());
     }
 }

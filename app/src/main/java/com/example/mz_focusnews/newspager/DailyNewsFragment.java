@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,6 @@ public class DailyNewsFragment extends Fragment {
     private Map<String, UserSession> userSessions;
 
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily_news, container, false);
 
@@ -66,9 +64,7 @@ public class DailyNewsFragment extends Fragment {
     // 오늘의 뉴스를 로드하는 메소드
     private void loadDailyNews() {
         String todayDate = getCurrentDate();
-        String previousDate = NewsUtils.getPreviousDate("daily", TimeZone.getTimeZone("Asia/Seoul"));
         NewsUtils.loadNews(getContext(), todayDate, "daily", daily_title, daily_content, daily_date, daily_image, userSessions, this);
-        NewsUtils.loadNews(getContext(), previousDate, "daily", daily_title, daily_content, daily_date, daily_image, userSessions, this);
     }
 
     // 현재 날짜를 가져오는 메소드
