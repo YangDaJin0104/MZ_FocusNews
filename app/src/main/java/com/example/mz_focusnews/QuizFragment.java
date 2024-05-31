@@ -131,7 +131,8 @@ public class QuizFragment extends Fragment {
 
             Context context = requireContext();         // 컨텍스트 가져오기
 
-            // quiz_solved.csv 파일 초기화 (테스트용)
+            // quiz_solved.csv 파일 초기화 - 실제 앱 배포하면 아래 두 줄 주석 처리해야 함.
+            // 캡디 전시회는 하루동안 진행되니 풀어놓겠습니다.
             CSVFileWriter csvFileWriter = new CSVFileWriter();
             csvFileWriter.clearQuizSolvedCSVFile(context, "quiz_solved.csv");
 

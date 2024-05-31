@@ -1,29 +1,23 @@
 <?php
+    // 가상서버 - /var/www/html/generateImages.php
+
     $apiKey = '//';
     $updateUrl = 'http://43.201.173.245/updateImgUrl.php';
-    $getUrl = 'http://43.201.173.245/getNullImgNewsData.php';
+    $getNewsData = 'http://43.201.173.245/getNullImgNewsData.php';      // news_id, summary 가져옴
 
-    function cleanTitle($title) {       // 제목에서 특수 문자 제거
-        return preg_replace('/[^\p{L}\p{N}\s\x20-\x7E]/u', '', $title);
-    }
-
-    function chatGPTImageGenerator($newsId, $title) {
+    function chatGPTImageGenerator($newsId, $summary) {
         global $apiKey;
 
         $url = 'https://api.openai.com/v1/images/generations';
         $model = 'dall-e-3';
 
-        if ($title == 'null') {
+        if ($summary == 'null') {
             return null;
         }
 
-        // 제목에서 특수 문자를 제거
-        $cleanTitle = cleanTitle($title);
-        echo($cleanTitle);
-
         $data = [
             'model' => $model,
-            'prompt' => $cleanTitle,
+            'prompt' => $summary,
             'n' => 1,
             'size' => '1024x1024'
         ];
@@ -63,7 +57,7 @@
         $data = http_build_query(['newsId' => $newsId, 'imgUrl' => $imgUrl]);
         $options = [
             'http' => [
-                'header'  => "Content-Type: application/x-www-form-urlencoded\r\n",
+                'header'  => "Content-Type: application/x-www-form-urlencoded;charset=utf-8\r\n",
                 'method'  => 'POST',
                 'content' => $data,
             ],
@@ -86,14 +80,16 @@
     }
 
     // news 데이터 가져오기
-    $response = file_get_contents($getUrl);
+    $response = file_get_contents($getNewsData);
     $newsData = json_decode($response, true);
 
     foreach ($newsData as $news) {
         $newsId = $news['news_id'];
-        $title = $news['title'];
+        $summary = $news['summary'];
 
-        $imgUrl = chatGPTImageGenerator($newsId, $title);
+        $firstSentence = strtok($summary, ".");     // 첫 번째 문장 추출
+        echo "첫 번째 문장: " . $firstSentence . "\n";
+        $imgUrl = chatGPTImageGenerator($newsId, $firstSentence);
 
         if ($imgUrl) {
             echo "imgUrl = " . $imgUrl . "\n";
@@ -104,4 +100,6 @@
 
         sleep(1);
     }
+
+    logToSyslog("함수 종료");
 ?>
