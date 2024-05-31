@@ -36,7 +36,7 @@ public class RegisterFragment extends Fragment {
 
     private EditText register_username, register_userID, register_userPw, register_userPwCheck;
     private Button idCheckBtn, registerBtn, nameCheckBtn;
-    private ImageButton backBtn;
+    private ImageButton btn_back;
     private ImageView iv_personal, iv_alarm;
     private TextView tv_personal, tv_alarm;
     private CheckBox full_permission, personal_permission, location_permission, alarm_permission; // 전체 동의, 개인 정보 동의, 위치 정보 동의, 속보 알림 동의
@@ -63,13 +63,14 @@ public class RegisterFragment extends Fragment {
 
         nameCheckBtn = view.findViewById(R.id.btn_namecheck);
         idCheckBtn = view.findViewById(R.id.btn_idcheck);
-        registerBtn = view.findViewById(R.id.btn_complete_register);
+        registerBtn = view.findViewById(R.id.btn_start_app);
 
-        backBtn = view.findViewById(R.id.backbtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        // 뒤로가기
+        btn_back = view.findViewById(R.id.backbtn);
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                onBack(); // 이전 화면으로 돌아가기
+                NavHostFragment.findNavController(RegisterFragment.this).navigateUp();
             }
         });
 

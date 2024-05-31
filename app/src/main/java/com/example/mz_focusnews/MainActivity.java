@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -87,8 +89,9 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                // 프래그먼트 ID에 따라 하단 네비게이션 바 표시 결정
-                if (destination.getId() == R.id.loginFragment || destination.getId() == R.id.registerFragment || destination.getId() == R.id.keywordFragment) {
+                // 로그인과 회원가입 프래그먼트 ID에 따라 하단 네비게이션 바 표시 결정
+                int dest_id = destination.getId();
+                if(dest_id == R.id.loginFragment || dest_id == R.id.registerFragment || dest_id == R.id.changePasswordFragment || dest_id == R.id.findPasswordFragment) {
                     bottomNavigationView.setVisibility(View.GONE); // 네비게이션 바 숨기기
                 } else {
                     bottomNavigationView.setVisibility(View.VISIBLE); // 네비게이션 바 표시하기
@@ -173,5 +176,19 @@ public class MainActivity extends AppCompatActivity {
         for (News news : filteredNewsList) {
             Log.d("FilteredNews", news.getTitle() + " - " + news.getSummary());
         }
+    }
+
+    // 뒤로가기 기능 정의
+    @Override
+    public void onBackPressed() {
+        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        if (navHostFragment != null) {
+            Fragment currentFragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+            if (currentFragment instanceof OnBackPressedListener) {
+                ((OnBackPressedListener) currentFragment).onBackPressed();
+                return;
+            }
+        }
+        super.onBackPressed();
     }
 }

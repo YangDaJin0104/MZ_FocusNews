@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -13,27 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="10dp">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/backbtn"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical" />
+        android:gravity="center">
 
         <LinearLayout
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginBottom="20dp">
+            android:layout_marginVertical="15dp">
 
             <TextView
                 android:id="@+id/progress"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
+                android:gravity="center"
                 android:text="(1/5)"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -62,8 +54,8 @@
                 android:text="(10점)"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:layout_marginBottom="20dp"/>
-
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"/>
 
             <!-- 문제는 70자 내로 출제해야 함. -->
             <TextView
@@ -86,14 +78,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="5dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="15dp">
 
                 <Button
                     android:layout_width="40dp"
@@ -125,8 +117,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="20dp">
-
+                android:layout_marginBottom="15dp">
 
                 <Button
                     android:layout_width="40dp"
@@ -159,7 +150,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="15dp">
 
                 <Button
                     android:layout_width="40dp"
@@ -217,16 +208,14 @@
                     android:paddingHorizontal="15dp" />
             </LinearLayout>
 
-
         </LinearLayout>
-
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginVertical="60dp">
+            android:layout_marginTop="40dp">
 
             <Button
                 android:id="@+id/stop"
@@ -272,10 +261,7 @@
                 android:textStyle="bold"
                 android:layout_marginHorizontal="40dp"
                 android:visibility="visible"/>
-
         </FrameLayout>
-
-
     </LinearLayout>
 
     <ImageView

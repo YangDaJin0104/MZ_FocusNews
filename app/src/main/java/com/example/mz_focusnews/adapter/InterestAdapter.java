@@ -94,7 +94,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_title = itemView.findViewById(R.id.interest_title);
+            tv_title = itemView.findViewById(R.id.news_title);
             tv_date = itemView.findViewById(R.id.interest_time);
             tv_category = itemView.findViewById(R.id.interest_category);
             iv_image = itemView.findViewById(R.id.interest_image);

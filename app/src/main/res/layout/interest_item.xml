@@ -24,7 +24,7 @@
             android:src="@drawable/img_sample" />
 
         <TextView
-            android:id="@+id/interest_title"
+            android:id="@+id/news_title"
             android:layout_width="180dp"
             android:layout_height="78dp"
             android:layout_marginTop="8dp"

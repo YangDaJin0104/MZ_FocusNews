@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.mz_focusnews.FindPasswordFragment;
 import com.example.mz_focusnews.R;
 
 public class KeywordFragment extends Fragment {
@@ -28,6 +30,7 @@ public class KeywordFragment extends Fragment {
     private Button keyword3Button;
 
     private Button completeRegisterButton;
+    private ImageButton btn_back;
 
     private String userId; // 사용자의 ID를 저장할 변수
 
@@ -46,11 +49,20 @@ public class KeywordFragment extends Fragment {
         keyword3EditText = view.findViewById(R.id.keyword3);
         keyword3Button = view.findViewById(R.id.btn_keyword3);
 
-        completeRegisterButton = view.findViewById(R.id.btn_complete_register);
+        completeRegisterButton = view.findViewById(R.id.btn_start_app);
 
         // SharedPreferences를 사용하여 userId를 초기화
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("user_id", null); // 사용자 ID 불러오기
+
+        // 뒤로가기
+        btn_back = view.findViewById(R.id.backbtn);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(KeywordFragment.this).navigateUp();
+            }
+        });
 
         // 키워드1 버튼 클릭 리스너 설정
         keyword1Button.setOnClickListener(v -> {

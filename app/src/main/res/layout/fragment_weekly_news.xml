@@ -12,13 +12,14 @@
         android:background="@drawable/background_shape_weeklyblue"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="15dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="3dp"
             android:text="Week's News"
             android:textColor="@color/black"
             android:textSize="17sp"
@@ -52,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:layout_marginBottom="2dp"
-                    android:text=" 뉴스 불러오는 중. . ."
+                    android:text="@string/sample_title_28"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -68,12 +69,12 @@
                 <TextView
                     android:id="@+id/weekly_date"
                     android:layout_width="180dp"
-                    android:layout_height="12dp"
+                    android:layout_height="14dp"
                     android:layout_gravity="bottom"
                     android:layout_marginTop="5dp"
                     android:text="YYYY년 MM월 DD일"
                     android:gravity="right|bottom"
-                    android:textSize="9sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteblue"
     android:orientation="vertical"
-    tools:context=".RegisterFragment">
+    tools:context=".KeyWords.KeywordFragment">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp">
 
-        <ImageView
-            android:id="@+id/backBtn"
-            android:layout_width="22dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="20dp"
-            android:src="@drawable/backbtn_gray">
-        </ImageView>
+        <ImageButton
+            android:id="@+id/backbtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/backbtn" />
 
         <TextView
             android:id="@+id/KeyWord_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
             android:text="선호 단어(KeyWord) 입력창"
             android:textStyle="bold"
             android:textSize="20sp" />
-    </LinearLayout>
+    </FrameLayout>
 
     <TextView
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="35dp"
         android:text="원하는 단어를 입력하면 그에 관련된 뉴스를 제공합니다.
         서비스를 원하지않는다면 앱 시작하기를 바로 눌러주세요!" />
 
@@ -82,7 +78,7 @@
                 android:padding="15dp"
                 android:ems="10"
                 android:inputType="text"
-                android:hint="이 단어가 들어간 뉴스가 보고싶어요"
+                android:hint="@string/keyword_input"
                 android:textColor="#6A6A6A"
                 android:textSize="14sp" />
 
@@ -104,7 +100,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:text="    *최대 10글자까지 가능합니다."
+            android:layout_marginStart="10dp"
+            android:text="*최대 10글자까지 가능합니다."
             android:textSize="11dp"/>
     </LinearLayout>
 
@@ -148,7 +145,7 @@
                 android:padding="15dp"
                 android:ems="10"
                 android:inputType="text"
-                android:hint="이 단어가 들어간 뉴스가 보고싶어요"
+                android:hint="@string/keyword_input"
                 android:textColor="#6A6A6A"
                 android:textSize="14sp" />
 
@@ -170,7 +167,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:text="    *최대 10글자까지 가능합니다."
+            android:layout_marginStart="10dp"
+            android:text="*최대 10글자까지 가능합니다."
             android:textSize="11dp"/>
     </LinearLayout>
 
@@ -214,7 +212,7 @@
                 android:padding="15dp"
                 android:ems="10"
                 android:inputType="text"
-                android:hint="이 단어가 들어간 뉴스가 보고싶어요"
+                android:hint="@string/keyword_input"
                 android:textColor="#6A6A6A"
                 android:textSize="14sp" />
 
@@ -236,7 +234,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:text="    *최대 10글자까지 가능합니다."
+            android:layout_marginStart="10dp"
+            android:text="*최대 10글자까지 가능합니다."
             android:textSize="11dp"/>
     </LinearLayout>
 
@@ -245,13 +244,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btn_complete_register"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:id="@+id/btn_start_app"
+            android:layout_width="160dp"
+            android:layout_height="45dp"
             android:background="@drawable/background_shape_blue"
             android:text="앱 시작하기"
             android:textStyle="bold" />

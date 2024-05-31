@@ -6,12 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,7 +29,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.mz_focusnews.NewsDB.News;
 import com.example.mz_focusnews.RelatedNews.NewsData;
 
 import java.util.Arrays;
@@ -42,6 +42,7 @@ public class ContentFragment extends Fragment {
     private TextView summary1, summary2, summary3;
     private TextView relatedNews1, relatedNews2;
     private ImageView image;
+    private ImageButton btn_back;
     private RequestQueue requestQueue;
 
     @Override
@@ -49,7 +50,7 @@ public class ContentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
 
         progressBar = view.findViewById(R.id.loading);
-        tv_title = view.findViewById(R.id.interest_title);
+        tv_title = view.findViewById(R.id.news_title);
         tv_time = view.findViewById(R.id.news_date);
         summary1 = view.findViewById(R.id.news_content1);
         summary2 = view.findViewById(R.id.news_content2);
@@ -62,6 +63,15 @@ public class ContentFragment extends Fragment {
         relatedNews2 = view.findViewById(R.id.news_related2);
 
         requestQueue = Volley.newRequestQueue(getActivity());
+
+        // 뒤로가기
+        btn_back = view.findViewById(R.id.backbtn);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(ContentFragment.this).navigateUp();
+            }
+        });
 
         // Bundle에서 newsId 추출
         if (getArguments() != null) {
