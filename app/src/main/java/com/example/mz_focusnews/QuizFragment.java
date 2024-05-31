@@ -1,7 +1,5 @@
 package com.example.mz_focusnews;
 
-import static android.content.Context.WINDOW_SERVICE;
-
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -22,7 +20,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -35,6 +32,7 @@ import com.example.mz_focusnews.Quiz.Question;
 import com.example.mz_focusnews.Quiz.QuestionGenerator;
 import com.example.mz_focusnews.Quiz.UpdateDBQuizScore;
 import com.example.mz_focusnews.Ranking.PopupManager;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -93,7 +91,7 @@ public class QuizFragment extends Fragment {
         });
 
         // 상단의 퀴즈 캐릭터 클릭 시, 오늘의 뉴스 화면으로 넘어감
-        img_character_default.setOnClickListener(new View.OnClickListener() {
+        img_character_today_quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences preferences = getActivity().getSharedPreferences("NewsData", Context.MODE_PRIVATE);
@@ -131,8 +129,8 @@ public class QuizFragment extends Fragment {
 
             // 2~5번째 퀴즈 출제: 문제은행 퀴즈 - quiz.csv 파일에 저장된 퀴즈 리스트 중 4문제
             List<Question> quizQuestions = QuestionGenerator.generateQuestions(context, USER_ID);
-            showPopup(view, quizQuestions);
-            //quiz(view, quizQuestions);
+
+            quiz(view, quizQuestions);
         }
     }
 
@@ -141,12 +139,34 @@ public class QuizFragment extends Fragment {
         String response;                // 오늘의 퀴즈 생성 여부
 
         Context context = getActivity();
+        SharedPreferences preferences = context.getSharedPreferences("todayQuiz", Context.MODE_PRIVATE);
+        String prevSummary = preferences.getString("summary", "null");
+        String prevQuestion = preferences.getString("Question", "null");
 
         // 오늘의 퀴즈(ChatGPT 기반 퀴즈)가 제대로 만들어질 때까지 반복
         while (todayQuiz == null) {
-            response = ChatGPTAPI.chatGPT(context, SUMMARY);
-            todayQuiz = QuestionGenerator.generateTodayQuiz(response);
+            if(SUMMARY.equals(prevSummary)){
+                SUMMARY = prevSummary;
+
+                Gson gson = new Gson();
+                todayQuiz = gson.fromJson(prevQuestion, Question.class);
+
+                break;
+            } else{
+                // 오늘의 퀴즈 생성
+                response = ChatGPTAPI.chatGPT(context, SUMMARY);
+                todayQuiz = QuestionGenerator.generateTodayQuiz(response);
+            }
         }
+
+        // 오늘의 퀴즈 문제 생성할 때 썼던 summary, Question 객체 저장 - 오늘의 뉴스가 같을 경우 불필요한 문제 생성을 막기 위함.
+        Gson gson = new Gson();
+        String strTodayQuiz = gson.toJson(todayQuiz);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("summary", SUMMARY);
+        editor.putString("Question", strTodayQuiz);
+        editor.apply();
 
         // 오늘의 퀴즈 생성 시, 팝업창이 떠있다면 팝업창 닫기
         if(PopupManager.getInstance().getPopupWindow() != null){
@@ -394,6 +414,7 @@ public class QuizFragment extends Fragment {
                 break;
             case 5:
                 str_score = "(20점)";
+                btn_next.setText("제출");     // 마지막 문제이기 때문에 '제출'로 텍스트 변경
                 break;
             default:
                 break;
