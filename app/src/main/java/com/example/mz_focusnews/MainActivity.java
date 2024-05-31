@@ -13,8 +13,8 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.mz_focusnews.NewsDB.News;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import com.android.volley.VolleyError;
 import com.example.mz_focusnews.NewsSummary.Summary;
 import com.example.mz_focusnews.NewsSummary.SummaryUtils;
@@ -23,8 +23,8 @@ import com.example.mz_focusnews.RelatedNews.NewsDataFetcher;
 import com.example.mz_focusnews.RelatedNews.NewsDataStore;
 import com.example.mz_focusnews.RelatedNews.RelatedNewsUtils;
 import com.example.mz_focusnews.RelatedNews.NewsData;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         fetchAllNewsIdsAndProcess();
 
         // img_url 값이 null인 뉴스 이미지 생성 (title 기반)
-
         newsDataStore = new NewsDataStore();
         summaryUtils = new SummaryUtils(this);
         NewsDataFetcher fetcher = new NewsDataFetcher(newsDataStore, this);
@@ -76,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainActivity", "News fetch failed", error);
             }
         });
-
-//        cleanDB();   php코드상에서 1시간마다 한번씩 DB 정리하도록 설정해놔서 더이상 클라이언트에서 실행할 필요x (아직 테스트 필요...)
 
         setContentView(R.layout.activity_main);
 
@@ -169,5 +166,12 @@ public class MainActivity extends AppCompatActivity {
             summaryUtils.deleteBadData(this);
             Log.d("cleanDB", "clean success");
         });
+    }
+
+    private void handleFilteredNews(List<News> filteredNewsList) {
+        // 필터링된 뉴스 리스트를 사용하여 필요한 작업을 수행
+        for (News news : filteredNewsList) {
+            Log.d("FilteredNews", news.getTitle() + " - " + news.getSummary());
+        }
     }
 }
