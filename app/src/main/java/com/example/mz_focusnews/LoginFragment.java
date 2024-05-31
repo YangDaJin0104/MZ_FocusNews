@@ -40,13 +40,20 @@ public class LoginFragment extends Fragment {
         forgetPw = view.findViewById(R.id.tv_forgetPw);
         goToSignup = view.findViewById(R.id.tv_goToSignup);
 
+        forgetPw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_findPasswordFragment);
+            }
+        });
+
         // 회원가입 페이지로 이동
         goToSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(LoginFragment.this)
                         .navigate(R.id.action_loginFragment_to_registerFragment);
-
             }
         });
 

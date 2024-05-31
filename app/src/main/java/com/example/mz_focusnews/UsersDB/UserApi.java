@@ -26,13 +26,14 @@ public interface UserApi {
 
     @FormUrlEncoded
     @POST("/api/users/saveKeyword")
-    Call<Void> saveKeyword(@Field("userId") String userId, @Field("keyword") String keyword);
+    Call<Void> saveKeyword(@Field("userId") String userId, @Field("keyword") String keyword, @Field("keywordPosition") int keywordPosition);
+
+    @GET("/api/users/{userId}/keywords")
+    Call<List<String>> getUserKeywords(@Path("userId") String userId);
 
     @PUT("/api/users/{userId}")
     Call<User> updateUser(@Path("userId") String userId, @Body User userDetails);
 
     @DELETE("/api/users/{userId}")
     Call<Void> deleteUser(@Path("userId") String userId);
-
 }
-
