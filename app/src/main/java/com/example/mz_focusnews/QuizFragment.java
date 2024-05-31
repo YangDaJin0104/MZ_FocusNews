@@ -131,8 +131,8 @@ public class QuizFragment extends Fragment {
 
             // 2~5번째 퀴즈 출제: 문제은행 퀴즈 - quiz.csv 파일에 저장된 퀴즈 리스트 중 4문제
             List<Question> quizQuestions = QuestionGenerator.generateQuestions(context, USER_ID);
-
-            quiz(view, quizQuestions);
+            showPopup(view, quizQuestions);
+            //quiz(view, quizQuestions);
         }
     }
 
@@ -585,7 +585,7 @@ public class QuizFragment extends Fragment {
         View popupView = inflater.inflate(R.layout.popup_quiz, null);
 
         // PopupWindow 생성
-        final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 1100, true);
+        final PopupWindow popupWindow = new PopupWindow(popupView, 1000, 1500, true);
 
         // 팝업 창의 배경을 설정
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -600,6 +600,6 @@ public class QuizFragment extends Fragment {
             }
         });
 
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 200);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
 }
