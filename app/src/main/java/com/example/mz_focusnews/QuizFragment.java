@@ -37,7 +37,7 @@ import com.google.gson.Gson;
 import java.util.List;
 
 public class QuizFragment extends Fragment {
-    private static final String TAG = "QuizActivity";
+    private static final String TAG = "QuizFragment";
     private int SCORE = 0;      // 사용자 획득 점수
 
     // 테스트용 데이터
@@ -104,6 +104,14 @@ public class QuizFragment extends Fragment {
             }
         });
 
+        btn_complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateDBQuizScore();    // users DB quiz_score 값 업데이트
+                navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_quizFragment_to_rankingFragment);
+            }
+        });
 
 
         showQuiz(view);
@@ -146,8 +154,6 @@ public class QuizFragment extends Fragment {
         // 오늘의 퀴즈(ChatGPT 기반 퀴즈)가 제대로 만들어질 때까지 반복
         while (todayQuiz == null) {
             if(SUMMARY.equals(prevSummary)){
-                SUMMARY = prevSummary;
-
                 Gson gson = new Gson();
                 todayQuiz = gson.fromJson(prevQuestion, Question.class);
 
@@ -185,34 +191,30 @@ public class QuizFragment extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController = Navigation.findNavController(view);
-
                 // 사용자가 선택한 답이 정답인지 확인
                 if (answerChecker.isCorrectAnswer(USER_ANSWER, final_question)) {
                     SCORE += 10;
-
-                    // character 이미지 바꿈. (오늘의 퀴즈 보러가기 사라짐)
-                    img_character_today_quiz.setVisibility(View.GONE);
-                    img_character_default.setVisibility(View.VISIBLE);
-
                     setResultView(view, true, final_question);
-
-                    csvQuiz1(view, quizList);   // 정답일 경우 다음 문제로 넘어감
-                } else {
-                    Log.d(TAG, "틀렸습니다!");
+                } else {        // 오늘의 퀴즈는 틀릴 경우, 퀴즈 종료
                     setResultView(view, false, final_question);
-                    setIncorrectView(final_question);
-                    updateDBQuizScore();
-                    
-                    // '완료' 버튼 클릭 시, 퀴즈 완전히 종료 (다음 문제 볼 수 없음)
-                    btn_complete.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            navController = Navigation.findNavController(view);
-                            navController.navigate(R.id.action_quizFragment_to_rankingFragment);
-                        }
-                    });
+                    setIncorrectView(final_question);       // 정답 표시
+                    setCompleteView(view);                  // '완료' 버튼 표시
+                    return;
                 }
+
+                // 한 번 더 클릭하면 다음 문제로 넘어감. (유저가 답 확인할 시간을 주기 위함)
+                btn_next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btn_next.setText("제출");
+
+                        // character 이미지 바꿈. (오늘의 퀴즈 보러가기 사라짐)
+                        img_character_today_quiz.setVisibility(View.GONE);
+                        img_character_default.setVisibility(View.VISIBLE);
+
+                        csvQuiz1(view, quizList);   // 오늘의 퀴즈는 정답을 맞춰야만 다음 문제로 넘어감
+                    }
+                });
             }
         });
     }
@@ -229,31 +231,28 @@ public class QuizFragment extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController = Navigation.findNavController(view);
-
-                if(USER_ANSWER.equals("NONE")){
-                    csvQuiz2(view, quizList);   // 아무 보기도 선택하지 않았을 경우 다음 문제로 넘어감
-                } else{
+                // 답을 선택한 경우
+                if(!USER_ANSWER.equals("NONE")){
                     // 사용자가 선택한 답이 정답인지 확인
                     if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                         SCORE += 5;
                         setResultView(view, true, current_quiz);
-                        csvQuiz2(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                     } else {
-                        Log.d(TAG, "틀렸습니다!");
                         setResultView(view, false, current_quiz);
                         setIncorrectView(current_quiz);
-                        updateDBQuizScore();
-
-                        btn_complete.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                navController = Navigation.findNavController(view);
-                                navController.navigate(R.id.action_quizFragment_to_rankingFragment);
-                            }
-                        });
                     }
+                } else{     // 답을 선택하지 않은 경우
+                    csvQuiz2(view, quizList);   // 다음 문제로 넘어감 (정답 여부 상관 X)
+                    return;
                 }
+
+                btn_next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btn_next.setText("제출");
+                        csvQuiz2(view, quizList);   // 다음 문제로 넘어감 (정답 여부 상관 X)
+                    }
+                });
             }
         });
     }
@@ -272,32 +271,28 @@ public class QuizFragment extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController = Navigation.findNavController(view);
-                //navController.navigate(R.id.action_rankingFragment_to_quizFragment);  // 수정 필요
-
-                if(USER_ANSWER.equals("NONE")){
-                    csvQuiz3(view, quizList);   // 아무 보기도 선택하지 않았을 경우 다음 문제로 넘어감
-                } else{
+                // 답을 선택한 경우
+                if(!USER_ANSWER.equals("NONE")){
                     // 사용자가 선택한 답이 정답인지 확인
                     if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                         SCORE += 10;
                         setResultView(view, true, current_quiz);
-                        csvQuiz3(view, quizList);   // 정답일 경우 다음 문제로 넘어감
                     } else {
-                        Log.d(TAG, "틀렸습니다!");
                         setResultView(view, false, current_quiz);
                         setIncorrectView(current_quiz);
-                        updateDBQuizScore();
-
-                        btn_complete.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                navController = Navigation.findNavController(view);
-                                navController.navigate(R.id.action_quizFragment_to_rankingFragment);
-                            }
-                        });
                     }
+                } else {     // 답을 선택하지 않은 경우
+                    csvQuiz3(view, quizList);   // 다음 문제로 넘어감 (정답 여부 상관 X)
+                    return;
                 }
+
+                btn_next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btn_next.setText("제출");
+                        csvQuiz3(view, quizList);   // 다음 문제로 넘어감 (정답 여부 상관 X)
+                    }
+                });
             }
         });
     }
@@ -316,33 +311,30 @@ public class QuizFragment extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController = Navigation.findNavController(view);
-
-                if(USER_ANSWER.equals("NONE")){
-                    csvQuiz4(view, quizList);   // 아무 보기도 선택하지 않았을 경우 다음 문제로 넘어감
-                } else{
+                // 답을 선택한 경우
+                if(!USER_ANSWER.equals("NONE")){
                     // 사용자가 선택한 답이 정답인지 확인
                     if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
                         SCORE += 15;
                         setResultView(view, true, current_quiz);
-                        showPopup(view, quizList);
                     } else {
-                        Log.d(TAG, "틀렸습니다!");
                         setResultView(view, false, current_quiz);
                         setIncorrectView(current_quiz);
-                        showPopup(view, quizList);
-
-                        updateDBQuizScore();
-
-                        btn_complete.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                navController = Navigation.findNavController(view);
-                                navController.navigate(R.id.action_quizFragment_to_rankingFragment);
-                            }
-                        });
                     }
+                } else {     // 답을 선택하지 않은 경우
+                    showPopup(view, quizList);  // 4번째 -> 5번째 문제로 넘어갈 때 룰 팝업창 띄워줌.
+                    csvQuiz4(view, quizList);   // 다음 문제로 넘어감 (정답 여부 상관 X)
+                    return;
                 }
+
+                btn_next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btn_next.setText("제출");
+                        showPopup(view, quizList);  // 4번째 -> 5번째 문제로 넘어갈 때 룰 팝업창 띄워줌.
+                        csvQuiz4(view, quizList);   // 다음 문제로 넘어감 (정답 여부 상관 X)
+                    }
+                });
             }
         });
     }
@@ -361,27 +353,21 @@ public class QuizFragment extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController = Navigation.findNavController(view);
-
-                // 사용자가 선택한 답이 정답인지 확인
-                if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
-                    SCORE += 20;
-                    setResultView(view, true, current_quiz);
-                    setCompleteView(view);      // 퀴즈 종료 시 설정 (마지막 문제이기 때문)
-                } else {
-                    SCORE -= 10;        // 마지막 문제는 틀릴 경우 -10점 (24.05.31 룰 수정)
-                    Log.d(TAG, "틀렸습니다!");
-                    setResultView(view, false, current_quiz);
-                    setIncorrectView(current_quiz);
-
-                    btn_complete.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            navController = Navigation.findNavController(view);
-                            navController.navigate(R.id.action_quizFragment_to_rankingFragment);
-                        }
-                    });
+                // 답을 선택한 경우
+                if(!USER_ANSWER.equals("NONE")){
+                    // 사용자가 선택한 답이 정답인지 확인
+                    if (answerChecker.isCorrectAnswer(USER_ANSWER, current_quiz)) {
+                        SCORE += 20;
+                        setResultView(view, true, current_quiz);
+                    } else {
+                        SCORE -= 10;        // 마지막 문제는 틀릴 경우 -10점 (24.05.31 룰 수정)
+                        setResultView(view, false, current_quiz);
+                        setIncorrectView(current_quiz);
+                    }
                 }
+
+                btn_next.setText("제출");
+                setCompleteView(view);  // 퀴즈 종료 시 설정 (마지막 문제이기 때문)
                 updateDBQuizScore();
             }
         });
@@ -476,10 +462,7 @@ public class QuizFragment extends Fragment {
             }
         }, 0);
 
-        // 틀렸을 경우, '그만','다음' 버튼 비활성화
-        if (!iscorrect) {
-            setCompleteView(view);
-        }
+        btn_next.setText("다음");
     }
 
     // 퀴즈 종료 시 설정
