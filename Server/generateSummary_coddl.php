@@ -3,8 +3,11 @@
 
     $apiKey = '//';     // ChatGPT API Key
     $updateUrl = 'http://43.201.173.245/SummaryInsert.php';      // summary를 생성한 경우, news 테이블에 update
-    $deleteUrl = 'http://43.201.173.245/deleteNews.php';        // summary를 생성하지 못한 경우, news 삭제
     $getNewsData = 'http://43.201.173.245/getNewsData_coddl.php';      // news_id, summary 가져옴
+
+    // crontab 설정 (실행될 시간 설정)
+    // */10 * * * * /usr/bin/php /var/www/html/generateSummary_coddl.php
+    // */40 * * * * /usr/bin/php /var/www/html/generateSummary_coddl.php
 
     function chatGPTSummary($newsId, $article) {
         global $apiKey;
@@ -41,13 +44,13 @@
     
         if (curl_errno($ch)) {
             error_log('Error in ChatGPT request: ' . curl_error($ch));
-            return;
+            return null;
         }
         
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($httpCode != 200) {
             error_log('Error in ChatGPT request: HTTP code ' . $httpCode);
-            return;
+            return null;
         }
     
         curl_close($ch);
@@ -66,7 +69,7 @@
             error_log('No "message" in first choice');
         }
     
-        return;
+        return null;
     }
 
     // news 테이블의 summary 값 업데이트
@@ -88,28 +91,6 @@
             echo "Error updating summary\n";
         } else {
             echo "Summary updated successfully\n";
-        }
-    }
-
-    // summary가 생성되지 않은 news 데이터 삭제
-    function deleteNews($newsId) {
-        global $deleteUrl;
-
-        $data = http_build_query(['newsId' => $newsId]);
-        $options = [
-            'http' => [
-                'header'  => "Content-Type: application/x-www-form-urlencoded;charset=UTF-8\r\n",
-                'method'  => 'POST',
-                'content' => $data,
-            ],
-        ];
-
-        $context = stream_context_create($options);
-        $result = file_get_contents($deleteUrl, false, $context);
-        if ($result === FALSE) {
-            echo "Error deleting news\n";
-        } else {
-            echo "News $newsId deleted successfully\n";
         }
     }
 
@@ -137,10 +118,12 @@
             updateSummary($newsId, $summary);
         } else{
             logToSyslog("fail to generate summary");
-            deleteNews($newsId); // Summary가 null일 경우 해당 뉴스 데이터를 삭제
         }
 
         sleep(1);
     }
 
+    // 순차적으로 실행
+    exec('php /var/www/html/deleteNews.php');       // summary 생성 후 summary is null인 데이터 삭제
+    exec('php /var/www/html/generateImages.php');   // img_url is null인 뉴스 이미지 생성
 ?>
