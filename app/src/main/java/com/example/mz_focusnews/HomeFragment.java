@@ -276,4 +276,3 @@ public class HomeFragment extends Fragment {
         nowDate.setText(formattedDate);
     }
 }
-

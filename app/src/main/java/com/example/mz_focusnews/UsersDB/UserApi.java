@@ -36,4 +36,8 @@ public interface UserApi {
 
     @DELETE("/api/users/{userId}")
     Call<Void> deleteUser(@Path("userId") String userId);
+
+    @FormUrlEncoded
+    @POST("/update-alarm-permission")
+    Call<Void> updateAlarmPermission(@Field("userId") String userId, @Field("alarmPermission") boolean alarmPermission);
 }

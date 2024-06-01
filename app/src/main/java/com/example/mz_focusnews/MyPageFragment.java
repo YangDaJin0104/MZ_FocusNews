@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.app.ActivityCompat;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,10 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mz_focusnews.request.UpdateAlarmRequest;
 import com.example.mz_focusnews.request.UserInfoRequest;
 
 import org.json.JSONException;
@@ -95,6 +99,12 @@ public class MyPageFragment extends Fragment {
             NavHostFragment.findNavController(MyPageFragment.this)
                     .navigate(R.id.action_myPageFragment_to_keywordChangeFragment);
         });
+
+        // Switch 상태 변경 리스너 설정
+        switch_alarm.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            updateAlarmSetting(isChecked);
+        });
+
         return view;
     }
 
@@ -164,5 +174,24 @@ public class MyPageFragment extends Fragment {
         UserInfoRequest userInfoRequest = new UserInfoRequest(userId, responseListener, errorListener);
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(userInfoRequest);
+    }
+
+    private void updateAlarmSetting(boolean isEnabled) {
+        Response.Listener<String> responseListener = response -> Toast.makeText(getContext(), "알림 설정이 업데이트되었습니다.", Toast.LENGTH_SHORT).show();
+        Response.ErrorListener errorListener = error -> {
+            String errorMessage = "Failed to update alarm setting";
+            if (error.networkResponse != null) {
+                errorMessage += " - Status Code: " + error.networkResponse.statusCode;
+            }
+            if (error.getCause() != null) {
+                errorMessage += " - Cause: " + error.getCause().toString();
+            }
+            Log.e("UpdateAlarmRequest", errorMessage, error);
+            Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
+        };
+
+        UpdateAlarmRequest request = new UpdateAlarmRequest(user_id, isEnabled, responseListener, errorListener);
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(request);
     }
 }
