@@ -235,7 +235,24 @@ public class ContentFragment extends Fragment {
 
         NewsData item = new NewsData(id, title, summary, related1, related2);
 
-        String[] summaries = summary.split("\\. ");
+        // 인천지법 형사 재판부는 A 씨에게 징역 2년을 선고하고 법정 구속했다.A 씨는 B 씨를 폭행한 혐의로 불구속기소된 후, 법정 진술과 관련 증거로 유죄 판결을 받았다, 이 폭행으로 B 씨는 갈비뼈가 부러지는 등 전치 6주의 진단을 받았다
+        // 위 문장을 두 문장으로 분리해서 보여주는 것 때문에 수정했습니다.
+
+        // summary 문자열에서 '.' 갯수 찾기
+        int count = 0;
+        for (char c : summary.toCharArray()) {
+            if (c == '.') {
+                count++;
+            }
+        }
+
+        String[] summaries;
+        if(count >= 4){         // .이 4개 이상이면(소수점 표현 등) '. '으로 분리 (점과 공백)
+            summaries = summary.split("\\. ");
+        } else {                // .이 3개 이하이면 '.'으로 분리 - 예) 징역 2년을 선고하고 법정 구속했다.A 씨는 B 씨를 폭행한 혐의로
+            summaries = summary.split("[.\\\\n]");
+        }
+        
         Log.d("summaries split", Arrays.toString(summaries));
         if (summaries.length >= 3) {
             summary1.setText(summaries[0].trim() + ".");
