@@ -185,7 +185,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:layout_marginBottom="60dp"
                 android:layout_marginTop="5dp">
 
@@ -193,7 +193,8 @@
                     android:id="@+id/rank_user"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="74dp"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/circle_button"
                     android:backgroundTint="#D9D9D9"
                     android:text="15"

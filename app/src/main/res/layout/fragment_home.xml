@@ -38,20 +38,21 @@
                         android:layout_marginLeft="20dp" />
 
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
                         android:src="@drawable/smile"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginLeft="7dp">
                     </ImageView>
 
                 </LinearLayout>
+
                 <ImageView
                     android:id="@+id/breaking_news_list"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="30dp"
-                    android:src="@drawable/bell"/>
+                    android:layout_marginRight="35dp"
+                    android:src="@drawable/bell" />
             </FrameLayout>
 
             <TextView
