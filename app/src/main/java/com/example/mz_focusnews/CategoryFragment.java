@@ -77,6 +77,12 @@ public class CategoryFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(newsAdapter);
+
+        // ProgressBar 초기화
+        progressBar = view.findViewById(R.id.progressBar);
+
+        loadNewsByCategory(currentCategory);
+        updateSelectedButton(view.findViewById(R.id.politics));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -105,7 +111,6 @@ public class CategoryFragment extends Fragment {
         Spinner sortSpinner = view.findViewById(R.id.sortSpinner);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            // 카테고리 정렬 최신순, 기본순, 조회수순
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -127,8 +132,6 @@ public class CategoryFragment extends Fragment {
             }
         });
 
-
-        // 카테고리 버튼 클릭리스너
         politicsButton.setOnClickListener(v -> {
             currentCategory = "politics";
             loadNewsByCategory(currentCategory);
@@ -145,8 +148,8 @@ public class CategoryFragment extends Fragment {
             updateSelectedButton(societyButton);
         });
         keywordButton.setOnClickListener(v -> {
-            Log.d("CategoryFragment", "Keyword button clicked");
-            newsFetcher.fetchUserKeywordsAndNews(user_id);
+            currentCategory = "keyword";
+            loadNewsByCategory(currentCategory);
             updateSelectedButton(keywordButton);
         });
         recruitmentButton.setOnClickListener(v -> {
@@ -170,13 +173,9 @@ public class CategoryFragment extends Fragment {
             updateSelectedButton(sportsButton);
         });
 
-        loadNewsByCategory(currentCategory);
-        updateSelectedButton(politicsButton);
-
         return view;
     }
 
-    // 키워드 클릭 확인
     private void handleNewsClick(News news) {
         Log.d("handleNewsClick", "User ID: " + user_id);
         Log.d("handleNewsClick", "News ID: " + news.getNewsId());
@@ -192,25 +191,57 @@ public class CategoryFragment extends Fragment {
                 .navigate(R.id.action_categoryFragment_to_contentFragment, bundle);
     }
 
-    // 처음화면 정치로 초기화
     private void initializeUIComponents(View view) {
         Button politicsButton = view.findViewById(R.id.politics);
         politicsButton.setOnClickListener(v -> loadNewsByCategory("politics"));
     }
 
-
-    // NewsAPI에서 뉴스 정보 가져공
     private void loadNewsByCategory(String category) {
-        progressBar.setVisibility(View.VISIBLE);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        if (category == null) {
+            category = "politics"; // 기본값 설정
+        }
+
+        if ("keyword".equals(category)) {
+            // 키워드에 맞는 뉴스 불러오기
+            newsFetcher.fetchUserKeywordsAndNews(user_id, new NewsFetcher.NewsFetchListener() {
+                @Override
+                public void onFetchCompleted(List<News> fetchedNews) {
+                    newsList.clear();
+                    newsList.addAll(fetchedNews);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        newsAdapter.updateNews(newsList);
+                    }
+                    if (progressBar != null) {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFetchFailed() {
+                    if (progressBar != null) {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                    Toast.makeText(getContext(), "키워드 뉴스를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
 
         RetrofitClient.getInstance().getNewsApi().getNewsByCategory(category, currentSortOption).enqueue(new Callback<List<News>>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<List<News>> call, Response<List<News>> response) {
-                progressBar.setVisibility(View.GONE);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
 
                 if (response.isSuccessful() && response.body() != null) {
-                    newsList = response.body();
+                    newsList.clear();
+                    newsList.addAll(response.body());
                     newsAdapter.updateNews(newsList);
                 } else {
                     ResponseBody errorBody = response.errorBody();
@@ -220,9 +251,9 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<News>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-
-                Toast.makeText(getContext(), "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
         });
     }
