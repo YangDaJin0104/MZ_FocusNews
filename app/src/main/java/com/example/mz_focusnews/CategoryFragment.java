@@ -201,10 +201,6 @@ public class CategoryFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
         }
 
-        if (category == null) {
-            category = "politics"; // 기본값 설정
-        }
-
         if ("keyword".equals(category)) {
             // 키워드에 맞는 뉴스 불러오기
             newsFetcher.fetchUserKeywordsAndNews(user_id, new NewsFetcher.NewsFetchListener() {
