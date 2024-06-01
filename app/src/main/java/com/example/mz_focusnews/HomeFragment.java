@@ -76,6 +76,7 @@ public class HomeFragment extends Fragment {
         // DrawerLayout 참조
         drawerLayout = view.findViewById(R.id.drawer_layout);
 
+
         // 사용자 이름 및 현재 시간 설정
         TextView userName = view.findViewById(R.id.user_name);
         TextView nowDate = view.findViewById(R.id.current_date);
@@ -237,10 +238,7 @@ public class HomeFragment extends Fragment {
                                 newsObject.optInt("related_news1", 0), // 기본값으로 0을 사용
                                 newsObject.optInt("related_news2", 0)  // 기본값으로 0을 사용
                         );
-                        // summary가 null 또는 빈 문자열이 아닌 경우에만 추가
-                        if (news.getSummary() != null && !news.getSummary().isEmpty()) {
-                            newsList.add(news);
-                        }
+                        newsList.add(news); // 뉴스 항목을 리스트에 추가
                     }
                     interestAdapter.notifyDataSetChanged(); // 어댑터에 데이터 변경 알림
                 } else {
@@ -250,7 +248,7 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "JSON Parsing Error", Toast.LENGTH_SHORT).show();
             }
-//        progressBar.setVisibility(view.GONE); // 데이터 로딩 완료 시 프로그레스 바 숨김
+//            progressBar.setVisibility(view.GONE); // 데이터 로딩 완료 시 프로그레스 바 숨김
         };
 
         Response.ErrorListener errorListener = error -> {
@@ -262,7 +260,6 @@ public class HomeFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(request);
     }
-
 
     // 사용자 세션을 관리하는 Map을 가져오는 메소드
     private Map<String, UserSession> getUserSessions() {
