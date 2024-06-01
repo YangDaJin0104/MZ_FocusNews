@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class NotificationService {
 
     private static final String CHANNEL_ID = "breaking_news_channel";
-    private static final String URL = "http://10.0.2.2:8081/new-breaking-news";
+    private static final String URL = "http://43.201.173.245:8081/new-breaking-news";
     private Context context;
 
     public NotificationService(Context context) {

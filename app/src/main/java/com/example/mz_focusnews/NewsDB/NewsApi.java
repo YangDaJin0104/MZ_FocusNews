@@ -18,6 +18,8 @@ import retrofit2.http.Query;
 public interface NewsApi {
     @GET("/api/news")
     Call<List<News>> getAllNews();
+    @GET("news/non-null-summary")
+    Call<List<News>> getNonNullSummaryNews();
 
     @GET("/api/news/category/{category}")
     Call<List<News>> getNewsByCategory(@Path("category") String category, @Query("sort") String sort);

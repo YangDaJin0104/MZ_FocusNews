@@ -77,8 +77,8 @@ public class NewsUtils {
         };
 
         Response.ErrorListener errorListener = error -> {
-            Log.e("NewsUtils", "네트워크 오류: ", error);
-            Toast.makeText(context, "네트워크 오류.", Toast.LENGTH_SHORT).show();
+//            Log.e("NewsUtils", "네트워크 오류: ", error);
+//            Toast.makeText(context, "네트워크 오류.", Toast.LENGTH_SHORT).show();
         };
 
         UpdateInterestRequest request = new UpdateInterestRequest(userId, category, responseListener, errorListener);
@@ -239,4 +239,5 @@ public class NewsUtils {
         }
 
     }
+
 }

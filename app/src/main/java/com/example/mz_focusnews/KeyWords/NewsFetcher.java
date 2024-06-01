@@ -1,7 +1,6 @@
 package com.example.mz_focusnews.KeyWords;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -34,7 +33,12 @@ public class NewsFetcher {
         this.newsList = newsList;
     }
 
-    public void fetchUserKeywordsAndNews(String userId) {
+    public interface NewsFetchListener {
+        void onFetchCompleted(List<News> fetchedNews);
+        void onFetchFailed();
+    }
+
+    public void fetchUserKeywordsAndNews(String userId, NewsFetchListener listener) {
         String url = USER_KEYWORD_URL + userId + "/keywords";
         Log.d(TAG, "Fetching keywords from URL: " + url);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
@@ -50,43 +54,44 @@ public class NewsFetcher {
                             Log.e(TAG, "JSON parsing error", e);
                         }
                     }
-                    fetchNewsByKeywords(userId); // userId를 사용하여 fetchNewsByKeywords 호출
+                    fetchNewsByKeywords(userId, listener); // userId를 사용하여 fetchNewsByKeywords 호출
                 },
                 error -> {
                     Log.e(TAG, "Error fetching keywords", error);
                     error.printStackTrace();
+                    listener.onFetchFailed();
                 }
         );
         requestQueue.add(jsonArrayRequest);
     }
 
-    private void fetchNewsByKeywords(String userId) {
+    private void fetchNewsByKeywords(String userId, NewsFetchListener listener) {
         String url = NEWS_BY_KEYWORDS_URL + "?userId=" + userId;
         Log.d(TAG, "Fetching news with URL: " + url);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
-                    newsList.clear(); // Clear the old news
+                    List<News> fetchedNews = new ArrayList<>();
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject newsObject = response.getJSONObject(i);
                             News news = new News();
+                            news.setNewsId(newsObject.getInt("newsId"));  // 여기서 뉴스 ID 설정
                             news.setTitle(newsObject.getString("title"));
                             news.setPublish(newsObject.getString("publish"));
                             news.setDate(newsObject.getString("date"));
                             news.setImgUrl(newsObject.getString("imgUrl"));
-                            newsList.add(news);
+                            fetchedNews.add(news);
                         } catch (JSONException e) {
                             Log.e(TAG, "JSON parsing error", e);
                         }
                     }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        newsAdapter.updateNews(newsList);
-                    }
+                    listener.onFetchCompleted(fetchedNews);
                 },
                 error -> {
                     Log.e(TAG, "Error fetching news by keyword", error);
                     error.printStackTrace();
+                    listener.onFetchFailed();
                 }
         );
         requestQueue.add(jsonArrayRequest);
