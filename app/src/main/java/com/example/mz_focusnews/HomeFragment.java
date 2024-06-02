@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
     private BreakingNewsAdapter breakingNewsAdapter; // 속보 뉴스 Adapter
     private List<News> newsList;
     private List<News> breakingNewsList; // 속보 뉴스 리스트
-    private Button breakingNewsButton; // 속보 뉴스 버튼 참조를 위한 변수
+    private TextView breakingNewsButton; // 속보 뉴스 버튼 참조를 위한 변수
     private DrawerLayout drawerLayout; // DrawerLayout 참조를 위한 변수
 
     private static final String PREFS_NAME = "BreakingNewsPrefs";
