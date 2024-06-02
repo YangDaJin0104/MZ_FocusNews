@@ -140,8 +140,7 @@ public class HomeFragment extends Fragment {
         breakingNewsAdapter = new BreakingNewsAdapter(getActivity(), breakingNewsList, new BreakingNewsAdapter.OnNewsClickListener() {
             @Override
             public void onNewsClick(News news) {
-                NavHostFragment.findNavController(HomeFragment.this)
-                        .navigate(R.id.action_homeFragment_to_contentFragment);
+
             }
         });
 
