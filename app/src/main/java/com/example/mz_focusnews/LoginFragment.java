@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.android.volley.RequestQueue;
@@ -88,9 +89,14 @@ public class LoginFragment extends Fragment {
                                 editor.putString("user_name", user_name);
                                 editor.apply();
 
+                                // loginFragment를 포함한 스택을 비움
+                                NavOptions navOptions = new NavOptions.Builder()
+                                        .setPopUpTo(R.id.loginFragment, true)
+                                        .build();
+
                                 // HomeFragment로 이동
                                 NavHostFragment.findNavController(LoginFragment.this)
-                                        .navigate(R.id.action_loginFragment_to_homeFragment);
+                                        .navigate(R.id.action_loginFragment_to_homeFragment, null, navOptions);
 
                             } else {    // 로그인 실패
                                 Toast.makeText(getActivity(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
