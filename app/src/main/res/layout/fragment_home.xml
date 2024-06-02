@@ -16,37 +16,43 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:orientation="horizontal">
+                android:layout_marginHorizontal="20dp"
+                android:layout_gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/smile"
+                        android:layout_marginRight="10dp" />
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hi, User Name"
+                        android:textSize="28dp"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/smile"
-                    android:layout_marginLeft="20dp">
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/user_name"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:text="Hi, User Name"
-                    android:textSize="28dp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="10dp" />
-
-                <ImageButton
                     android:id="@+id/breaking_news_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:layout_marginLeft="30dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/bell"/>
-            </LinearLayout>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="12dp"
+                    android:src="@drawable/bell" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/current_date"
@@ -57,17 +63,29 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginLeft="20dp"/>
 
-            <Button
-                android:id="@+id/breakingNews"
+            <FrameLayout
                 android:layout_width="380dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:paddingLeft="20dp"
-                android:drawableLeft="@drawable/siren"
-                android:textColor="@color/white"
-                android:background="@drawable/background_shape_blue"/>
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/breakingNews"
+                    android:layout_width="380dp"
+                    android:layout_height="50dp"
+                    android:textColor="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="53dp"
+                    android:background="@drawable/background_shape_blue"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/siren" />
+            </FrameLayout>
 
             <!-- 안에 담길 내용들은 fragment_daliy... 들에 있음-->
             <androidx.viewpager2.widget.ViewPager2

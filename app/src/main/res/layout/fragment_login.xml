@@ -10,8 +10,8 @@
     tools:context=".LoginFragment">
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
         android:src="@drawable/logo" />
 
 <!--    <TextView-->
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         android:orientation="vertical">
 
         <LinearLayout
