@@ -50,9 +50,12 @@
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="match_parent"
-                    android:layout_height="70sp"
-                    android:padding="10dp"
-                    android:text="@string/sample_title_26"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="70dp"
+                    android:minHeight="50dp"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/sample_title_28"
                     android:textColor="@color/black"
                     android:textSize="14.5sp"
                     android:textStyle="bold" />

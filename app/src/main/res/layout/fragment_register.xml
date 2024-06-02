@@ -91,7 +91,6 @@
                     android:layout_marginTop="2dp"
                     android:background="@drawable/background_shape_littleblue"
                     android:text="중복 확인"
-                    android:textStyle="bold"
                     android:textSize="10dp" />
             </FrameLayout>
         </LinearLayout>
@@ -164,7 +163,6 @@
                     android:layout_marginTop="2dp"
                     android:background="@drawable/background_shape_littleblue"
                     android:text="중복 확인"
-                    android:textStyle="bold"
                     android:textSize="10sp" />
             </FrameLayout>
         </LinearLayout>

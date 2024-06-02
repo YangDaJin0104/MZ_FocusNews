@@ -67,6 +67,7 @@
                         android:id="@+id/daily_content"
                         android:layout_width="180dp"
                         android:layout_height="40dp"
+                        android:layout_marginBottom="15dp"
                         android:text="@string/sample_content_30"
                         android:textSize="12.5sp"
                         android:textStyle="bold" />
