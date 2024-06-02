@@ -12,6 +12,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+
         if (navHostFragment != null) {
             Fragment currentFragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
             if (currentFragment instanceof OnBackPressedListener) {
@@ -151,6 +153,17 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
-        super.onBackPressed();
+//        super.onBackPressed();
+
+        // 현재 프래그먼트를 확인하고 홈 프래그먼트가 아닌 경우 홈 프래그먼트로 이동
+        int currentFragmentId = navController.getCurrentDestination().getId();
+        if (currentFragmentId != R.id.homeFragment) {
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setPopUpTo(R.id.homeFragment, true)
+                    .build();
+            navController.navigate(R.id.homeFragment, null, navOptions);
+        } else {
+            super.onBackPressed(); // 홈 프래그먼트에서 뒤로가기 버튼을 누르면 앱 종료
+        }
     }
 }
