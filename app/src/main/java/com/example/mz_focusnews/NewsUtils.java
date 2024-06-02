@@ -37,7 +37,7 @@ public class NewsUtils {
     // 클릭된 뉴스 아이템의 정보를 서버에 전송하는 메소드
     public static void sendNewsItemToServer(Context context, News news) {
         int newsId = news.getNewsId();
-//        Log.d("NewsUtils", "sendNewsItemToServer: 뉴스 조회수 증가 요청 전송 시작, 뉴스 ID=" + newsId);
+        Log.d("NewsUtils", "sendNewsItemToServer: 뉴스 조회수 증가 요청 전송 시작, 뉴스 ID=" + newsId);
 
         NewsViewCountRequest request = new NewsViewCountRequest(newsId, new Response.Listener<String>() {
             @Override
@@ -48,11 +48,11 @@ public class NewsUtils {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
-//        Log.d("NewsUtils", "sendNewsItemToServer: 뉴스 조회수 증가 요청 큐에 추가됨, 뉴스 ID=" + newsId);
+        Log.d("NewsUtils", "sendNewsItemToServer: 뉴스 조회수 증가 요청 큐에 추가됨, 뉴스 ID=" + newsId);
     }
 
     public static void logUserInteraction(Context context, Map<String, UserSession> userSessions, String userId, News news) {
-//        Log.d("NewsUtils", "logUserInteraction: 사용자 상호작용 시작, 사용자 ID=" + userId + ", 뉴스 ID=" + news.getNewsId());
+        Log.d("NewsUtils", "logUserInteraction: 사용자 상호작용 시작, 사용자 ID=" + userId + ", 뉴스 ID=" + news.getNewsId());
         UserSession session = userSessions.computeIfAbsent(userId, id -> new UserSession());
         session.logInteraction(news.getNewsId(), news.getCategory());
 
@@ -61,7 +61,7 @@ public class NewsUtils {
     }
 
     public static void updateUserInterestCategory(Context context, String userId, String category) {
-//        Log.d("NewsUtils", "updateUserInterestCategory: 사용자 선호 카테고리 업데이트 요청 시작, 카테고리=" + category);
+        Log.d("NewsUtils", "updateUserInterestCategory: 사용자 선호 카테고리 업데이트 요청 시작, 카테고리=" + category);
 
         Response.Listener<String> responseListener = response -> {
             try {
@@ -77,7 +77,7 @@ public class NewsUtils {
         };
 
         Response.ErrorListener errorListener = error -> {
-//            Log.e("NewsUtils", "네트워크 오류: ", error);
+            Log.e("NewsUtils", "네트워크 오류: ", error);
 //            Toast.makeText(context, "네트워크 오류.", Toast.LENGTH_SHORT).show();
         };
 
@@ -88,7 +88,7 @@ public class NewsUtils {
 
     // 클릭된 뉴스 아이템을 처리하고 화면을 전환하는 메소드
     public static void handleNewsClick(Fragment fragment, News news, Map<String, UserSession> userSessions, String userId) {
-//        Log.d("NewsUtils", "handleNewsItemClick: 뉴스 아이템 클릭 처리 시작, 사용자 ID=" + userId);
+        Log.d("NewsUtils", "handleNewsItemClick: 뉴스 아이템 클릭 처리 시작, 사용자 ID=" + userId);
         if (news != null) {
             sendNewsItemToServer(fragment.getContext(), news);
             logUserInteraction(fragment.getContext(), userSessions, userId, news);
