@@ -43,8 +43,6 @@ import java.io.InputStream;
 
 public class MyPageFragment extends Fragment {
 
-    private Button changeKeywordButton; // 키워드 버튼 설정변수
-
     private static final int REQUEST_CODE_PERMISSION = 1;
     private static final int REQUEST_CODE_PICK_IMAGE = 2;
 
@@ -60,14 +58,11 @@ public class MyPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_page, container, false);
 
-        // 키워드 변경 버튼 설정
-        changeKeywordButton = view.findViewById(R.id.change_keyword_btn);
-
         tv_name = view.findViewById(R.id.my_name);
         tv_keyword1 = view.findViewById(R.id.tv_keyword1);
         tv_keyword2 = view.findViewById(R.id.tv_keyword2);
         tv_keyword3 = view.findViewById(R.id.tv_keyword3);
-        iv_keyword = view.findViewById(R.id.iv_keyword);
+        iv_keyword = view.findViewById(R.id.iv_keyword); // 키워드 변경
         iv_profile = view.findViewById(R.id.iv_profile);
         iv_edit = view.findViewById(R.id.iv_edit);
         btn_change = view.findViewById(R.id.btn_change_pw);
@@ -85,17 +80,18 @@ public class MyPageFragment extends Fragment {
         btn_change.setOnClickListener(v -> NavHostFragment.findNavController(MyPageFragment.this)
                 .navigate(R.id.action_myPageFragment_to_changePasswordFragment));
 
+        // 이미지 접근 권한 설정 (프로필 이미지 변경)
         iv_edit.setOnClickListener(v -> {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_MEDIA_IMAGES)
                     != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
+                requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_CODE_PERMISSION);
             } else {
                 openGallery();
             }
         });
 
         // 키워드 변경 버튼 리스너
-        changeKeywordButton.setOnClickListener(v -> {
+        iv_keyword.setOnClickListener(v -> {
             NavHostFragment.findNavController(MyPageFragment.this)
                     .navigate(R.id.action_myPageFragment_to_keywordChangeFragment);
         });
@@ -134,16 +130,14 @@ public class MyPageFragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openGallery();
             } else {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    // 사용자가 권한 요청을 거부했지만, 권한 필요성 설명 후 다시 요청
+                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_MEDIA_IMAGES)) {
                     new AlertDialog.Builder(getContext())
                             .setTitle("Permission needed")
                             .setMessage("This permission is needed to pick images from your gallery")
-                            .setPositiveButton("OK", (dialog, which) -> ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION))
+                            .setPositiveButton("OK", (dialog, which) -> ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_CODE_PERMISSION))
                             .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                             .create().show();
                 } else {
-                    // 사용자가 '다시 묻지 않음'을 선택하고 권한 요청을 거부한 경우
                     Toast.makeText(getContext(), "Permission denied. You can enable it in app settings.", Toast.LENGTH_LONG).show();
                 }
             }

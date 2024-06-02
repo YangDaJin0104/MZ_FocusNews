@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment {
     private BreakingNewsAdapter breakingNewsAdapter; // 속보 뉴스 Adapter
     private List<News> newsList;
     private List<News> breakingNewsList; // 속보 뉴스 리스트
-    private Button breakingNewsButton; // 속보 뉴스 버튼 참조를 위한 변수
+    private TextView breakingNewsButton; // 속보 뉴스 버튼 참조를 위한 변수
     private DrawerLayout drawerLayout; // DrawerLayout 참조를 위한 변수
 
     private static final String PREFS_NAME = "BreakingNewsPrefs";
@@ -81,7 +82,7 @@ public class HomeFragment extends Fragment {
         TextView userName = view.findViewById(R.id.user_name);
         TextView nowDate = view.findViewById(R.id.current_date);
         breakingNewsButton = view.findViewById(R.id.breakingNews); // 속보 뉴스 버튼 참조
-        ImageButton breakingNewsListButton = view.findViewById(R.id.breaking_news_list); // 드로어 열기 버튼 참조
+        ImageView breakingNewsListButton = view.findViewById(R.id.breaking_news_list); // 드로어 열기 버튼 참조
 
         // SharedPreferences로 데이터 받아오기: 아이디 , 이름
         SharedPreferences sp = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
