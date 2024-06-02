@@ -104,8 +104,7 @@
             android:layout_gravity="left"
             android:layout_marginHorizontal="25dp">
 
-            <Button
-                android:id="@+id/change_keyword_btn"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="키워드 변경"

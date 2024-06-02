@@ -8,14 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.mz_focusnews.ContentFragment;
 import com.example.mz_focusnews.R;
 import com.example.mz_focusnews.NewsDB.RetrofitClient;
 import com.example.mz_focusnews.UsersDB.UserApi;
@@ -40,7 +41,8 @@ public class KeywordChangeFragment extends Fragment {
     private Button keyword3Button;
     private TextView userKeyword3;
 
-    private Button completeRegisterButton;
+    private ImageButton btn_back;
+    private Button completeChangeButton;
 
     private String userId; // 사용자의 ID를 저장할 변수
     private UserApi userApi;
@@ -63,7 +65,16 @@ public class KeywordChangeFragment extends Fragment {
         keyword3Button = view.findViewById(R.id.btn_change_keyword3);
         userKeyword3 = view.findViewById(R.id.user_keyword3);
 
-        completeRegisterButton = view.findViewById(R.id.btn_complete_register);
+        completeChangeButton = view.findViewById(R.id.btn_complete_change);
+
+        // 뒤로가기
+        btn_back = view.findViewById(R.id.backbtn);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(KeywordChangeFragment.this).navigateUp();
+            }
+        });
 
         // SharedPreferences를 사용하여 userId를 초기화
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
@@ -117,7 +128,7 @@ public class KeywordChangeFragment extends Fragment {
         });
 
         // 완료 버튼 클릭 리스너 설정
-        completeRegisterButton.setOnClickListener(v -> {
+        completeChangeButton.setOnClickListener(v -> {
             NavHostFragment.findNavController(KeywordChangeFragment.this)
                     .navigate(R.id.action_keywordChangeFragment_to_myPageFragment);
         });

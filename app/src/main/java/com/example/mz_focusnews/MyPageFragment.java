@@ -43,8 +43,6 @@ import java.io.InputStream;
 
 public class MyPageFragment extends Fragment {
 
-    private Button changeKeywordButton; // 키워드 버튼 설정변수
-
     private static final int REQUEST_CODE_PERMISSION = 1;
     private static final int REQUEST_CODE_PICK_IMAGE = 2;
 
@@ -60,14 +58,11 @@ public class MyPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_page, container, false);
 
-        // 키워드 변경 버튼 설정
-        changeKeywordButton = view.findViewById(R.id.change_keyword_btn);
-
         tv_name = view.findViewById(R.id.my_name);
         tv_keyword1 = view.findViewById(R.id.tv_keyword1);
         tv_keyword2 = view.findViewById(R.id.tv_keyword2);
         tv_keyword3 = view.findViewById(R.id.tv_keyword3);
-        iv_keyword = view.findViewById(R.id.iv_keyword);
+        iv_keyword = view.findViewById(R.id.iv_keyword); // 키워드 변경
         iv_profile = view.findViewById(R.id.iv_profile);
         iv_edit = view.findViewById(R.id.iv_edit);
         btn_change = view.findViewById(R.id.btn_change_pw);
@@ -96,7 +91,7 @@ public class MyPageFragment extends Fragment {
         });
 
         // 키워드 변경 버튼 리스너
-        changeKeywordButton.setOnClickListener(v -> {
+        iv_keyword.setOnClickListener(v -> {
             NavHostFragment.findNavController(MyPageFragment.this)
                     .navigate(R.id.action_myPageFragment_to_keywordChangeFragment);
         });
