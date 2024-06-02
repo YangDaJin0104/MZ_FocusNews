@@ -87,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 // 로그인과 회원가입 프래그먼트 ID에 따라 하단 네비게이션 바 표시 결정
                 int dest_id = destination.getId();
-                if(dest_id == R.id.loginFragment || dest_id == R.id.registerFragment || dest_id == R.id.changePasswordFragment || dest_id == R.id.findPasswordFragment) {
+                if(dest_id == R.id.loginFragment || dest_id == R.id.registerFragment
+                        || dest_id == R.id.changePasswordFragment || dest_id == R.id.findPasswordFragment
+                        || dest_id == R.id.keywordChangeFragment || dest_id == R.id.keywordFragment) {
                     bottomNavigationView.setVisibility(View.GONE); // 네비게이션 바 숨기기
                 } else {
                     bottomNavigationView.setVisibility(View.VISIBLE); // 네비게이션 바 표시하기
