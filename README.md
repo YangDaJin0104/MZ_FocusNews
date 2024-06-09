@@ -15,7 +15,9 @@
 또한, 각 기사의 맨 위에는 관련 이미지가 포함되어 시각적인 효과를 더하여 사용자의 시선을 사로잡습니다.
 
 이 프로젝트는 기존 뉴스 서비스와 구분되는 개인화된 시간 기반 뉴스 제공, AI 기반 맞춤형 뉴스 추천 시스템, 상호작용적 학습 경험 제공, 연관 기사 시스템을 통한 심층적 이해 촉진, 그리고 지역 기반 뉴스 제공을 통해 사용자들에게 더욱 효율적이고 즐거운 뉴스 소비 경험을 제공합니다.
-
+  
+**📽️ [시연 영상 보러가기](https://youtu.be/LAvr-E4jU0w )**
+  
 ## ⚙️ 개발 도구 및 환경
 ### 개발 언어
 <div style="display: flex; align-items: center;">
@@ -47,6 +49,9 @@
 
 ## 🟢 프로젝트 현황
 
+### 프로젝트 기간
+- 2024.03.04 ~ 2024.06.03 (3개월)
+
 ### 기능 개발
 - [X] 오늘/이 주/이 달의 뉴스
 - [X] 뉴스 3줄 요약
@@ -65,6 +70,18 @@
 ### 진행 상황
 현재 진행 상황은 약 **100%** 입니다.
 
+## 🙂 홍채영의 업무
+1. AWS EC2 가상 서버 연결
+2. DB 서버 구축 (MySQL)
+3. 로그인, 퀴즈 팝업 UI 설계 및 구현
+4. 상식 퀴즈 구현
+5. 퀴즈 유저 랭킹 구현
+6. 퀴즈 출제
+7. 오늘의 뉴스 기반 뉴스 생성 (OpenAI API 이용)
+8. 뉴스 관련 이미지 생성 (OpenAI API 이용)
+9. 뉴스 3줄 요약 구현 (OpenAI API 이용)
+10. 발표
+  
 ## 🖼️ Figma 이미지 (UI)
 
 | ![메인화면](https://postfiles.pstatic.net/MjAyNDA1MDhfMTc1/MDAxNzE1MTczMzQ0NzM3.rSt7cQ-aJ_Yswv9XgprWehGixfyX5PCqvD39lHnYtUog.om6Xh4A7Wm1mDYMSJCdMtdlOKb0B5vm3PZlpLRMF8yQg.PNG/%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4.png?type=w966) | ![뉴스화면](https://postfiles.pstatic.net/MjAyNDA1MDhfMTc4/MDAxNzE1MTczMzQ0NzMy.twy6TFcFRD8JjM7pNom4ruw0Vbfj_K96tw_ocnVyBAIg.aKpsMiyENsdNtDmh3PPgNgWewYaRTw5skBWLg1OAUXEg.PNG/%EB%89%B4%EC%8A%A4%ED%99%94%EB%A9%B4.png?type=w966) |
